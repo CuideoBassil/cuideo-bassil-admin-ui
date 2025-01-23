@@ -44,10 +44,7 @@ const useProductSubmit = () => {
   const [productType, setProductType] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [videoId, setVideoId] = useState<string>("");
-  const [offerDate, setOfferDate] = useState<{
-    startDate: null;
-    endDate: null;
-  }>({
+  const [offerDate, setOfferDate] = useState<any>({
     startDate: null,
     endDate: null,
   });

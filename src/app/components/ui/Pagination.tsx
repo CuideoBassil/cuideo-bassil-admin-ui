@@ -1,5 +1,6 @@
 import { Next, Prev } from "@/svg";
-import ReactPaginate from "react-paginate";
+import ReactPaginate from "react-paginate"
+
 
 // prop type
 type IProps = {
@@ -8,18 +9,18 @@ type IProps = {
 };
 
 const PaginationTwo = ({ handlePageClick, pageCount }: IProps) => {
-  return (
-    <ReactPaginate
-      className="list-wrap"
-      breakLabel="..."
-      activeClassName="current"
-      nextLabel={<Next/>}
-      onPageChange={handlePageClick}
-      pageRangeDisplayed={5}
-      pageCount={pageCount}
-      previousLabel={<Prev/>}
-      renderOnZeroPageCount={null}
-    />
+  return (<></>
+    // <ReactPaginate
+    //   className="list-wrap"
+    //   breakLabel="..."
+    //   activeClassName="current"
+    //   nextLabel={<Next/>}
+    //   onPageChange={handlePageClick}
+    //   pageRangeDisplayed={5}
+    //   pageCount={pageCount}
+    //   previousLabel={<Prev/>}
+    //   renderOnZeroPageCount={null}
+    // />
   );
 };
 
