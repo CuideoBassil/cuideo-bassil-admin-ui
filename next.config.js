@@ -11,6 +11,7 @@ const nextConfig = {
     ]
   },
   images: {
+    path:"/admin/_next/image",
     domains: ['i.ibb.co','res.cloudinary.com','lh3.googleusercontent.com'],
   },
 }
