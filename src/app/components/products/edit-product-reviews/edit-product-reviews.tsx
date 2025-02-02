@@ -1,8 +1,6 @@
 "use client";
 import usePagination from "@/hooks/use-pagination";
-import useProductSubmit from "@/hooks/useProductSubmit";
 import { useGetProductQuery } from "@/redux/product/productApi";
-import { useState } from "react";
 import ErrorMsg from "../../common/error-msg";
 import Pagination from "../../ui/Pagination";
 import ProductReviewTableHead from "../product-lists/prd-review-table-head";
@@ -47,7 +45,7 @@ const EditProductReviews = ({ id }: { id: string }) => {
         {/* bottom  */}
         <div className="flex justify-between items-center flex-wrap mx-8">
           <p className="mb-0 text-tiny">
-            Showing {currentItems.length} of {product?.reviews.length}
+            Showing 1-{currentItems.length} of {product?.reviews.length}
           </p>
           <div className="pagination py-3 flex justify-end items-center mx-8 pagination">
             <Pagination

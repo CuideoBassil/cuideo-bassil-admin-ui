@@ -1,11 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
-import Pagination from "../ui/Pagination";
-import ErrorMsg from "../common/error-msg";
-import { useGetAllStaffQuery } from "@/redux/auth/authApi";
-import StaffAction from "./staff-action";
 import usePagination from "@/hooks/use-pagination";
+import { useGetAllStaffQuery } from "@/redux/auth/authApi";
+import Image from "next/image";
+import ErrorMsg from "../common/error-msg";
+import Pagination from "../ui/Pagination";
+import StaffAction from "./staff-action";
 
 const StaffTables = () => {
   const { data: staffData, isError, isLoading } = useGetAllStaffQuery();
@@ -73,7 +72,7 @@ const StaffTables = () => {
                 </tr>
               </thead>
               <tbody>
-                {allStaff.map((item) => (
+                {allStaff.map((item: any) => (
                   <tr
                     key={item._id}
                     className="bg-white border-b border-gray6 last:border-0 text-start mx-9"

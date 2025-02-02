@@ -1,10 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
-import slugify from "slugify";
-import { useForm } from "react-hook-form";
-import {useRouter} from 'next/navigation';
-import { useAddProductMutation, useEditProductMutation } from "@/redux/product/productApi";
+import {
+  useAddProductMutation,
+  useEditProductMutation,
+} from "@/redux/product/productApi";
 import { notifyError, notifySuccess } from "@/utils/toast";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import slugify from "slugify";
 
 // ImageURL type
 export interface ImageURL {
@@ -31,7 +34,7 @@ const useProductSubmit = () => {
   const [img, setImg] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
-  const [unit, setUnit] = useState<string>("");
+  const [unit, setUnit] = useState<string>("1");
   const [imageURLs, setImageURLs] = useState<ImageURL[]>([]);
   const [parent, setParent] = useState<string>("");
   const [children, setChildren] = useState<string>("");
@@ -60,13 +63,14 @@ const useProductSubmit = () => {
 
   const router = useRouter();
 
-
   // useAddProductMutation
   const [addProduct, { data: addProductData, isError, isLoading }] =
     useAddProductMutation();
   // useAddProductMutation
-  const [editProduct, { data: editProductData, isError: editErr, isLoading: editLoading }] =
-    useEditProductMutation();
+  const [
+    editProduct,
+    { data: editProductData, isError: editErr, isLoading: editLoading },
+  ] = useEditProductMutation();
 
   const {
     register,
@@ -82,7 +86,7 @@ const useProductSubmit = () => {
     setImg("");
     setTitle("");
     setSlug("");
-    setUnit("");
+    setUnit("1");
     setImageURLs([]);
     setParent("");
     setChildren("");
@@ -107,15 +111,13 @@ const useProductSubmit = () => {
 
   // handle submit product
   const handleSubmitProduct = async (data: any) => {
-    // console.log("product data--->", data);
-
     // product data
     const productData = {
       sku: data.SKU,
       img: img,
       title: data.title,
       slug: slugify(data.title, { replacement: "-", lower: true }),
-      unit: data.unit,
+      unit: unit,
       imageURLs: imageURLs,
       parent: parent,
       children: children,
@@ -135,9 +137,6 @@ const useProductSubmit = () => {
       additionalInformation: additionalInformation,
       tags: tags,
     };
-
-    console.log('productData-------------------..>',productData)
-
 
     if (!img) {
       return notifyError("Product image is required");
@@ -160,7 +159,7 @@ const useProductSubmit = () => {
         notifySuccess("Product created successFully");
         setIsSubmitted(true);
         resetForm();
-        router.push('/product-grid')
+        router.push("/product-grid");
       }
     }
   };
@@ -172,7 +171,7 @@ const useProductSubmit = () => {
       img: img,
       title: data.title,
       slug: slugify(data.title, { replacement: "-", lower: true }),
-      unit: data.unit,
+      unit: unit,
       imageURLs: imageURLs,
       parent: parent,
       children: children,
@@ -192,7 +191,6 @@ const useProductSubmit = () => {
       additionalInformation: additionalInformation,
       tags: tags,
     };
-    console.log('edit productData---->',productData)
     const res = await editProduct({ id: id, data: productData });
     if ("error" in res) {
       if ("data" in res.error) {
@@ -204,7 +202,7 @@ const useProductSubmit = () => {
     } else {
       notifySuccess("Product edit successFully");
       setIsSubmitted(true);
-      router.push('/product-grid')
+      router.push("/product-grid");
       resetForm();
     }
   };

@@ -1,6 +1,6 @@
 import LoginForm from "@/forms/login-form";
 import Image from "next/image";
-
+const small_logo = "/admin/assets/img/bg/small-logo.png";
 const LoginPage = () => {
   return (
     <div className="tp-main-wrapper h-screen">
@@ -10,7 +10,7 @@ const LoginPage = () => {
             <div className="col-span-4 lg:col-span-6 relative h-full hidden lg:block">
               <Image
                 className="w-[520px] h-[575px] object-contain"
-                src="/assets/img/bg/small-logo.png"
+                src="/admin/assets/img/bg/small-logo.png"
                 alt="image"
                 width={600}
                 height={600}

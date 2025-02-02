@@ -1,24 +1,19 @@
 "use client";
-import React from "react";
 import useCategorySubmit from "@/hooks/useCategorySubmit";
-import ProductType from "../products/add-product/product-type";
-import CategoryTables from "./category-tables";
-import CategoryImgUpload from "./global-img-upload";
-import CategoryChildren from "./category-children";
-import ErrorMsg from "../common/error-msg";
 import { useGetCategoryQuery } from "@/redux/category/categoryApi";
+import ProductType from "../products/add-product/product-type";
 import CategoryParent from "./category-parent";
-import CategoryDescription from "./category-description";
+import CategoryTables from "./category-tables";
 
-const  EditCategory = ({ id }: { id: string }) => {
+const EditCategory = ({ id }: { id: string }) => {
   const { data: categoryData, isError, isLoading } = useGetCategoryQuery(id);
   const {
-    selectProductType,
+    // selectProductType,
     setSelectProductType,
     errors,
     control,
-    categoryChildren,
-    setCategoryChildren,
+    // categoryChildren,
+    // setCategoryChildren,
     register,
     handleSubmit,
     setCategoryImg,
@@ -38,12 +33,12 @@ const  EditCategory = ({ id }: { id: string }) => {
           >
             <div className="mb-6 bg-white px-8 py-8 rounded-md">
               {/* category image upload */}
-              <CategoryImgUpload
+              {/* <CategoryImgUpload
                 isSubmitted={isSubmitted}
                 setImage={setCategoryImg}
                 default_img={categoryData.img}
                 image={categoryImg}
-              />
+              /> */}
               {/* category image upload */}
 
               {/* category parent */}
@@ -54,12 +49,12 @@ const  EditCategory = ({ id }: { id: string }) => {
               />
               {/* category parent */}
 
-              <CategoryChildren
+              {/* <CategoryChildren
                 categoryChildren={categoryChildren}
                 setCategoryChildren={setCategoryChildren}
                 error={error}
                 default_value={categoryData.children}
-              />
+              /> */}
 
               {/* Product Type */}
               <div className="mb-6">
@@ -76,10 +71,10 @@ const  EditCategory = ({ id }: { id: string }) => {
               {/* Product Type */}
 
               {/* Category Description */}
-              <CategoryDescription
+              {/* <CategoryDescription
                 register={register}
                 default_value={categoryData.description}
-              />
+              /> */}
               {/* Category Description */}
 
               <button className="tp-btn px-7 py-2">Edit Category</button>

@@ -145,7 +145,7 @@ const ProductTypeBrand = ({
 
         {content}
 
-        <div className="mb-5">
+        {/* <div className="mb-5">
           <p className="mb-0 text-base text-black">
             Unit <span className="text-red">*</span>
           </p>
@@ -159,7 +159,7 @@ const ProductTypeBrand = ({
           />
           <ErrorMsg msg={errors?.unit?.message as string} />
           <span className="text-tiny leading-4">Set the unit of product.</span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

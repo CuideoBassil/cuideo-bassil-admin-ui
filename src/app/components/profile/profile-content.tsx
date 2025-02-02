@@ -16,7 +16,6 @@ type IPropType = {
 
 const ProfileContent = ({ profileImg, updateProfile }: IPropType) => {
   const { user } = useSelector((state: RootState) => state.auth);
-  console.log("uuu: ", user);
   const [adminRole, setAdminRole] = useState<string>("");
   // react hook form
   const {

@@ -1,8 +1,7 @@
 import Image from "next/image";
-import React from "react";
-import upload_default from "@assets/img/icons/upload.png";
 import Loading from "../../common/loading";
 
+const upload_default = "/admin/assets/img/icons/upload.png";
 const DefaultUploadImg = ({
   isLoading,
   wh,

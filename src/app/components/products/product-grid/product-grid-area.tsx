@@ -65,7 +65,7 @@ const ProductGridArea = () => {
         {/* bottom  */}
         <div className="flex justify-between items-center flex-wrap mx-8">
           <p className="mb-0 text-tiny">
-            Showing {currentItems.length} of {products?.data.length}
+            Showing 1-{currentItems.length} of {products?.data.length}
           </p>
           <div className="pagination py-3 flex justify-end items-center mx-8 pagination">
             <Pagination

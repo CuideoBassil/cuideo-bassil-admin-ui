@@ -1,22 +1,31 @@
-import React from "react";
-import Image from "next/image";
-import upload_default from "@assets/img/icons/upload.png";
-import { SmClose } from "@/svg";
 import useCloudinary from "@/hooks/useCloudinary";
 import { ImageURL } from "@/hooks/useProductSubmit";
+import { SmClose } from "@/svg";
+import Image from "next/image";
+import React from "react";
 
 type IPropType = {
   file: { url: string; id: string };
   setFormData?: React.Dispatch<React.SetStateAction<ImageURL[]>>;
   setImgUrl?: React.Dispatch<React.SetStateAction<string>>;
-  isCenter?:boolean;
+  isCenter?: boolean;
 };
-const UploadImage = ({ file,setFormData,setImgUrl,isCenter=false }: IPropType) => {
-  const {handleDeleteImg,item} = useCloudinary(file,setFormData,setImgUrl);
+const upload_default = "/admin/assets/img/icons/upload.png";
+const UploadImage = ({
+  file,
+  setFormData,
+  setImgUrl,
+  isCenter = false,
+}: IPropType) => {
+  const { handleDeleteImg, item } = useCloudinary(file, setFormData, setImgUrl);
   return (
     <>
       {item.url && (
-        <div className={`flex flex-row flex-wrap ${isCenter?'items-center justify-center':''}`}>
+        <div
+          className={`flex flex-row flex-wrap ${
+            isCenter ? "items-center justify-center" : ""
+          }`}
+        >
           <div className="relative">
             <Image
               className="inline-flex border rounded-md border-gray6 w-24 max-h-24 p-2"
@@ -36,7 +45,11 @@ const UploadImage = ({ file,setFormData,setImgUrl,isCenter=false }: IPropType) =
         </div>
       )}
       {!item.url && (
-        <div className={`flex flex-row flex-wrap ${isCenter?'items-center justify-center':''}`}>
+        <div
+          className={`flex flex-row flex-wrap ${
+            isCenter ? "items-center justify-center" : ""
+          }`}
+        >
           <div className="relative">
             <Image
               className="inline-flex border rounded-md border-gray6 w-24 max-h-24 p-2"

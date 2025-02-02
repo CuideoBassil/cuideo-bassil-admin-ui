@@ -7,6 +7,7 @@ import {
   Sales,
   Setting,
   StuffUser,
+  Type,
 } from "@/svg";
 import { ISidebarMenus } from "./../types/menu-types";
 
@@ -36,10 +37,17 @@ const sidebar_menu: Array<ISidebarMenus> = [
   },
   {
     id: 3,
+    icon: Type,
+    link: "/product-types",
+    title: "Products Types",
+  },
+  {
+    id: 4,
     icon: Categories,
     link: "/category",
     title: "Categories",
   },
+
   // {
   //   id: 4,
   //   icon: Orders,

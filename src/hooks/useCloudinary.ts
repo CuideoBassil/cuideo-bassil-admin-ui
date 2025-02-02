@@ -16,8 +16,8 @@ const useCloudinary = (
 
   // set image url
   useEffect(() => {
-    setItem({url:file.url,id:file.id})
-  },[file.id, file.url])
+    setItem({ url: file.url, id: file.id });
+  }, [file.id, file.url]);
 
   // update state when delData was changes
   useEffect(() => {
@@ -27,10 +27,9 @@ const useCloudinary = (
         const index = updatedFormData.findIndex(
           (item) => item.img === file.url
         );
-        console.log('index',index)
         if (index !== -1) {
           updatedFormData[index] = { ...updatedFormData[index], img: "" };
-        } 
+        }
         return updatedFormData;
       });
     }
@@ -40,7 +39,7 @@ const useCloudinary = (
     }
   }, [delData, delError, file, item.id, file.url, setFormData, setImgUrl]);
 
-  // handle delete image 
+  // handle delete image
   const handleDeleteImg = (file: { url: string; id: string }) => {
     try {
       const { id } = file;
@@ -54,7 +53,6 @@ const useCloudinary = (
       setItem({ url: "", id: "" });
     } catch (error) {
       // Handle the error
-      console.log(error)
       notifyError("Something went wrong");
     }
   };

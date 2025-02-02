@@ -1,11 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import ErrorMsg from "../common/error-msg";
-import TableItem from "./table-item";
-import TableHead from "./table-head";
-import Pagination from "../ui/Pagination";
-import { useGetRecentOrdersQuery } from "@/redux/order/orderApi";
 import usePagination from "@/hooks/use-pagination";
+import { useGetRecentOrdersQuery } from "@/redux/order/orderApi";
+import ErrorMsg from "../common/error-msg";
+import Pagination from "../ui/Pagination";
+import TableHead from "./table-head";
+import TableItem from "./table-item";
 
 const RecentOrders = () => {
   const { data: recentOrders, isError, isLoading } = useGetRecentOrdersQuery();
@@ -29,14 +28,16 @@ const RecentOrders = () => {
           <TableHead />
           <tbody>
             {currentItems?.map((order) => (
-                <TableItem key={order._id} order={order} />
-              ))}
+              <TableItem key={order._id} order={order} />
+            ))}
           </tbody>
         </table>
         {/*  */}
         <div className="px-4 pt-6 border-t border-gray6">
           <div className="flex flex-col justify-between sm:flex-row pagination">
-          <span className="flex items-center uppercase">Showing 1-{currentItems.length} of {recentOrders?.orders.length}</span>
+            <span className="flex items-center uppercase">
+              Showing 1-{currentItems.length} of {recentOrders?.orders.length}
+            </span>
             <Pagination
               handlePageClick={handlePageClick}
               pageCount={pageCount}

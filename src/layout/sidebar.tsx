@@ -58,7 +58,7 @@ export default function Sidebar({ sideMenu, setSideMenu }: IProps) {
                   className="object-contain h-[100%] w-[100%]"
                   width={260}
                   height={100}
-                  src="/assets/img/logo/logo.png"
+                  src="/admin/assets/img/logo/logo.png"
                   alt="logo"
                   priority
                 />

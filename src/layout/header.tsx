@@ -1,20 +1,18 @@
 "use client";
-import Image from "next/image";
-import { redirect, useRouter } from "next/navigation";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import React, { useRef, useState, useEffect } from "react";
-import { Menu, Search } from "@/svg";
-import { RootState } from "@/redux/store";
-import default_user from "@assets/img/users/user-10.jpg";
-import NotificationArea from "./component/notification-area";
 import { userLoggedOut } from "@/redux/auth/authSlice";
+import { RootState } from "@/redux/store";
+import { Menu } from "@/svg";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // prop type
 type IProps = {
   setSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
 };
-
+const default_user = "/admin/assets/img/users/user-10.jpg";
 const Header = ({ setSideMenu }: IProps) => {
   const { user } = useSelector((state: RootState) => state.auth);
   const [searchOverlay, setSearchOverlay] = useState<boolean>(false);

@@ -1,16 +1,16 @@
 "use client";
-import React, { SetStateAction, useEffect, useState } from "react";
+import { useGetAllCategoriesQuery } from "@/redux/category/categoryApi";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import {
+  Accordion,
+  AccordionBody,
+  AccordionHeader,
   Card,
-  Typography,
   List,
   ListItem,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
+  Typography,
 } from "@material-tailwind/react";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { useGetAllCategoriesQuery } from "@/redux/category/categoryApi";
+import React, { SetStateAction, useEffect, useState } from "react";
 import ErrorMsg from "../common/error-msg";
 
 // prop type
@@ -44,7 +44,6 @@ export default function ProductCategory({
       setParent(parent);
       setChildren(children);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // handleCategory
@@ -92,7 +91,7 @@ export default function ProductCategory({
     content = (
       <>
         <List className="p-0">
-          {categoryItems.map((item) => (
+          {categoryItems.map((item: any) => (
             <Accordion
               key={item._id}
               open={open === item._id}

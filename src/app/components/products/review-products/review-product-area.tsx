@@ -1,14 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import usePagination from "@/hooks/use-pagination";
 import { useGetReviewProductsQuery } from "@/redux/product/productApi";
 import { Search } from "@/svg";
+import React, { useState } from "react";
 import ErrorMsg from "../../common/error-msg";
-import ReviewItem from "./review-item";
 import Pagination from "../../ui/Pagination";
-import usePagination from "@/hooks/use-pagination";
+import ReviewItem from "./review-item";
 
 const ReviewProductArea = () => {
-  const {data: reviewProducts,isError,isLoading} = useGetReviewProductsQuery();
+  const {
+    data: reviewProducts,
+    isError,
+    isLoading,
+  } = useGetReviewProductsQuery();
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectValue, setSelectValue] = useState<string>("");
   const paginationData = usePagination(reviewProducts?.data || [], 5);
@@ -117,26 +121,24 @@ const ReviewProductArea = () => {
               </tr>
             </thead>
             <tbody>
-              {review_items.map((item) => (
+              {review_items.map((item: any) => (
                 <ReviewItem key={item._id} item={item} />
               ))}
             </tbody>
           </table>
         </div>
 
-          <div className="flex justify-between items-center flex-wrap mx-8">
-            <p className="mb-0 text-tiny mr-3">
-              Showing 1-
-              {currentItems.length} of {reviewProducts?.data.length}
-            </p>
-            <div className="pagination py-3 flex justify-end items-center mr-8 pagination">
-              <Pagination
-                handlePageClick={handlePageClick}
-                pageCount={pageCount}
-              />
-            </div>
+        <div className="flex justify-between items-center flex-wrap mx-8">
+          <p className="mb-0 text-tiny mr-3">
+            Showing 1-{currentItems.length} of {reviewProducts?.data.length}
+          </p>
+          <div className="pagination py-3 flex justify-end items-center mr-8 pagination">
+            <Pagination
+              handlePageClick={handlePageClick}
+              pageCount={pageCount}
+            />
           </div>
-
+        </div>
       </>
     );
   }

@@ -10,18 +10,18 @@ import CategoryDescription from "./category-description";
 
 const AddCategory = () => {
   const {
-    selectProductType,
+    // selectProductType,
     setSelectProductType,
     errors,
     control,
-    categoryChildren,
-    setCategoryChildren,
+    // categoryChildren,
+    // setCategoryChildren,
     register,
     handleSubmit,
     handleSubmitCategory,
     setCategoryImg,
     categoryImg,
-    error,
+    // error,
     isSubmitted,
   } = useCategorySubmit();
   return (
@@ -30,22 +30,22 @@ const AddCategory = () => {
         <form onSubmit={handleSubmit(handleSubmitCategory)}>
           <div className="mb-6 bg-white px-8 py-8 rounded-md">
             {/* category image upload */}
-            <CategoryImgUpload
+            {/* <CategoryImgUpload
               isSubmitted={isSubmitted}
               setImage={setCategoryImg}
               image={categoryImg}
-            />
+            /> */}
             {/* category image upload */}
 
             {/* category parent */}
             <CategoryParent register={register} errors={errors} />
             {/* category parent */}
 
-            <CategoryChildren
+            {/* <CategoryChildren
               categoryChildren={categoryChildren}
               setCategoryChildren={setCategoryChildren}
               error={error}
-            />
+            /> */}
 
             {/* Product Type */}
             <div className="mb-6">
@@ -61,7 +61,7 @@ const AddCategory = () => {
             {/* Product Type */}
 
             {/* Category Description */}
-            <CategoryDescription register={register} />
+            {/* <CategoryDescription register={register} /> */}
             {/* Category Description */}
 
             <button className="tp-btn px-7 py-2">Add Category</button>

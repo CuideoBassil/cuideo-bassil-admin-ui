@@ -36,13 +36,6 @@ const ProductSubmit = () => {
     imageURLs,
   } = useProductSubmit();
 
-  console.log(
-    "additionalInformation--->",
-    additionalInformation,
-    "imageURLs--->",
-    imageURLs
-  );
-
   return (
     <form onSubmit={handleSubmit(handleSubmitProduct)}>
       <div className="grid grid-cols-12 gap-6 mb-6">
@@ -88,7 +81,7 @@ const ProductSubmit = () => {
                 register={register}
                 errors={errors}
               />
-              <FormField
+              {/* <FormField
                 title="discount percentage"
                 type="number"
                 isRequired={false}
@@ -96,11 +89,11 @@ const ProductSubmit = () => {
                 bottomTitle="Set the product Discount."
                 register={register}
                 errors={errors}
-              />
+              /> */}
             </div>
           </div>
 
-          <div className="bg-white px-8 py-8 rounded-md mb-6">
+          {/* <div className="bg-white px-8 py-8 rounded-md mb-6">
             <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-x-6">
               <FormField
                 title="youtube video Id"
@@ -110,7 +103,7 @@ const ProductSubmit = () => {
                 register={register}
                 errors={errors}
               />
-              {/* date picker start */}
+              
               <div>
                 <p className="mb-0 text-base text-black capitalize">
                   start and end date
@@ -123,9 +116,9 @@ const ProductSubmit = () => {
                   set the product offer and end date
                 </span>
               </div>
-              {/* date picker start */}
+              
             </div>
-          </div>
+          </div> */}
 
           {/* product type and brands start */}
           <ProductTypeBrand

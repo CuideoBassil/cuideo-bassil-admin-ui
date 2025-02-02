@@ -1,16 +1,16 @@
-import React from "react";
-import { Camera } from "@/svg";
-import default_cover from "@assets/img/bg/profile-header.jpg";
 import useUploadImage from "@/hooks/useUploadImg";
+import { Camera } from "@/svg";
 
 const ProfileCover = () => {
-  const { handleImageUpload, uploadData, isError, isLoading } = useUploadImage();
+  const default_cover = "/admin/assets/img/bg/profile-header.jpg";
+  const { handleImageUpload, uploadData, isError, isLoading } =
+    useUploadImage();
   return (
     <div className="relative h-[200px] w-full">
       <div
         style={{
           backgroundImage: `url(${
-            uploadData?.data.url ? uploadData?.data.url : default_cover.src
+            uploadData?.data.url ? uploadData?.data.url : default_cover
           })`,
         }}
         className="data-bg absolute top-0 left-0 w-full h-full bg-no-repeat bg-cover"

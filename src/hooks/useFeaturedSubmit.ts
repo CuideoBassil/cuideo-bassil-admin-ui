@@ -4,7 +4,7 @@ import {
 } from "@/redux/featured/featuredApi";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const useFeaturedSubmit = () => {
@@ -12,9 +12,7 @@ const useFeaturedSubmit = () => {
   const [hex, setHex] = useState("#fff");
   const [isImageSubmitted, setIsImageSubmitted] = useState<boolean>(false);
   const [section, setSection] = useState<number>(1);
-  useEffect(() => {
-    console.log("hex: ", hex);
-  }, [hex]);
+
   const router = useRouter();
   // add
   const [addFeatured, { data: featuredData, isError, isLoading }] =
@@ -40,9 +38,6 @@ const useFeaturedSubmit = () => {
 
   // submit handle
   const handleSubmitFeatured = async (data: any) => {
-    console.log("data-->", data);
-    console.log("image-->", itemImage);
-
     try {
       const featured_data = {
         title: data?.title,
@@ -68,14 +63,12 @@ const useFeaturedSubmit = () => {
         setItemImage("");
       }
     } catch (error) {
-      console.log(error);
       notifyError("Something went wrong");
     }
   };
 
   //handle Submit edit Category
   const handleSubmitEditFeatured = async (data: any, id: string) => {
-    console.log("data-->", data);
     try {
       const featured_data = {
         title: data?.title,
@@ -101,7 +94,6 @@ const useFeaturedSubmit = () => {
         reset();
       }
     } catch (error) {
-      console.log(error);
       notifyError("Something went wrong");
     }
   };

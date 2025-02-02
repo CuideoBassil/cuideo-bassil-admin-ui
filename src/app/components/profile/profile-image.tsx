@@ -1,11 +1,11 @@
+import useUploadImage from "@/hooks/useUploadImg";
+import { RootState } from "@/redux/store";
+import { CameraTwo } from "@/svg";
+import { IAdminUpdateRes } from "@/types/admin-type";
+
 import Image from "next/image";
 import React, { useEffect } from "react";
-import profile_img from "@assets/img/users/user-4.jpg";
-import { CameraTwo } from "@/svg";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import useUploadImage from "@/hooks/useUploadImg";
-import { IAdminUpdateRes } from "@/types/admin-type";
 import Loading from "../common/loading";
 
 // prop type
@@ -13,7 +13,7 @@ type IPropType = {
   setProfileImg: React.Dispatch<React.SetStateAction<string>>;
   updateData: IAdminUpdateRes | undefined;
 };
-
+const profile_img = "/admin/assets/img/users/user-4.jpg";
 const ProfileImage = ({ setProfileImg, updateData }: IPropType) => {
   const { user } = useSelector((state: RootState) => state.auth);
   const { handleImageUpload, uploadData, isError, isLoading } =
@@ -21,14 +21,9 @@ const ProfileImage = ({ setProfileImg, updateData }: IPropType) => {
 
   useEffect(() => {
     setProfileImg(
-      uploadData?.data.url
-        ? uploadData.data.url
-        : user?.image
-          ? user.image
-          : ''
+      uploadData?.data.url ? uploadData.data.url : user?.image ? user.image : ""
     );
   }, [setProfileImg, uploadData, user]);
-  
 
   return (
     <div className="px-8 pb-8 relative">
@@ -48,7 +43,7 @@ const ProfileImage = ({ setProfileImg, updateData }: IPropType) => {
             width={142}
             height={142}
             alt="profile-img"
-            style={{objectFit:'cover'}}
+            style={{ objectFit: "cover" }}
           />
         )}
         <input

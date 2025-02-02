@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { MonthSales, Received, Sales, TotalOrders } from "@/svg";
 import { useGetDashboardAmountQuery } from "@/redux/order/orderApi";
+import { MonthSales, Received, Sales, TotalOrders } from "@/svg";
 import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
-import isBetween from "dayjs/plugin/isBetween";
+import React from "react";
 import ErrorMsg from "../common/error-msg";
 dayjs.extend(isToday, isYesterday);
 dayjs.extend(isBetween);
@@ -74,9 +74,9 @@ const CardItems = () => {
       <>
         <CardItem
           title="Today Orders"
-          amount={dashboardOrderAmount?.todayOrderAmount} 
-          card={dashboardOrderAmount?.todayCardPaymentAmount} 
-          cash={dashboardOrderAmount?.todayCashPaymentAmount} 
+          amount={dashboardOrderAmount?.todayOrderAmount}
+          card={dashboardOrderAmount?.todayCardPaymentAmount}
+          cash={dashboardOrderAmount?.todayCashPaymentAmount}
           icon={<Received />}
           clr=""
           clr2="bg-success"

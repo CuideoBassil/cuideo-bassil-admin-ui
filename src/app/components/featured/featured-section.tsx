@@ -46,7 +46,6 @@ const FeaturedSection = ({ control, default_value, setSection }: IPropType) => {
             }
             onChange={(selectedOption) => {
               field.onChange(selectedOption);
-              console.log("vvv: ", selectedOption?.value);
               setSection(selectedOption?.value);
             }}
             options={[

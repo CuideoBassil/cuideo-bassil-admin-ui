@@ -36,7 +36,6 @@ const LineChart = () => {
   }
 
   if (!isLoading && !isError && sales?.salesReport) {
-    // console.log(sales?.salesReport);
     const salesReport = sales?.salesReport;
 
     const barOptions = {

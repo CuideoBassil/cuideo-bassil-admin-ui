@@ -1,5 +1,4 @@
 import useUploadImage from "@/hooks/useUploadImg";
-import upload_default from "@assets/img/icons/upload.png";
 import Image from "next/image";
 import React, { useEffect } from "react";
 import Loading from "../common/loading";
@@ -13,6 +12,7 @@ type IPropType = {
   image?: string;
   setIsSubmitted?: React.Dispatch<React.SetStateAction<boolean>>;
 };
+const upload_default = "/admin/assets/img/icons/upload.png";
 
 const GlobalImgUpload = ({
   setImage,

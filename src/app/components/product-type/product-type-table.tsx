@@ -1,15 +1,17 @@
 "use client";
 import usePagination from "@/hooks/use-pagination";
-import { useGetAllCategoriesQuery } from "@/redux/category/categoryApi";
-import Image from "next/image";
+import { useGetAllProductTypesQuery } from "@/redux/product-type/productTypeApi";
 import ErrorMsg from "../common/error-msg";
 import Pagination from "../ui/Pagination";
-import CategoryEditDelete from "./edit-delete-category";
+import ProductTypeEditDelete from "./product-type-edit-del";
 
-const CategoryTables = () => {
-  const { data: categories, isError, isLoading } = useGetAllCategoriesQuery();
-
-  const paginationData = usePagination(categories?.result || [], 5);
+const ProductTypeTables = () => {
+  const {
+    data: productTypes,
+    isError,
+    isLoading,
+  } = useGetAllProductTypesQuery();
+  const paginationData = usePagination(productTypes?.result || [], 5);
   const { currentItems, handlePageClick, pageCount } = paginationData;
   // decide what to render
   let content = null;
@@ -20,16 +22,11 @@ const CategoryTables = () => {
   if (!isLoading && isError) {
     content = <ErrorMsg msg="There was an error" />;
   }
-  if (!isLoading && !isError && categories?.result.length === 0) {
+  if (!isLoading && !isError && productTypes?.result.length === 0) {
     content = <ErrorMsg msg="No Category Found" />;
   }
 
-  if (
-    !isLoading &&
-    !isError &&
-    categories?.success &&
-    currentItems.length > 0
-  ) {
+  if (!isLoading && !isError && currentItems) {
     content = (
       <>
         <div className="overflow-scroll 2xl:overflow-visible">
@@ -49,18 +46,7 @@ const CategoryTables = () => {
                   >
                     Name
                   </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[150px] text-end"
-                  >
-                    Product type
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[150px] text-end"
-                  >
-                    Items
-                  </th>
+
                   <th
                     scope="col"
                     className="px-9 py-3 text-tiny text-text2 uppercase  font-semibold w-[12%] text-end"
@@ -78,31 +64,13 @@ const CategoryTables = () => {
                     <td className="px-3 py-3 pl-0 font-normal text-[#55585B]">
                       #{item._id.slice(2, 10)}
                     </td>
-                    <td className="pr-8 py-5 whitespace-nowrap">
-                      <a href="#" className="flex items-center space-x-5">
-                        {item.img && (
-                          <Image
-                            className="w-10 h-10 rounded-full shrink shrink-0 object-cover"
-                            src={item.img}
-                            alt="image"
-                            width={40}
-                            height={40}
-                          />
-                        )}
-                        <span className="font-medium text-heading text-hover-primary transition">
-                          {item.parent}
-                        </span>
-                      </a>
+                    <td className="pr-8 py-5 whitespace-nowrap font-medium text-heading text-hover-primary transition">
+                      {item.name}
                     </td>
-                    <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                      /{item.productType}
-                    </td>
-                    <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                      {item.products?.length}
-                    </td>
+
                     <td className="px-9 py-3 text-end">
                       <div className="flex items-center justify-end space-x-2">
-                        <CategoryEditDelete id={item._id} />
+                        <ProductTypeEditDelete id={item._id} />
                       </div>
                     </td>
                   </tr>
@@ -113,7 +81,7 @@ const CategoryTables = () => {
         </div>
         <div className="flex justify-between items-center flex-wrap">
           <p className="mb-0 text-tiny">
-            Showing 1-{currentItems.length} of {categories?.result.length}
+            Showing 1-{currentItems.length} of {productTypes?.result.length}
           </p>
           <div className="pagination py-3 flex justify-end items-center pagination">
             <Pagination
@@ -132,4 +100,4 @@ const CategoryTables = () => {
   );
 };
 
-export default CategoryTables;
+export default ProductTypeTables;

@@ -19,7 +19,8 @@ const ProductImgUpload = ({
   default_img,
 }: IPropType) => {
   const [initialLoad, setInitialLoad] = useState(true);
-  const {handleImageUpload,uploadData,isError,error,isLoading} = useUploadImage();
+  const { handleImageUpload, uploadData, isError, error, isLoading } =
+    useUploadImage();
 
   useEffect(() => {
     if (uploadData && !isError) {
@@ -34,7 +35,6 @@ const ProductImgUpload = ({
     }
   }, [default_img, initialLoad, setImgUrl]);
 
-  // console.log(imgUrl);
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6 text-center">
       <p className="text-base text-black mb-4">Upload Image</p>

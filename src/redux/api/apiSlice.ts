@@ -44,5 +44,7 @@ export const apiSlice = createApi({
     "getFeatured",
     "UpdateProductQuantity",
     "Product",
+    "AllProductTypes",
+    "getProductType",
   ],
 });

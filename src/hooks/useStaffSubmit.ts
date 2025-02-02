@@ -2,7 +2,10 @@ import { notifySuccess, notifyError } from "@/utils/toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useAddStaffMutation, useUpdateProfileMutation } from "@/redux/auth/authApi";
+import {
+  useAddStaffMutation,
+  useUpdateProfileMutation,
+} from "@/redux/auth/authApi";
 import dayjs from "dayjs";
 
 const useStaffSubmit = () => {
@@ -54,7 +57,6 @@ const useStaffSubmit = () => {
         setStaffImg("");
       }
     } catch (error) {
-      console.log(error);
       notifyError("Something went wrong");
     }
   };
@@ -73,7 +75,6 @@ const useStaffSubmit = () => {
           : dayjs(new Date()).format("YYYY-MM-DD"),
       };
       const res = await updateProfile({ id, data: stuff_data });
-      console.log(res)
       if ("error" in res) {
         if ("data" in res.error) {
           const errorData = res.error.data as { message?: string };
@@ -83,12 +84,11 @@ const useStaffSubmit = () => {
         }
       } else {
         notifySuccess("Stuff update successfully");
-        router.push('/our-staff')
+        router.push("/our-staff");
         setIsSubmitted(true);
         reset();
       }
     } catch (error) {
-      console.log(error);
       notifyError("Something went wrong");
     }
   };

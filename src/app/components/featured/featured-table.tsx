@@ -83,7 +83,7 @@ const FeaturedTables = () => {
                 </tr>
               </thead>
               <tbody>
-                {[...currentItems.reverse()].map((item) => (
+                {[...currentItems.reverse()].map((item: any) => (
                   <tr
                     key={item._id}
                     className="bg-white border-b border-gray6 last:border-0 text-start mx-9 items-center justify-center"
@@ -142,8 +142,7 @@ const FeaturedTables = () => {
         </div>
         <div className="flex justify-between items-center flex-wrap">
           <p className="mb-0 text-tiny">
-            Showing 1-
-            {currentItems.length} of {featured?.data.length}
+            Showing 1-{currentItems.length} of {featured?.data.length}
           </p>
           <div className="pagination py-3 flex justify-end items-center pagination">
             <Pagination
