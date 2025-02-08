@@ -126,8 +126,10 @@ const ProductSubmit = () => {
             errors={errors}
             control={control}
             setSelectBrand={setBrand}
+            setSelectCategory={setCategory}
             setSelectProductType={setProductType}
           />
+
           {/* product type and brands end */}
 
           {/* additional information page start */}
@@ -152,9 +154,8 @@ const ProductSubmit = () => {
             isSubmitted={isSubmitted}
           />
 
-          <div className="bg-white px-8 py-8 rounded-md mb-6">
+          {/* <div className="bg-white px-8 py-8 rounded-md mb-6">
             <p className="mb-5 text-base text-black">Product Category</p>
-            {/* category start */}
             <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 mb-5">
               <ProductCategory
                 setCategory={setCategory}
@@ -162,7 +163,7 @@ const ProductSubmit = () => {
                 setChildren={setChildren}
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="bg-white px-8 py-8 rounded-md mb-6">
             <p className="mb-5 text-base text-black">Product Tags</p>

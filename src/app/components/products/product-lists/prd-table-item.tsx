@@ -39,10 +39,10 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
       </td>
       <td className="px-3 py-3 font-normal text-[#55585B] ">{sku}</td>
       <td className="px-3 py-3 font-normal text-[#55585B]">${price}</td>
-      <td className="px-3 py-3 font-normal  text-[#55585B] ">
+      {/* <td className="px-3 py-3 font-normal  text-[#55585B] ">
         {description.slice(0, 45)}
         {description.length > 45 && "..."}
-      </td>
+      </td> */}
       <td className="px-3 py-3 font-normal text-heading ">
         <div className="flex justify-end items-center space-x-1 text-tiny">
           <span className="text-yellow flex items-center space-x-1">
@@ -68,7 +68,7 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
           {status === "in-stock" ? "In Stock" : "Out Of Stock"}
         </span>
       </td>
-      <td className="px-3 py-3 font-normal text-[#55585B] ">{quantity}</td>
+      {/* <td className="px-3 py-3 font-normal text-[#55585B] ">{quantity}</td> */}
 
       <td className="px-9 py-3 ">
         <div className="flex items-center justify-end space-x-2">

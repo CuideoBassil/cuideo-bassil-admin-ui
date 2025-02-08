@@ -1,13 +1,12 @@
-import { useGetAllBrandsQuery } from "@/redux/brand/brandApi";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Control,
-  Controller,
   FieldErrors,
   UseFormRegister,
+  Controller,
+  Control,
 } from "react-hook-form";
+import { useGetAllBrandsQuery } from "@/redux/brand/brandApi";
 
-import { useGetAllCategoriesQuery } from "@/redux/category/categoryApi";
 import ReactSelect, { GroupBase } from "react-select";
 import ErrorMsg from "../../common/error-msg";
 import Loading from "../../common/loading";
@@ -21,9 +20,6 @@ type IPropType = {
   setSelectBrand: React.Dispatch<
     React.SetStateAction<{ name: string; id: string }>
   >;
-  setSelectCategory: React.Dispatch<
-    React.SetStateAction<{ name: string; id: string }>
-  >;
   default_value?: {
     brand: string;
     product_type: string;
@@ -31,21 +27,15 @@ type IPropType = {
   };
 };
 
-const ProductTypeBrand = ({
+const ProductCategory = ({
   register,
   errors,
   control,
   setSelectProductType,
   setSelectBrand,
-  setSelectCategory,
   default_value,
 }: IPropType) => {
   const { data: brands, isError, isLoading } = useGetAllBrandsQuery();
-  const {
-    data: categories,
-    isError: isErrorCategory,
-    isLoading: isLoadingCategory,
-  } = useGetAllCategoriesQuery();
 
   const [hasDefaultValues, setHasDefaultValues] = useState<boolean>(false);
   // default value set
@@ -56,15 +46,8 @@ const ProductTypeBrand = ({
       !hasDefaultValues
     ) {
       const brand = brands?.result.find((b) => b.name === default_value.brand);
-      const category = categories?.result.find(
-        (c) => c.parent === default_value?.product_type
-      );
       if (brand) {
         setSelectBrand({ id: brand._id as string, name: default_value.brand });
-        setSelectCategory({
-          id: category?._id as string,
-          name: default_value.product_type,
-        });
         setSelectProductType(default_value.product_type);
         setHasDefaultValues(true);
       }
@@ -148,16 +131,14 @@ const ProductTypeBrand = ({
     <div className="bg-white px-8 py-8 rounded-md mb-6">
       <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-x-6">
         <div className="mb-5">
-          <p className="mb-0 text-base text-black">Product Type</p>
+          <p className="mb-0 text-base text-black">Category</p>
           <ProductType
             control={control}
             errors={errors}
             default_value={default_value?.product_type}
             setSelectProductType={setSelectProductType}
           />
-          <span className="text-tiny leading-4">
-            Set the product ProductType.
-          </span>
+          <span className="text-tiny leading-4">Set the product category.</span>
         </div>
 
         {content}
@@ -182,4 +163,4 @@ const ProductTypeBrand = ({
   );
 };
 
-export default ProductTypeBrand;
+export default ProductCategory;

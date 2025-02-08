@@ -159,7 +159,7 @@ const useProductSubmit = () => {
         notifySuccess("Product created successFully");
         setIsSubmitted(true);
         resetForm();
-        router.push("/product-grid");
+        router.push("/product-list");
       }
     }
   };
@@ -202,7 +202,7 @@ const useProductSubmit = () => {
     } else {
       notifySuccess("Product edit successFully");
       setIsSubmitted(true);
-      router.push("/product-grid");
+      router.push("/product-list");
       resetForm();
     }
   };

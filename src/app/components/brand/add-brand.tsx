@@ -1,12 +1,9 @@
 "use client";
-import React from "react";
-import ReactSelect from "react-select";
 import useBrandSubmit from "@/hooks/useBrandSubmit";
 import GlobalImgUpload from "../category/global-img-upload";
+import BrandStatus from "./brand-status";
 import BrandTables from "./brand-table";
 import BrandFormField from "./form-field-two";
-import BrandDesc from "./brand-desc";
-import BrandStatus from "./brand-status";
 
 const AddBrand = () => {
   const {
@@ -19,7 +16,6 @@ const AddBrand = () => {
     isSubmitted,
     setIsSubmitted,
   } = useBrandSubmit();
-
 
   // handle Change status
   const handleChange = (value: string | undefined) => {
@@ -41,18 +37,39 @@ const AddBrand = () => {
             {/* brand image upload */}
 
             {/* Form Field */}
-            <BrandFormField register={register} errors={errors} name="Name" isReq={true} />
-            <BrandFormField register={register} errors={errors} name="Email" isReq={true} />
-            <BrandFormField register={register} errors={errors} name="Website" isReq={false} />
-            <BrandFormField register={register} errors={errors} name="Location" isReq={false} />
+            <BrandFormField
+              register={register}
+              errors={errors}
+              name="Name"
+              isReq={true}
+            />
+            <BrandFormField
+              register={register}
+              errors={errors}
+              name="Website"
+              isReq={false}
+            />
+            {/* <BrandFormField
+              register={register}
+              errors={errors}
+              name="Email"
+              isReq={false}
+            />
+
+            <BrandFormField
+              register={register}
+              errors={errors}
+              name="Location"
+              isReq={false}
+            /> */}
             {/* Form Field */}
 
             {/* description start */}
-            <BrandDesc register={register}/>
+            {/* <BrandDesc register={register} /> */}
             {/* description end */}
 
             {/* brand status start */}
-            <BrandStatus handleChange={handleChange} />
+            {/* <BrandStatus handleChange={handleChange} /> */}
             {/* brand status end */}
 
             <button className="tp-btn px-7 py-2">Add Brand</button>
@@ -61,7 +78,7 @@ const AddBrand = () => {
       </div>
       <div className="col-span-12 lg:col-span-8">
         {/* brand table start */}
-        <BrandTables/>
+        <BrandTables />
         {/* brand table end */}
       </div>
     </div>
