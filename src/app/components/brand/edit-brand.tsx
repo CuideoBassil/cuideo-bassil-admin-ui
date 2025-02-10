@@ -1,14 +1,12 @@
 "use client";
-import React from "react";
 import useBrandSubmit from "@/hooks/useBrandSubmit";
+import { useGetBrandQuery } from "@/redux/brand/brandApi";
 import CategoryImgUpload from "../category/global-img-upload";
 import ErrorMsg from "../common/error-msg";
-import BrandTables from "./brand-table";
-import { useGetBrandQuery } from "@/redux/brand/brandApi";
 import Loading from "../common/loading";
-import BrandFormField from "./form-field-two";
-import BrandDesc from "./brand-desc";
 import BrandStatus from "./brand-status";
+import BrandTables from "./brand-table";
+import BrandFormField from "./form-field-two";
 
 const EditBrand = ({ id }: { id: string }) => {
   const {
@@ -63,13 +61,13 @@ const EditBrand = ({ id }: { id: string }) => {
               isReq={true}
             />
             {/* <BrandFormField default_val={brand.email} register={register} errors={errors} name="Email" isReq={true} /> */}
-            <BrandFormField
+            {/* <BrandFormField
               default_val={brand.website}
               register={register}
               errors={errors}
               name="Website"
               isReq={false}
-            />
+            /> */}
             {/* <BrandFormField default_val={brand.location} register={register} errors={errors} name="Location" isReq={false} /> */}
             {/* Form Field */}
 

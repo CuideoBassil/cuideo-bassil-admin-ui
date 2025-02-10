@@ -34,12 +34,12 @@ const ProductTypeTables = () => {
             <table className="w-full text-base text-left text-gray-500 ">
               <thead>
                 <tr className="border-b border-gray6 text-tiny">
-                  <th
+                  {/* <th
                     scope="col"
                     className="pr-8 py-3 text-tiny text-text2 uppercase font-semibold"
                   >
                     ID
-                  </th>
+                  </th> */}
                   <th
                     scope="col"
                     className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px]"
@@ -61,9 +61,9 @@ const ProductTypeTables = () => {
                     key={item._id}
                     className="bg-white border-b border-gray6 last:border-0 text-start mx-9"
                   >
-                    <td className="px-3 py-3 pl-0 font-normal text-[#55585B]">
+                    {/* <td className="px-3 py-3 pl-0 font-normal text-[#55585B]">
                       #{item._id.slice(2, 10)}
-                    </td>
+                    </td> */}
                     <td className="pr-8 py-5 whitespace-nowrap font-medium text-heading text-hover-primary transition">
                       {item.name}
                     </td>

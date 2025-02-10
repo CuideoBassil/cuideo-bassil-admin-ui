@@ -1,11 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import ErrorMsg from "../common/error-msg";
-import Image from "next/image";
-import Pagination from "../ui/Pagination";
-import { useGetAllBrandsQuery } from "@/redux/brand/brandApi";
-import BrandEditDelete from "./brand-edit-del";
 import usePagination from "@/hooks/use-pagination";
+import { useGetAllBrandsQuery } from "@/redux/brand/brandApi";
+import Image from "next/image";
+import ErrorMsg from "../common/error-msg";
+import Pagination from "../ui/Pagination";
+import BrandEditDelete from "./brand-edit-del";
 
 const BrandTables = () => {
   const { data: brands, isError, isLoading } = useGetAllBrandsQuery();
@@ -32,12 +31,12 @@ const BrandTables = () => {
             <table className="w-full text-base text-left text-gray-500 ">
               <thead>
                 <tr className="border-b border-gray6 text-tiny">
-                  <th
+                  {/* <th
                     scope="col"
                     className="pr-8 py-3 text-tiny text-text2 uppercase font-semibold"
                   >
                     ID
-                  </th>
+                  </th> */}
                   <th
                     scope="col"
                     className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px]"
@@ -50,12 +49,12 @@ const BrandTables = () => {
                   >
                     Email
                   </th> */}
-                  <th
+                  {/* <th
                     scope="col"
                     className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[150px] text-end"
                   >
                     Website
-                  </th>
+                  </th> */}
                   {/* <th
                     scope="col"
                     className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[150px] text-end"
@@ -76,9 +75,9 @@ const BrandTables = () => {
                     key={item._id}
                     className="bg-white border-b border-gray6 last:border-0 text-start mx-9"
                   >
-                    <td className="px-3 py-3 pl-0 font-normal text-[#55585B]">
+                    {/* <td className="px-3 py-3 pl-0 font-normal text-[#55585B]">
                       #{item._id.slice(2, 10)}
-                    </td>
+                    </td> */}
                     <td className="pr-8 py-5 whitespace-nowrap">
                       <a href="#" className="flex items-center space-x-5">
                         {item.logo && (
@@ -98,9 +97,9 @@ const BrandTables = () => {
                     {/* <td className="px-3 py-3 font-normal text-[#55585B] text-end">
                         {item.email}
                       </td> */}
-                    <td className="px-3 py-3 font-normal text-[#55585B] text-end">
+                    {/* <td className="px-3 py-3 font-normal text-[#55585B] text-end">
                       {item.website}
-                    </td>
+                    </td> */}
                     {/* <td className="px-3 py-3 font-normal text-[#55585B] text-end">
                         {item.location}
                       </td> */}

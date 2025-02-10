@@ -1,7 +1,6 @@
 "use client";
 import useBrandSubmit from "@/hooks/useBrandSubmit";
 import GlobalImgUpload from "../category/global-img-upload";
-import BrandStatus from "./brand-status";
 import BrandTables from "./brand-table";
 import BrandFormField from "./form-field-two";
 
@@ -43,12 +42,12 @@ const AddBrand = () => {
               name="Name"
               isReq={true}
             />
-            <BrandFormField
+            {/* <BrandFormField
               register={register}
               errors={errors}
               name="Website"
               isReq={false}
-            />
+            /> */}
             {/* <BrandFormField
               register={register}
               errors={errors}
