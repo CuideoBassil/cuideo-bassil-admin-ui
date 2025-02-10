@@ -1,17 +1,15 @@
 "use client";
-import React from "react";
 import useProductSubmit from "@/hooks/useProductSubmit";
-import ErrorMsg from "../../common/error-msg";
-import FormField from "../form-field";
-import DescriptionTextarea from "../add-product/description-textarea";
 import { useGetProductQuery } from "@/redux/product/productApi";
-import OfferDatePicker from "../add-product/offer-date-picker";
-import ProductTypeBrand from "../add-product/product-type-brand";
-import AdditionalInformation from "../add-product/additional-information";
-import ProductVariants from "../add-product/product-variants";
-import ProductImgUpload from "../add-product/product-img-upload";
-import Tags from "../add-product/tags";
 import ProductCategory from "../../category/product-category";
+import ErrorMsg from "../../common/error-msg";
+import DescriptionTextarea from "../add-product/description-textarea";
+import OfferDatePicker from "../add-product/offer-date-picker";
+import ProductImgUpload from "../add-product/product-img-upload";
+import ProductTypeBrand from "../add-product/product-type-brand";
+import ProductVariants from "../add-product/product-variants";
+import Tags from "../add-product/tags";
+import FormField from "../form-field";
 
 const EditProductSubmit = ({ id }: { id: string }) => {
   const { data: product, isError, isLoading } = useGetProductQuery(id);
@@ -149,6 +147,7 @@ const EditProductSubmit = ({ id }: { id: string }) => {
 
             {/* product type and brands start */}
             <ProductTypeBrand
+              setSelectCategory={setCategory}
               register={register}
               errors={errors}
               control={control}

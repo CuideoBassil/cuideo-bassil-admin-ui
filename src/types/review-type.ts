@@ -8,6 +8,8 @@ type Category = {
   id: string;
 };
 
+type ProductType = { id: string; name: string };
+
 type Color = {
   name: string;
   clrCode: string;
@@ -22,11 +24,13 @@ type AdditionalInformation = {
   key: string;
   value: string;
 };
+
 type IReviewUser = {
   _id: string;
   name: string;
   email: string;
 };
+
 type TReview = {
   _id: string;
   name: IReviewUser;
@@ -62,13 +66,13 @@ export interface IProduct {
   unit?: string;
   imageURLs: ImageURL[];
   parent: string;
-  children: string;
+  children: string[];
   price: number;
   discount?: number;
   quantity: number;
   status: "in-stock" | "out-of-stock" | "discontinued";
   reviews?: TReview[];
-  productType: string;
+  productType: ProductType;
   description: string;
   additionalInformation?: AdditionalInformation[];
   offerDate?: {
@@ -89,56 +93,45 @@ export interface ProductResponse {
   data: IProduct[];
 }
 
-// IAddProduct
+// IAddProduct interface for product addition
 export interface IAddProduct {
-  sku: string;
-  img: string;
   title: string;
-  slug?: string;
-  unit: string;
-  imageURLs: {
-    color: {
-      name?: string;
-      clrCode?: string;
-    };
-    img: string;
-    sizes?: string[];
-  }[];
-  parent: string;
-  children: string;
-  price: number;
-  discount: number;
-  quantity: number;
-  brand: { name: string; id: string };
-  category: { name: string; id: string };
-  status: "in-stock" | "out-of-stock" | "discontinued";
-  productType: string;
-  description: string;
-  videoId?: string;
-  additionalInformation?: {
-    key: string;
-    value: string;
-  }[];
+  brand: { id: string; name: string };
+  category: { id: string; name: string };
+  sku: string;
+  image: string; // Primary image
+  additionalImages?: string[]; // Additional images
+  slug: string;
+  unit?: string;
   tags?: string[];
-  sizes?: string[];
+  parent?: string;
+  children?: string[]; // Fixed: should be an array
+  price: number;
+  discount?: number;
+  quantity: number;
+  status?: "in-stock" | "out-of-stock" | "discontinued";
+  productType?: { id: string; name: string };
+  description?: string;
+  additionalInformation?: string; // Changed from object array to string
   offerDate?: {
-    startDate: string | null;
-    endDate: string | null;
+    startDate?: string | null;
+    endDate?: string | null;
   };
 }
 
-// IUpdateProductQuantity
+// IUpdateProductQuantity interface for updating product quantity
 export interface IUpdateProductQuantity {
   sku: string;
   quantity: number;
 }
 
-// review product response
+// Review product response interface
 export interface IReviewProductRes {
   success: boolean;
   data: IProduct[];
 }
-// delete review product response
+
+// Delete review product response interface
 export interface IDelReviewsRes {
   success: boolean;
   message: string;
