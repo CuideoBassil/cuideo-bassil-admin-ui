@@ -37,7 +37,9 @@ const CouponEditArea = ({ id }: { id: string }) => {
     content = (
       <>
         <div className="col-span-12 lg:col-span-4">
-          <form onSubmit={handleSubmit((data) => handleSubmitEditCoupon(data,id))}>
+          <form
+            onSubmit={handleSubmit((data) => handleSubmitEditCoupon(data, id))}
+          >
             <div className="mb-6 bg-white px-8 py-8 rounded-md">
               {/* coupon image upload */}
               <div className="bg-white">
@@ -91,12 +93,12 @@ const CouponEditArea = ({ id }: { id: string }) => {
               <div className="mb-6">
                 <p className="mb-0 text-base text-black">Product Type</p>
                 <div className="category-add-select select-bordered">
-                  <ProductType
+                  {/* <ProductType
                     setSelectProductType={setSelectProductType}
                     control={control}
                     errors={errors}
                     default_value={coupon.productType}
-                  />
+                  /> */}
                 </div>
               </div>
               {/* product type */}
@@ -116,7 +118,10 @@ const CouponEditArea = ({ id }: { id: string }) => {
           {/* brand table start */}
           <div className="relative overflow-x-auto bg-white px-8 py-4 rounded-md">
             <div className="overflow-scroll 2xl:overflow-visible">
-              <CouponTable cls="w-[975px] 2xl:w-full" setOpenSidebar={setOpenSidebar} />
+              <CouponTable
+                cls="w-[975px] 2xl:w-full"
+                setOpenSidebar={setOpenSidebar}
+              />
             </div>
           </div>
           {/* brand table end */}

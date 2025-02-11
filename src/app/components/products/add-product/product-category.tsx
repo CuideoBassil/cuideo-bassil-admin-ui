@@ -132,12 +132,12 @@ const ProductCategory = ({
       <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-x-6">
         <div className="mb-5">
           <p className="mb-0 text-base text-black">Category</p>
-          <ProductType
+          {/* <ProductType
             control={control}
             errors={errors}
             default_value={default_value?.product_type}
             setSelectProductType={setSelectProductType}
-          />
+          /> */}
           <span className="text-tiny leading-4">Set the product category.</span>
         </div>
 

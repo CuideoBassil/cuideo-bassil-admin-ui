@@ -46,7 +46,9 @@ const CouponOffcanvas = ({ propsItems }: IPropType) => {
   return (
     <>
       <div
-        className={`offcanvas-area fixed top-0 right-0 h-full bg-white w-[280px] sm:w-[400px] z-[999] overflow-y-scroll overscroll-y-contain scrollbar-hide shadow-md translate-x-[calc(100%+80px)]  transition duration-300 ${openSidebar ? "offcanvas-opened" : ""}`}
+        className={`offcanvas-area fixed top-0 right-0 h-full bg-white w-[280px] sm:w-[400px] z-[999] overflow-y-scroll overscroll-y-contain scrollbar-hide shadow-md translate-x-[calc(100%+80px)]  transition duration-300 ${
+          openSidebar ? "offcanvas-opened" : ""
+        }`}
       >
         <div className="flex flex-col justify-between h-full">
           {/* main wrap */}
@@ -110,11 +112,11 @@ const CouponOffcanvas = ({ propsItems }: IPropType) => {
                 <div className="mb-6">
                   <p className="mb-0 text-base text-black">Product Type</p>
                   <div className="category-add-select select-bordered">
-                    <ProductType
+                    {/* <ProductType
                       setSelectProductType={setSelectProductType}
                       control={control}
                       errors={errors}
-                    />
+                    /> */}
                   </div>
                 </div>
                 {/* Product Type */}
@@ -127,7 +129,10 @@ const CouponOffcanvas = ({ propsItems }: IPropType) => {
               >
                 Add Coupon
               </button>
-              <button  onClick={() => setOpenSidebar(false)} className="tp-btn w-full sm:w-1/2 items-center justify-around border border-gray6 bg-white text-black hover:text-white hover:border-danger hover:bg-danger">
+              <button
+                onClick={() => setOpenSidebar(false)}
+                className="tp-btn w-full sm:w-1/2 items-center justify-around border border-gray6 bg-white text-black hover:text-white hover:border-danger hover:bg-danger"
+              >
                 Cancel
               </button>
             </div>
@@ -136,7 +141,9 @@ const CouponOffcanvas = ({ propsItems }: IPropType) => {
       </div>
       <div
         onClick={() => setOpenSidebar(false)}
-        className={`body-overlay fixed bg-black top-0 left-0 w-full h-full z-[60] invisible opacity-0 transition-all duration-300 ${openSidebar ? "opened" : ""}`}
+        className={`body-overlay fixed bg-black top-0 left-0 w-full h-full z-[60] invisible opacity-0 transition-all duration-300 ${
+          openSidebar ? "opened" : ""
+        }`}
       ></div>
     </>
   );

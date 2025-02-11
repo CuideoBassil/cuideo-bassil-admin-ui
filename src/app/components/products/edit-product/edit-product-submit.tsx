@@ -146,7 +146,7 @@ const EditProductSubmit = ({ id }: { id: string }) => {
             </div>
 
             {/* product type and brands start */}
-            <ProductTypeBrand
+            {/* <ProductTypeBrand
               setSelectCategory={setCategory}
               register={register}
               errors={errors}
@@ -158,7 +158,7 @@ const EditProductSubmit = ({ id }: { id: string }) => {
                 productType: product.productType,
                 unit: product.unit,
               }}
-            />
+            /> */}
             {/* product type and brands end */}
 
             {/* additional information page start */}
