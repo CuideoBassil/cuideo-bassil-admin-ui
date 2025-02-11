@@ -29,6 +29,7 @@ export const apiSlice = createApi({
     "AllProducts",
     "StockOutProducts",
     "AllCategory",
+    "CategoriesByProductType",
     "AllBrands",
     "getCategory",
     "AllOrders",

@@ -78,18 +78,11 @@ export interface ProductResponse {
 // IAddProduct
 export interface IAddProduct {
   sku: string;
-  img: string;
+  image: string;
   title: string;
   slug?: string;
   unit: string;
-  imageURLs: {
-    color: {
-      name?: string;
-      clrCode?: string;
-    };
-    img: string;
-    sizes?: string[];
-  }[];
+  additionalImages: string[];
   parent: string;
   children: string;
   price: number;
@@ -97,8 +90,9 @@ export interface IAddProduct {
   quantity: number;
   brand: { name: string; id: string };
   category: { name: string; id: string };
+  color: { name: string; code: string };
   status: "in-stock" | "out-of-stock" | "discontinued";
-  productType: string;
+  productType: { name: string; id: string };
   description: string;
   videoId?: string;
   additionalInformation?: {

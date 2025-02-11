@@ -1,9 +1,8 @@
+import useUploadImage from "@/hooks/useUploadImg";
 import React, { useEffect, useState } from "react";
 import Loading from "../../common/loading";
-import { useUploadImageMutation } from "@/redux/cloudinary/cloudinaryApi";
-import UploadImage from "./upload-image";
 import DefaultUploadImg from "./default-upload-img";
-import useUploadImage from "@/hooks/useUploadImg";
+import UploadImage from "./upload-image";
 
 type IPropType = {
   imgUrl: string;
@@ -37,7 +36,7 @@ const ProductImgUpload = ({
 
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6 text-center">
-      <p className="text-base text-black mb-4">Upload Image</p>
+      <p className="text-base text-black mb-4">Upload Main Image</p>
       <div className="text-center flex items-center justify-center">
         {isSubmitted ? (
           <DefaultUploadImg wh={100} />

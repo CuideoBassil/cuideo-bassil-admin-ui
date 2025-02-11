@@ -1,15 +1,13 @@
 "use client";
-import React from "react";
 import useProductSubmit from "@/hooks/useProductSubmit";
-import DescriptionTextarea from "./description-textarea";
-import OfferDatePicker from "./offer-date-picker";
-import ProductTypeBrand from "./product-type-brand";
-import AdditionalInformation from "./additional-information";
-import ProductVariants from "./product-variants";
-import ProductImgUpload from "./product-img-upload";
-import ProductCategory from "../../category/product-category";
-import Tags from "./tags";
 import FormField from "../form-field";
+import DescriptionTextarea from "./description-textarea";
+import ProductImgUpload from "./product-img-upload";
+import ProductTypeBrand from "./product-type-brand";
+import Tags from "./tags";
+import ProductVariants from "./product-variants";
+import ProductColor from "./product-color";
+import ProductAdditionalImagesUpload from "./product-additional-images-upload";
 
 const ProductSubmit = () => {
   const {
@@ -21,19 +19,24 @@ const ProductSubmit = () => {
     setTags,
     setAdditionalInformation,
     control,
-    setCategory,
     setParent,
     setChildren,
     setImg,
     img,
+    setCategory,
     setBrand,
     setProductType,
+    category,
+    brand,
+    productType,
     setImageURLs,
     offerDate,
     setOfferDate,
     isSubmitted,
     additionalInformation,
     imageURLs,
+    color,
+    setColor,
   } = useProductSubmit();
 
   return (
@@ -128,6 +131,9 @@ const ProductSubmit = () => {
             setSelectBrand={setBrand}
             setSelectCategory={setCategory}
             setSelectProductType={setProductType}
+            selectBrand={brand}
+            selectCategory={category}
+            selectProductType={productType}
           />
 
           {/* product type and brands end */}
@@ -139,11 +145,18 @@ const ProductSubmit = () => {
           {/* additional information page end */}
 
           {/* product variations start */}
-          <ProductVariants
+          <ProductColor color={color} setColor={setColor} />
+
+          {/* <ProductVariants
             isSubmitted={isSubmitted}
             setImageURLs={setImageURLs}
-          />
+          /> */}
           {/* product variations end */}
+          <ProductAdditionalImagesUpload
+            imgUrl={img}
+            setImgUrl={setImageURLs}
+            isSubmitted={isSubmitted}
+          />
         </div>
 
         {/* right side */}

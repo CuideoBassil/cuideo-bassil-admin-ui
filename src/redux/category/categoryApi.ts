@@ -26,6 +26,14 @@ export const authApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["AllCategory"],
     }),
+
+    // Add this inside `endpoints` in `authApi`
+    getCategoriesByProductType: builder.query<CategoryResponse, string>({
+      query: (productTypeId) =>
+        `/api/category/by-product-type/${productTypeId}`,
+      providesTags: ["CategoriesByProductType"],
+    }),
+
     // delete category
     deleteCategory: builder.mutation<ICategoryDeleteRes, string>({
       query(id: string) {
@@ -37,7 +45,10 @@ export const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ["AllCategory"],
     }),
     // editCategory
-    editCategory: builder.mutation<IAddCategoryResponse, { id: string; data: Partial<IAddCategory> }>({
+    editCategory: builder.mutation<
+      IAddCategoryResponse,
+      { id: string; data: Partial<IAddCategory> }
+    >({
       query({ id, data }) {
         return {
           url: `/api/category/edit/${id}`,
@@ -45,12 +56,12 @@ export const authApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ["AllCategory","getCategory"],
+      invalidatesTags: ["AllCategory", "getCategory"],
     }),
     // get single product
     getCategory: builder.query<IAddCategory, string>({
       query: (id) => `/api/category/get/${id}`,
-      providesTags:['getCategory']
+      providesTags: ["getCategory"],
     }),
   }),
 });
@@ -60,5 +71,6 @@ export const {
   useAddCategoryMutation,
   useDeleteCategoryMutation,
   useEditCategoryMutation,
-  useGetCategoryQuery, 
+  useGetCategoryQuery,
+  useGetCategoriesByProductTypeQuery,
 } = authApi;

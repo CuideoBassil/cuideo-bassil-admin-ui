@@ -1,14 +1,17 @@
+import { useGetAllProductTypesQuery } from "@/redux/product-type/productTypeApi";
 import React, { useEffect } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import ReactSelect from "react-select";
 import ErrorMsg from "../../common/error-msg";
-import { useGetAllProductTypesQuery } from "@/redux/product-type/productTypeApi";
 
 // prop type
 type IPropType = {
   errors: FieldErrors<any>;
   control: Control;
-  setSelectProductType: React.Dispatch<React.SetStateAction<string>>;
+  setSelectProductType: React.Dispatch<
+    React.SetStateAction<{ name: string; id: string }>
+  >;
+  selectProductType: { name: string; id: string };
   default_value?: string;
 };
 
@@ -17,6 +20,7 @@ const ProductType = ({
   control,
   default_value,
   setSelectProductType,
+  selectProductType,
 }: IPropType) => {
   const {
     data: productTypes,
@@ -25,12 +29,12 @@ const ProductType = ({
   } = useGetAllProductTypesQuery();
   // handleSelectProduct
   const handleSelectProduct = (value: string) => {
-    setSelectProductType(value);
+    setSelectProductType({ name: value, id: "1" });
   };
   // set default product
   useEffect(() => {
     if (default_value) {
-      setSelectProductType(default_value);
+      setSelectProductType({ name: default_value, id: "1" });
     }
   }, [default_value, setSelectProductType]);
 

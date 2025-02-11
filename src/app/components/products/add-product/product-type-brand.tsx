@@ -11,22 +11,28 @@ import { useGetAllCategoriesQuery } from "@/redux/category/categoryApi";
 import ReactSelect, { GroupBase } from "react-select";
 import ErrorMsg from "../../common/error-msg";
 import Loading from "../../common/loading";
+import ProductCategory from "./product-cat";
 import ProductType from "./product-type";
 // prop type
 type IPropType = {
   register: UseFormRegister<any>;
   errors: FieldErrors<any>;
   control: Control;
-  setSelectProductType: React.Dispatch<React.SetStateAction<string>>;
+  setSelectProductType: React.Dispatch<
+    React.SetStateAction<{ name: string; id: string }>
+  >;
   setSelectBrand: React.Dispatch<
     React.SetStateAction<{ name: string; id: string }>
   >;
   setSelectCategory: React.Dispatch<
     React.SetStateAction<{ name: string; id: string }>
   >;
+  selectProductType: { name: string; id: string };
+  selectBrand: { name: string; id: string };
+  selectCategory: { name: string; id: string };
   default_value?: {
     brand: string;
-    product_type: string;
+    productType: string;
     unit: string;
   };
 };
@@ -36,6 +42,7 @@ const ProductTypeBrand = ({
   errors,
   control,
   setSelectProductType,
+  selectProductType,
   setSelectBrand,
   setSelectCategory,
   default_value,
@@ -51,21 +58,24 @@ const ProductTypeBrand = ({
   // default value set
   useEffect(() => {
     if (
-      default_value?.product_type &&
+      default_value?.productType &&
       default_value.brand &&
       !hasDefaultValues
     ) {
       const brand = brands?.result.find((b) => b.name === default_value.brand);
       const category = categories?.result.find(
-        (c) => c.parent === default_value?.product_type
+        (c) => c.parent === default_value?.productType
       );
       if (brand) {
         setSelectBrand({ id: brand._id as string, name: default_value.brand });
         setSelectCategory({
           id: category?._id as string,
-          name: default_value.product_type,
+          name: default_value.productType,
         });
-        setSelectProductType(default_value.product_type);
+        setSelectProductType({
+          name: default_value.productType,
+          id: "1",
+        });
         setHasDefaultValues(true);
       }
     }
@@ -152,13 +162,30 @@ const ProductTypeBrand = ({
           <ProductType
             control={control}
             errors={errors}
-            default_value={default_value?.product_type}
+            default_value={default_value?.productType}
             setSelectProductType={setSelectProductType}
+            selectProductType={selectProductType}
           />
           <span className="text-tiny leading-4">
             Set the product ProductType.
           </span>
         </div>
+        {selectProductType.name !== "" && (
+          <div className="mb-5">
+            <p className="mb-0 text-base text-black">Category</p>
+            <ProductCategory
+              control={control}
+              errors={errors}
+              default_value={default_value?.productType}
+              setSelectCategory={setSelectProductType}
+              selectCategory={selectProductType}
+              productType={selectProductType.name}
+            />
+            <span className="text-tiny leading-4">
+              Set the product Category.
+            </span>
+          </div>
+        )}
 
         {content}
 

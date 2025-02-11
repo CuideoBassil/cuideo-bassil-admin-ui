@@ -155,7 +155,7 @@ const EditProductSubmit = ({ id }: { id: string }) => {
               setSelectProductType={setProductType}
               default_value={{
                 brand: product.brand.name,
-                product_type: product.productType,
+                productType: product.productType,
                 unit: product.unit,
               }}
             />
@@ -169,11 +169,11 @@ const EditProductSubmit = ({ id }: { id: string }) => {
             {/* additional information page end */}
 
             {/* product variations start */}
-            <ProductVariants
+            {/* <ProductVariants
               isSubmitted={isSubmitted}
               setImageURLs={setImageURLs}
               default_value={product.imageURLs}
-            />
+            /> */}
             {/* product variations end */}
           </div>
 

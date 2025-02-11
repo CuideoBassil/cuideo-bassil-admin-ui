@@ -22,7 +22,15 @@ type IBrand = {
   name: string;
   id: string;
 };
+type IColor = {
+  name: string;
+  code: string;
+};
 type ICategory = {
+  name: string;
+  id: string;
+};
+type IProductType = {
   name: string;
   id: string;
 };
@@ -35,16 +43,20 @@ const useProductSubmit = () => {
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
   const [unit, setUnit] = useState<string>("1");
-  const [imageURLs, setImageURLs] = useState<ImageURL[]>([]);
+  const [imageURLs, setImageURLs] = useState<string[]>([]);
   const [parent, setParent] = useState<string>("");
   const [children, setChildren] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(0);
   const [brand, setBrand] = useState<IBrand>({ name: "", id: "" });
+  const [color, setColor] = useState<IColor>({ name: "", code: "" });
   const [category, setCategory] = useState<ICategory>({ name: "", id: "" });
   const [status, setStatus] = useState<status>("in-stock");
-  const [productType, setProductType] = useState<string>("");
+  const [productType, setProductType] = useState<IProductType>({
+    name: "",
+    id: "",
+  });
   const [description, setDescription] = useState<string>("");
   const [videoId, setVideoId] = useState<string>("");
   const [offerDate, setOfferDate] = useState<any>({
@@ -96,7 +108,8 @@ const useProductSubmit = () => {
     setBrand({ name: "", id: "" });
     setCategory({ name: "", id: "" });
     setStatus("in-stock");
-    setProductType("");
+    setProductType({ name: "", id: "" });
+    setColor({ name: "", code: "" });
     setDescription("");
     setVideoId("");
     setOfferDate({
@@ -114,11 +127,11 @@ const useProductSubmit = () => {
     // product data
     const productData = {
       sku: data.SKU,
-      img: img,
+      image: img,
       title: data.title,
       slug: slugify(data.title, { replacement: "-", lower: true }),
       unit: unit,
-      imageURLs: imageURLs,
+      additionalImages: imageURLs,
       parent: parent,
       children: children,
       price: data.price,
@@ -126,6 +139,7 @@ const useProductSubmit = () => {
       quantity: data.quantity,
       brand: brand,
       category: category,
+      color: color,
       status: status,
       offerDate: {
         startDate: offerDate.startDate,
@@ -172,7 +186,7 @@ const useProductSubmit = () => {
       title: data.title,
       slug: slugify(data.title, { replacement: "-", lower: true }),
       unit: unit,
-      imageURLs: imageURLs,
+      additionalImages: imageURLs,
       parent: parent,
       children: children,
       price: data.price,
@@ -180,6 +194,7 @@ const useProductSubmit = () => {
       quantity: data.quantity,
       brand: brand,
       category: category,
+      color: color,
       status: status,
       offerDate: {
         startDate: offerDate.startDate,
@@ -234,6 +249,8 @@ const useProductSubmit = () => {
     setBrand,
     category,
     setCategory,
+    color,
+    setColor,
     status,
     setStatus,
     productType,
