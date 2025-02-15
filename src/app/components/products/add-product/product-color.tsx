@@ -1,47 +1,62 @@
 import { Sketch } from "@uiw/react-color";
+import { useEffect } from "react";
 
-// Prop type
 type IColorType = {
   name: string;
   code: string;
 };
 
 type IPropType = {
+  defaul_value?: { name: string; code: string };
   color: IColorType;
   setColor: React.Dispatch<React.SetStateAction<IColorType>>;
 };
 
-const ProductColor = ({ color, setColor }: IPropType) => {
+const ProductColor = ({ defaul_value, color, setColor }: IPropType) => {
+  useEffect(() => {
+    if (defaul_value && !color.name && !color.code) {
+      setColor({ name: defaul_value.name, code: defaul_value.code });
+    }
+  }, [defaul_value, color, setColor]);
+
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6">
-      <h4 className="text-[22px]">Product Color</h4>
       <div className="mt-10 pt-10 border-t border-gray relative">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-x-6">
+        <div className="grid sm:grid-cols-2 gap-x-6">
+          {/* Color Name Input */}
           <div className="mb-5">
-            <p className="mb-0 text-base text-black">Color Name</p>
+            <label
+              htmlFor="clrName"
+              className="mb-0 text-base text-black block"
+            >
+              Color Name <span className="text-red">*</span>
+            </label>
             <input
               id="clrName"
-              className="input w-full h-[44px] rounded-md border border-gray6 px-6 text-base"
+              aria-label="Color Name"
+              className="input w-full h-11 rounded-md border border-gray6 px-6 text-base"
               type="text"
+              value={color.name}
               placeholder="Color Name"
-              value={color?.name}
-              onChange={(e) => {
-                setColor({ ...color, name: e.target.value });
-              }}
+              onChange={(e) =>
+                setColor((prev) => ({ ...prev, name: e.target.value }))
+              }
             />
             <span className="text-tiny leading-4">
-              Set the Color name of product.
+              Set the Color name of the product.
             </span>
           </div>
+
+          {/* Color Picker */}
           <div className="flex flex-col mb-5">
-            <p className="mb-0 text-base text-black">Background Color</p>
+            <p className="mb-0 text-base text-black">Color</p>
             <Sketch
-              style={{ width: "100%" }}
+              className="w-full"
               color={color.code}
-              disableAlpha={true}
-              onChange={(updatedColor) => {
-                setColor({ ...color, code: updatedColor.hex });
-              }}
+              disableAlpha
+              onChange={(updatedColor) =>
+                setColor((prev) => ({ ...prev, code: updatedColor.hex }))
+              }
             />
           </div>
         </div>

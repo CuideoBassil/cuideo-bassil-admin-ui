@@ -17,37 +17,34 @@ const ProductImgUpload = ({
   isSubmitted,
   default_img,
 }: IPropType) => {
-  const [initialLoad, setInitialLoad] = useState(true);
-  const { handleImageUpload, uploadData, isError, error, isLoading } =
+  const { handleImageUpload, uploadData, isError, isLoading } =
     useUploadImage();
 
   useEffect(() => {
-    if (uploadData && !isError) {
+    if (uploadData?.data?.url && !isError) {
       setImgUrl(uploadData.data.url);
     }
   }, [uploadData, isError, setImgUrl]);
 
   useEffect(() => {
-    if (default_img && initialLoad) {
+    if (default_img) {
       setImgUrl(default_img);
-      setInitialLoad(false);
     }
-  }, [default_img, initialLoad, setImgUrl]);
+  }, [default_img, setImgUrl]);
 
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6 text-center">
-      <p className="text-base text-black mb-4">Upload Main Image</p>
-      <div className="text-center flex items-center justify-center">
+      <p className="text-base text-black mb-4">
+        Upload Main Image <span className="text-red">*</span>
+      </p>
+      <div className="flex items-center justify-center">
         {isSubmitted ? (
           <DefaultUploadImg wh={100} />
         ) : isLoading ? (
           <Loading loading={isLoading} spinner="fade" />
-        ) : uploadData && !isError ? (
+        ) : uploadData?.data?.url && !isError ? (
           <UploadImage
-            file={{
-              url: uploadData?.data.url ? uploadData?.data.url : imgUrl,
-              id: uploadData?.data.id,
-            }}
+            file={{ url: uploadData.data.url, id: uploadData.data.id }}
             setImgUrl={setImgUrl}
           />
         ) : (
@@ -56,21 +53,20 @@ const ProductImgUpload = ({
       </div>
 
       <div className="mt-8">
-        <div>
-          <input
-            onChange={handleImageUpload}
-            type="file"
-            name="image"
-            id="product_img"
-            className="hidden"
-          />
-          <label
-            htmlFor="product_img"
-            className="text-tiny w-full inline-block py-1 px-4 rounded-md border border-gray6 text-center hover:cursor-pointer hover:bg-theme hover:text-white hover:border-theme transition"
-          >
-            Upload Image
-          </label>
-        </div>
+        <input
+          onChange={handleImageUpload}
+          type="file"
+          name="image"
+          id="product_img"
+          className="hidden"
+          aria-label="Upload product image"
+        />
+        <label
+          htmlFor="product_img"
+          className="text-tiny w-full inline-block py-1 px-4 rounded-md border border-gray6 text-center cursor-pointer hover:bg-theme hover:text-white hover:border-theme transition"
+        >
+          Upload Image
+        </label>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ const ReviewItem = ({ item }: { item: IProduct }) => {
         <a href="#" className="flex items-center space-x-5">
           <Image
             className="w-[60px] h-[60px] rounded-md"
-            src={item.img}
+            src={item.image}
             alt="product-img"
             width={282}
             height={300}

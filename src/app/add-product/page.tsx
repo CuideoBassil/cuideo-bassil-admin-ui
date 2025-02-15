@@ -1,3 +1,4 @@
+"use client";
 import Wrapper from "@/layout/wrapper";
 import Breadcrumb from "../components/breadcrumb/breadcrumb";
 import ProductSubmit from "../components/products/add-product/product-submit";

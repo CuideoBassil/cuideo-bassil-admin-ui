@@ -3,19 +3,8 @@ import Image from "next/image";
 import { Rating } from "react-simple-star-rating";
 import EditDeleteBtn from "../../button/edit-delete-btn";
 const ProductTableItem = ({ product }: { product: IProduct }) => {
-  const {
-    _id,
-    img,
-    title,
-    sku,
-    price,
-    reviews,
-    status,
-    description,
-    brand,
-    category,
-    quantity,
-  } = product || {};
+  const { _id, title, sku, price, reviews, status, brand, category } =
+    product || {};
   const averageRating =
     reviews && reviews?.length > 0
       ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
@@ -27,7 +16,7 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
         <div className="flex items-center flex-row gap-2 ">
           <Image
             className="w-[60px] h-[60px] rounded-md object-cover bg-[#F2F3F5]"
-            src={product.img}
+            src={product.image}
             width={60}
             height={60}
             alt="product img"

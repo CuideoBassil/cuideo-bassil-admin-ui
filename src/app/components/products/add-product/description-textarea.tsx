@@ -1,6 +1,5 @@
-import React from "react";
-import ErrorMsg from "../../common/error-msg";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
+import ErrorMsg from "../../common/error-msg";
 
 type IPropType = {
   register: UseFormRegister<any>;
@@ -11,13 +10,15 @@ type IPropType = {
 const DescriptionTextarea = ({ register, errors, defaultValue }: IPropType) => {
   return (
     <div className="mb-5">
-      <p className="mb-0 text-base text-black">Description</p>
+      <p className="mb-0 text-base text-black">
+        Description <span className="text-red">*</span>
+      </p>
       <div id="editor" className="text-base">
         <textarea
           {...register("description", {
             required: `description is required!`,
           })}
-          placeholder="Your Description"
+          placeholder="Product Description"
           className="input h-[120px] resize-none w-full py-3 text-base"
           defaultValue={defaultValue}
         />

@@ -1,10 +1,11 @@
-import { apiSlice } from "../api/apiSlice";
 import {
+  CategoryByTypeResponse,
   CategoryResponse,
   IAddCategory,
   IAddCategoryResponse,
   ICategoryDeleteRes,
 } from "@/types/category-type";
+import { apiSlice } from "../api/apiSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   overrideExisting: true,
@@ -27,10 +28,13 @@ export const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ["AllCategory"],
     }),
 
-    // Add this inside `endpoints` in `authApi`
-    getCategoriesByProductType: builder.query<CategoryResponse, string>({
-      query: (productTypeId) =>
-        `/api/category/by-product-type/${productTypeId}`,
+    // get Categories By Product Type
+    getCategoriesByProductType: builder.query<
+      CategoryByTypeResponse,
+      string | null
+    >({
+      query: (productType) =>
+        `/api/category/product-type/${productType?.toLowerCase()}`,
       providesTags: ["CategoriesByProductType"],
     }),
 

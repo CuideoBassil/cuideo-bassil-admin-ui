@@ -7,10 +7,14 @@ type Category = {
   name: string;
   id: string;
 };
+type ProductType = {
+  name: string;
+  id: string;
+};
 
 type Color = {
   name: string;
-  clrCode: string;
+  code: string;
 };
 
 type ImageURL = {
@@ -42,19 +46,20 @@ export interface IProduct {
   brand: Brand;
   category: Category;
   sku: string;
-  img: string;
+  image: string;
   title: string;
   slug?: string;
   unit?: string;
-  imageURLs: ImageURL[];
+  additionalImages: any[];
   parent: string;
   children: string;
+  color: Color;
   price: number;
   discount?: number;
   quantity: number;
   status: "in-stock" | "out-of-stock" | "discontinued";
   reviews?: TReview[];
-  productType: string;
+  productType: ProductType;
   description: string;
   additionalInformation?: AdditionalInformation[];
   offerDate?: {
@@ -95,10 +100,7 @@ export interface IAddProduct {
   productType: { name: string; id: string };
   description: string;
   videoId?: string;
-  additionalInformation?: {
-    key: string;
-    value: string;
-  }[];
+  additionalInformation?: any;
   tags?: string[];
   sizes?: string[];
   offerDate?: {

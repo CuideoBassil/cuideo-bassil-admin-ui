@@ -1,12 +1,10 @@
-import React from "react";
 import Image from "next/image";
-import { Rating } from "react-simple-star-rating";
 // internal
 import { IProduct } from "@/types/product-type";
 import ProductGridAction from "./product-grid-action";
 
 const ProductGridItem = ({ product }: { product: IProduct }) => {
-  const { _id, img, title, sku, price, reviews, status, quantity } =
+  const { _id, image, title, sku, price, reviews, status, quantity } =
     product || {};
   // averageRating
   const averageRating =
@@ -19,7 +17,7 @@ const ProductGridItem = ({ product }: { product: IProduct }) => {
         <div className="inline-block bg-[#F2F3F5]">
           <Image
             className="w-full"
-            src={img}
+            src={image}
             width={279}
             height={297}
             alt="product img"

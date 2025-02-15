@@ -1,5 +1,5 @@
 import { useGetAllProductTypesQuery } from "@/redux/product-type/productTypeApi";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import ReactSelect from "react-select";
 import ErrorMsg from "../../common/error-msg";
@@ -20,7 +20,6 @@ const ProductType = ({
   control,
   default_value,
   setSelectProductType,
-  selectProductType,
 }: IPropType) => {
   const {
     data: productTypes,
@@ -28,15 +27,27 @@ const ProductType = ({
     isLoading,
   } = useGetAllProductTypesQuery();
   // handleSelectProduct
-  const handleSelectProduct = (value: string) => {
-    setSelectProductType({ name: value, id: "1" });
-  };
+  const handleSelectProduct = useCallback(
+    (selectedOption: { value: string }) => {
+      const productType = productTypes?.result?.find(
+        (b) => b.name === selectedOption.value
+      );
+      setSelectProductType({
+        id: productType?._id || "",
+        name: selectedOption.value,
+      });
+    },
+    [productTypes, setSelectProductType]
+  );
+  // const handleSelectProduct = (selectedOption: string) => {
+  //   setSelectProductType({ name: value, id: "1" });
+  // };
   // set default product
-  useEffect(() => {
-    if (default_value) {
-      setSelectProductType({ name: default_value, id: "1" });
-    }
-  }, [default_value, setSelectProductType]);
+  // useEffect(() => {
+  //   if (default_value) {
+  //     setSelectProductType({ name: default_value, id: "1" });
+  //   }
+  // }, [default_value, setSelectProductType]);
 
   return (
     <>
@@ -63,7 +74,7 @@ const ProductType = ({
             }
             onChange={(selectedOption) => {
               field.onChange(selectedOption);
-              handleSelectProduct(selectedOption?.value);
+              handleSelectProduct(selectedOption);
             }}
             options={productTypes?.result.map((type) => {
               return { value: type.name, label: type.name };

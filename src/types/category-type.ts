@@ -1,4 +1,3 @@
-
 export interface ICategoryItem {
   _id: string;
   img: string;
@@ -14,6 +13,11 @@ export interface ICategoryItem {
 export interface CategoryResponse {
   success: boolean;
   result: ICategoryItem[];
+}
+export interface CategoryByTypeResponse {
+  success: boolean;
+  message: string;
+  data: ICategoryItem[];
 }
 
 export interface IAddCategory {
@@ -42,5 +46,3 @@ export interface ICategoryDeleteRes {
   success?: boolean;
   message?: string;
 }
-
-

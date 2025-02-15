@@ -120,7 +120,7 @@ const ProductVariants = ({
             </div>
 
             <div className="flex flex-col mb-5">
-              <p className="mb-0 text-base text-black">Background Color</p>
+              <p className="mb-0 text-base text-black">Color</p>
               <Sketch
                 style={{ width: "100%" }}
                 color={formData[i].color.clrCode}
