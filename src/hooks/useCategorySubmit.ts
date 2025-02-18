@@ -12,8 +12,10 @@ const useCategorySubmit = () => {
   const [parent, setParent] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const [selectProductType, setSelectProductType] = useState<string>("");
-  // const [categoryChildren, setCategoryChildren] = useState<string[]>([]);
+  const [selectProductType, setSelectProductType] = useState<{
+    name: string;
+    id: string;
+  }>({ name: "", id: "" }); // const [categoryChildren, setCategoryChildren] = useState<string[]>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const router = useRouter();
   // add

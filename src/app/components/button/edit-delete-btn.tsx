@@ -51,11 +51,15 @@ const EditDeleteBtn = ({ id }: { id: string }) => {
   const handleUpdate = async () => {
     const data = [
       {
-        sku: "qwe123",
-        quantity: -1,
+        sku: "555",
+        quantity: 0,
       },
       {
-        sku: "qweqwe123",
+        sku: "123",
+        quantity: 1,
+      },
+      {
+        sku: "777",
         quantity: 30,
       },
     ];
