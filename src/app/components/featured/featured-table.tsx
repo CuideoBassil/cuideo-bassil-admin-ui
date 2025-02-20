@@ -8,7 +8,7 @@ import FeaturedEditDelete from "./featured-edit-del";
 
 const FeaturedTables = () => {
   const { data: featured, isError, isLoading } = useGetAllFeaturedQuery();
-  const paginationData = usePagination(featured?.data || [], 5);
+  const paginationData = usePagination(featured?.data || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
   // decide what to render
   let content = null;

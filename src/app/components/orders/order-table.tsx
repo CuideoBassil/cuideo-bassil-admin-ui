@@ -14,7 +14,7 @@ const OrderTable = () => {
   const { data: orders, isError, isLoading, error } = useGetAllOrdersQuery();
   const [searchVal, setSearchVal] = useState<string>("");
   const [selectVal, setSelectVal] = useState<string>("");
-  const paginationData = usePagination(orders?.data || [], 5);
+  const paginationData = usePagination(orders?.data || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
 
   // decide what to render

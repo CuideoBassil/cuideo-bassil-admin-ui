@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import DeleteTooltip from "../tooltip/delete-tooltip";
 import EditTooltip from "../tooltip/edit-tooltip";
 import { useDeleteProductTypeMutation } from "@/redux/product-type/productTypeApi";
-import { notifyError } from "@/utils/toast";
+import { notifyError, notifySuccess } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 
 // prop type
@@ -42,7 +42,7 @@ const ProductTypeEditDelete = ({ id }: IPropType) => {
               }
             }
           } else {
-            Swal.fire("Deleted!", `Your category has been deleted.`, "success");
+            notifySuccess(`This category has been deleted.`);
             router.push("/product-types");
           }
         } catch (error) {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 // internal
 import { Delete, Edit } from "@/svg";
-import { notifyError } from "@/utils/toast";
+import { notifyError, notifySuccess } from "@/utils/toast";
 import { useDeleteProductMutation } from "@/redux/product/productApi";
 import EditTooltip from "../../tooltip/edit-tooltip";
 import DeleteTooltip from "../../tooltip/delete-tooltip";
@@ -35,7 +35,7 @@ const ProductGridAction = ({ id }: { id: string }) => {
               }
             }
           } else {
-            Swal.fire("Deleted!", `Your product has been deleted.`, "success");
+            notifySuccess(`This product has been deleted.`);
           }
         } catch (error) {}
       }

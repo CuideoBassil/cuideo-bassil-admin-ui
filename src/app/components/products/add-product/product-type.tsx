@@ -20,6 +20,7 @@ const ProductType = ({
   control,
   default_value,
   setSelectProductType,
+  selectProductType,
 }: IPropType) => {
   const {
     data: productTypes,

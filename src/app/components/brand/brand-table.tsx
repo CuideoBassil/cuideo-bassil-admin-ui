@@ -8,7 +8,7 @@ import BrandEditDelete from "./brand-edit-del";
 
 const BrandTables = () => {
   const { data: brands, isError, isLoading } = useGetAllBrandsQuery();
-  const paginationData = usePagination(brands?.result || [], 5);
+  const paginationData = usePagination(brands?.result || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
   // decide what to render
   let content = null;

@@ -36,7 +36,7 @@ const CouponTable = ({
   searchValue,
 }: IPropType) => {
   const { data: coupons, isError, isLoading, error } = useGetAllCouponsQuery();
-  const paginationData = usePagination(coupons || [], 5);
+  const paginationData = usePagination(coupons || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
   // decide to render
   let content = null;

@@ -1,11 +1,13 @@
 import useProductSubmit from "@/hooks/useProductSubmit";
 import FormField from "../form-field";
 import DescriptionTextarea from "./description-textarea";
+import OfferDatePicker from "./offer-date-picker";
 import ProductAdditionalImagesUpload from "./product-additional-images-upload";
 import ProductColor from "./product-color";
 import ProductImgUpload from "./product-img-upload";
 import ProductTypeBrand from "./product-type-brand";
 import Tags from "./tags";
+import { useGetAllTagsQuery } from "@/redux/tag/tagApi";
 
 const ProductSubmit = () => {
   const {
@@ -27,6 +29,8 @@ const ProductSubmit = () => {
     setImageURLs,
     imageURLs,
     color,
+    offerDate,
+    setOfferDate,
     setColor,
     isSubmitted,
   } = useProductSubmit();
@@ -75,7 +79,32 @@ const ProductSubmit = () => {
             />
           </div>
         </div>
-
+        <div className="bg-white px-8 py-8 rounded-md mb-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-x-6">
+            <FormField
+              title="discount percentage"
+              type="number"
+              isRequired={false}
+              placeHolder="Discount"
+              bottomTitle="Set the product Discount."
+              register={register}
+              errors={errors}
+            />
+            <div>
+              <p className="mb-0 text-base text-black capitalize">
+                start and end date
+              </p>
+              <OfferDatePicker
+                offerDate={offerDate}
+                setOfferDate={setOfferDate}
+              />
+              <span className="text-tiny leading-4">
+                set the product offer and end date
+              </span>
+            </div>
+            {/* date picker start */}
+          </div>
+        </div>
         <ProductTypeBrand
           register={register}
           errors={errors}

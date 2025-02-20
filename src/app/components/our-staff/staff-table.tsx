@@ -8,7 +8,7 @@ import StaffAction from "./staff-action";
 
 const StaffTables = () => {
   const { data: staffData, isError, isLoading } = useGetAllStaffQuery();
-  const paginationData = usePagination(staffData?.data || [], 5);
+  const paginationData = usePagination(staffData?.data || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
   // decide what to render
   let content = null;

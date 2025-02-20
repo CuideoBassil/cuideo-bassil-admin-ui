@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import DeleteTooltip from "../tooltip/delete-tooltip";
 import EditTooltip from "../tooltip/edit-tooltip";
 import { useDeleteCategoryMutation } from "@/redux/category/categoryApi";
-import { notifyError } from "@/utils/toast";
+import { notifyError, notifySuccess } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 
 // prop type
@@ -16,7 +16,7 @@ type IPropType = {
 const CategoryEditDelete = ({ id }: IPropType) => {
   const [showEdit, setShowEdit] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
-  const router = useRouter()
+  const router = useRouter();
   const [deleteCategory, { data: delData, error: delErr }] =
     useDeleteCategoryMutation();
 
@@ -41,8 +41,8 @@ const CategoryEditDelete = ({ id }: IPropType) => {
               }
             }
           } else {
-            Swal.fire("Deleted!", `Your category has been deleted.`, "success");
-            router.push('/category')
+            notifySuccess(`Your category has been deleted.`);
+            router.push("/category");
           }
         } catch (error) {
           // Handle error or show error message

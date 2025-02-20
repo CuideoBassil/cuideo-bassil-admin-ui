@@ -1,11 +1,11 @@
-import { notifySuccess, notifyError } from "@/utils/toast";
 import {
   useAddCategoryMutation,
   useEditCategoryMutation,
 } from "@/redux/category/categoryApi";
+import { notifyError, notifySuccess } from "@/utils/toast";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 
 const useCategorySubmit = () => {
   const [categoryImg, setCategoryImg] = useState<string>("");
@@ -15,7 +15,8 @@ const useCategorySubmit = () => {
   const [selectProductType, setSelectProductType] = useState<{
     name: string;
     id: string;
-  }>({ name: "", id: "" }); // const [categoryChildren, setCategoryChildren] = useState<string[]>([]);
+  }>({ name: "", id: "" });
+  // const [categoryChildren, setCategoryChildren] = useState<string[]>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const router = useRouter();
   // add

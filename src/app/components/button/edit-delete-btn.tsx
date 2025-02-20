@@ -3,7 +3,7 @@ import {
   useUpdateProductQuantityMutation,
 } from "@/redux/product/productApi";
 import { Delete, Edit } from "@/svg";
-import { notifyError } from "@/utils/toast";
+import { notifyError, notifySuccess } from "@/utils/toast";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
@@ -41,7 +41,7 @@ const EditDeleteBtn = ({ id }: { id: string }) => {
               }
             }
           } else {
-            Swal.fire("Deleted!", `Your product has been deleted.`, "success");
+            notifySuccess(`This product has been deleted.`);
           }
         } catch (error) {}
       }

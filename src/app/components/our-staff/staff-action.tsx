@@ -1,6 +1,6 @@
 import { useDeleteStaffMutation } from "@/redux/auth/authApi";
 import { Delete, Edit } from "@/svg";
-import { notifyError } from "@/utils/toast";
+import { notifyError, notifySuccess } from "@/utils/toast";
 import Link from "next/link";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -39,7 +39,7 @@ const StaffAction = ({ id, isSuperAdmin = false }: IPropType) => {
               }
             }
           } else {
-            Swal.fire("Deleted!", `Your stuff has been deleted.`, "success");
+            notifySuccess(`This staff has been deleted.`);
           }
         } catch (error) {
           // Handle error or show error message

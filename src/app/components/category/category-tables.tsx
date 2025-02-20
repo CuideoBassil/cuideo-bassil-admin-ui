@@ -9,7 +9,7 @@ import CategoryEditDelete from "./edit-delete-category";
 const CategoryTables = () => {
   const { data: categories, isError, isLoading } = useGetAllCategoriesQuery();
 
-  const paginationData = usePagination(categories?.result || [], 5);
+  const paginationData = usePagination(categories?.result || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
   // decide what to render
   let content = null;
@@ -55,12 +55,12 @@ const CategoryTables = () => {
                   >
                     Product type
                   </th>
-                  <th
+                  {/* <th
                     scope="col"
                     className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[150px] text-end"
                   >
                     Items
-                  </th>
+                  </th> */}
                   <th
                     scope="col"
                     className="px-9 py-3 text-tiny text-text2 uppercase  font-semibold w-[12%] text-end"
@@ -95,11 +95,11 @@ const CategoryTables = () => {
                       </a>
                     </td>
                     <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                      /{item.productType}
+                      {item.productType}
                     </td>
-                    <td className="px-3 py-3 font-normal text-[#55585B] text-end">
+                    {/* <td className="px-3 py-3 font-normal text-[#55585B] text-end">
                       {item.products?.length}
-                    </td>
+                    </td> */}
                     <td className="px-9 py-3 text-end">
                       <div className="flex items-center justify-end space-x-2">
                         <CategoryEditDelete id={item._id} />

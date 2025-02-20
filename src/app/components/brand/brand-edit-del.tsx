@@ -1,12 +1,12 @@
+import { useDeleteBrandMutation } from "@/redux/brand/brandApi";
 import { Delete, Edit } from "@/svg";
+import { notifyError, notifySuccess } from "@/utils/toast";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import DeleteTooltip from "../tooltip/delete-tooltip";
 import EditTooltip from "../tooltip/edit-tooltip";
-import { useDeleteBrandMutation } from "@/redux/brand/brandApi";
-import { notifyError } from "@/utils/toast";
-import { useRouter } from "next/navigation";
 
 // prop type
 type IPropType = {
@@ -42,7 +42,7 @@ const BrandEditDelete = ({ id }: IPropType) => {
               }
             }
           } else {
-            Swal.fire("Deleted!", `This brand has been deleted.`, "success");
+            notifySuccess(`This brand has been deleted.`);
             router.push("/brands");
           }
         } catch (error) {

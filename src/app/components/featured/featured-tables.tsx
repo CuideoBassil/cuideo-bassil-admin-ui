@@ -12,7 +12,7 @@ const FeaturedTabless = () => {
     isError,
     isLoading,
   } = useGetFeaturedBySectionQuery(2);
-  const paginationData = usePagination(featured?.data || [], 5);
+  const paginationData = usePagination(featured?.data || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
   // decide what to render
   let content = null;

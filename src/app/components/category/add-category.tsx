@@ -1,12 +1,8 @@
 "use client";
-import React from "react";
 import useCategorySubmit from "@/hooks/useCategorySubmit";
 import ProductType from "../products/add-product/product-type";
-import CategoryTables from "./category-tables";
-import CategoryImgUpload from "./global-img-upload";
-import CategoryChildren from "./category-children";
 import CategoryParent from "./category-parent";
-import CategoryDescription from "./category-description";
+import CategoryTables from "./category-tables";
 
 const AddCategory = () => {
   const {

@@ -1,5 +1,6 @@
 import {
   Categories,
+  Coupons,
   Leaf,
   Products,
   Profile,
@@ -66,7 +67,13 @@ const sidebar_menu: Array<ISidebarMenus> = [
     link: "/reviews",
     title: "Reviews",
   },
-  // {
+  {
+    id: 7,
+    icon: Coupons,
+    link: "/tags",
+    title: "Tags",
+  },
+  // // {
   //   id: 7,
   //   icon: Coupons,
   //   link: "/coupon",

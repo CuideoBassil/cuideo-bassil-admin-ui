@@ -15,7 +15,7 @@ const ReviewProductArea = () => {
   } = useGetReviewProductsQuery();
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectValue, setSelectValue] = useState<string>("");
-  const paginationData = usePagination(reviewProducts?.data || [], 5);
+  const paginationData = usePagination(reviewProducts?.data || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
 
   // search field

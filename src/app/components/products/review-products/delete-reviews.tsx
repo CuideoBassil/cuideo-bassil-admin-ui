@@ -1,5 +1,6 @@
 import { useDeleteReviewsMutation } from "@/redux/review/reviewApi";
 import { Delete } from "@/svg";
+import { notifyError } from "@/utils/toast";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
@@ -30,10 +31,10 @@ const DeleteReviews = ({ id }: { id: string }) => {
             const res = await deleteReviews(id);
             if ("data" in res) {
               if ("message" in res.data) {
-                Swal.fire("Deleted!", `${res.data.message}`, "success");
+                notifyError(`Deleted! ${res.data.message}`);
               }
             } else {
-              Swal.fire("Deleted!", `Product reviews not found`, "error");
+              notifyError(`Product reviews not found.`);
             }
           } catch (error) {
             // Handle error or show error message

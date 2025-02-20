@@ -33,8 +33,7 @@ export const authApi = apiSlice.injectEndpoints({
       CategoryByTypeResponse,
       string | null
     >({
-      query: (productType) =>
-        `/api/category/product-type/${productType?.toLowerCase()}`,
+      query: (productType) => `/api/category/product-type/${productType}`,
       providesTags: ["CategoriesByProductType"],
     }),
 

@@ -1,17 +1,13 @@
 "use client";
 import usePagination from "@/hooks/use-pagination";
-import { useGetAllProductTypesQuery } from "@/redux/product-type/productTypeApi";
+import { useGetAllTagsQuery } from "@/redux/tag/tagApi";
 import ErrorMsg from "../common/error-msg";
 import Pagination from "../ui/Pagination";
-import ProductTypeEditDelete from "./product-type-edit-del";
+import TagEditDelete from "./product-type-edit-del";
 
-const ProductTypeTables = () => {
-  const {
-    data: productTypes,
-    isError,
-    isLoading,
-  } = useGetAllProductTypesQuery();
-  const paginationData = usePagination(productTypes?.result || [], 10);
+const TagTables = () => {
+  const { data: tags, isError, isLoading } = useGetAllTagsQuery();
+  const paginationData = usePagination(tags?.result || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
   // decide what to render
   let content = null;
@@ -22,7 +18,7 @@ const ProductTypeTables = () => {
   if (!isLoading && isError) {
     content = <ErrorMsg msg="There was an error" />;
   }
-  if (!isLoading && !isError && productTypes?.result.length === 0) {
+  if (!isLoading && !isError && tags?.result.length === 0) {
     content = <ErrorMsg msg="No Category Found" />;
   }
 
@@ -70,7 +66,7 @@ const ProductTypeTables = () => {
 
                     <td className="px-9 py-3 text-end">
                       <div className="flex items-center justify-end space-x-2">
-                        <ProductTypeEditDelete id={item._id} />
+                        <TagEditDelete id={item._id} />
                       </div>
                     </td>
                   </tr>
@@ -81,7 +77,7 @@ const ProductTypeTables = () => {
         </div>
         <div className="flex justify-between items-center flex-wrap">
           <p className="mb-0 text-tiny">
-            Showing 1-{currentItems.length} of {productTypes?.result.length}
+            Showing 1-{currentItems.length} of {tags?.result.length}
           </p>
           <div className="pagination py-3 flex justify-end items-center pagination">
             <Pagination
@@ -100,4 +96,4 @@ const ProductTypeTables = () => {
   );
 };
 
-export default ProductTypeTables;
+export default TagTables;

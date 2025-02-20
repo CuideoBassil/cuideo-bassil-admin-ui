@@ -8,7 +8,7 @@ import TableItem from "./table-item";
 
 const RecentOrders = () => {
   const { data: recentOrders, isError, isLoading } = useGetRecentOrdersQuery();
-  const paginationData = usePagination(recentOrders?.orders || [], 5);
+  const paginationData = usePagination(recentOrders?.orders || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
 
   // decide what to render
