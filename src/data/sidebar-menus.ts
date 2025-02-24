@@ -49,12 +49,6 @@ const sidebar_menu: Array<ISidebarMenus> = [
     title: "Categories",
   },
 
-  // {
-  //   id: 4,
-  //   icon: Orders,
-  //   link: "/orders",
-  //   title: "Orders",
-  // },
   {
     id: 5,
     icon: Leaf,
@@ -79,20 +73,26 @@ const sidebar_menu: Array<ISidebarMenus> = [
   //   link: "/coupon",
   //   title: "Coupons",
   // },
+  // {
+  //   id: 8,
+  //   icon: Orders,
+  //   link: "/orders",
+  //   title: "Orders",
+  // },
   {
-    id: 8,
+    id: 9,
     icon: Profile,
     link: "/profile",
     title: "Profile",
   },
   {
-    id: 9,
+    id: 10,
     icon: Setting,
     link: "#",
     title: "Online store",
   },
   {
-    id: 10,
+    id: 11,
     icon: StuffUser,
     link: "/our-staff",
     title: "Our Staff",

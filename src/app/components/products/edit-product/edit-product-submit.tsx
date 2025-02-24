@@ -4,6 +4,7 @@ import { useGetProductQuery } from "@/redux/product/productApi";
 import { IProduct } from "@/types/product-type";
 import ErrorMsg from "../../common/error-msg";
 import DescriptionTextarea from "../add-product/description-textarea";
+import OfferDatePicker from "../add-product/offer-date-picker";
 import ProductAdditionalImagesUpload from "../add-product/product-additional-images-upload";
 import ProductColor from "../add-product/product-color";
 import ProductImgUpload from "../add-product/product-img-upload";
@@ -34,6 +35,8 @@ const EditProductSubmit = ({ id }: { id: string }) => {
     setColor,
     isSubmitted,
     handleEditProduct,
+    setOfferDate,
+    offerDate,
   } = useProductSubmit();
 
   let content = null;
@@ -103,6 +106,32 @@ const EditProductSubmit = ({ id }: { id: string }) => {
                 errors={errors}
                 defaultValue={productDetails.quantity}
               />
+            </div>
+          </div>
+          <div className="bg-white px-8 py-8 rounded-md mb-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-x-6">
+              <FormField
+                title="discount_price"
+                type="number"
+                isRequired={false}
+                placeHolder="Discounted  Price"
+                bottomTitle="Set the product discounted price."
+                register={register}
+                errors={errors}
+              />
+              <div>
+                <p className="mb-0 text-base text-black capitalize">
+                  start and end date
+                </p>
+                <OfferDatePicker
+                  offerDate={offerDate}
+                  setOfferDate={setOfferDate}
+                />
+                <span className="text-tiny leading-4">
+                  set the product offer and end date
+                </span>
+              </div>
+              {/* date picker start */}
             </div>
           </div>
 

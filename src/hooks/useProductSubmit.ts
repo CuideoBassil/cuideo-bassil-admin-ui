@@ -106,7 +106,7 @@ const useProductSubmit = () => {
       parent: category.name,
       children,
       price: +data.price,
-      discount: +data.discount_percentage,
+      discount: +data.discount_price,
       quantity: +data.quantity,
       brand,
       category,
@@ -121,7 +121,7 @@ const useProductSubmit = () => {
 
     if (!img) return notifyError("Product image is required");
     if (!category.name) return notifyError("Category is required");
-    if (+data.discount_percentage > +data.price)
+    if (+data.discount_price > +data.price)
       return notifyError("Price must be greater than discount");
 
     try {
@@ -137,6 +137,7 @@ const useProductSubmit = () => {
 
   // Edit Product Function
   const handleEditProduct = async (data: any, id: string) => {
+    console.log("data", data);
     const productData = {
       sku: data.SKU,
       image: img,
@@ -147,7 +148,7 @@ const useProductSubmit = () => {
       parent: category.name,
       children,
       price: +data.price,
-      discount: +data.discount_percentage,
+      discount: +data.discount_price,
       quantity: +data.quantity,
       brand,
       category,
