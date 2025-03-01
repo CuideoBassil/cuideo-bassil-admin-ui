@@ -8,7 +8,7 @@ const OrderTopBar = () => {
         <input
           className="input h-[44px] w-full pl-14"
           type="text"
-          placeholder="Search by order id"
+          placeholder="order id"
         />
         <button className="absolute top-1/2 left-5 translate-y-[-50%] hover:text-theme">
           <Search />

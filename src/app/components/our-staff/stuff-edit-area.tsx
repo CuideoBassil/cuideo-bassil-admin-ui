@@ -98,7 +98,7 @@ const EditStaffArea = ({ id }: { id: string }) => {
             {/* Product Type */}
 
             <button type="submit" className="tp-btn px-7 py-2">
-              Edit Stuff
+              Edit Staff
             </button>
           </div>
         </form>

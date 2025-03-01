@@ -51,7 +51,7 @@ const useStaffSubmit = () => {
           }
         }
       } else {
-        notifySuccess("Stuff added successfully");
+        notifySuccess("Staff added successfully");
         setIsSubmitted(true);
         reset();
         setStaffImg("");
@@ -83,7 +83,7 @@ const useStaffSubmit = () => {
           }
         }
       } else {
-        notifySuccess("Stuff update successfully");
+        notifySuccess("Staff update successfully");
         router.push("/our-staff");
         setIsSubmitted(true);
         reset();

@@ -20,16 +20,16 @@ const CouponArea = () => {
     control,
     setSelectProductType,
   } = useCouponSubmit();
-  const [searchValue,setSearchValue] = useState<string>("");
-  const [selectValue,setSelectValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [selectValue, setSelectValue] = useState<string>("");
   // handle search value
-  const handleSearchValue = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value)
-  }
+  const handleSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
   // handle select value
-  const handleSelectValue = (e:React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectValue(e.target.value)
-  }
+  const handleSelectValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectValue(e.target.value);
+  };
   return (
     <>
       <div className="bg-white rounded-t-md rounded-b-md shadow-xs py-4">
@@ -40,7 +40,7 @@ const CouponArea = () => {
                 <input
                   className="input h-[44px] w-full pl-14"
                   type="text"
-                  placeholder="Search by coupon name"
+                  placeholder="coupon name"
                   onChange={handleSearchValue}
                 />
                 <button className="absolute top-1/2 left-5 translate-y-[-50%] hover:text-theme">

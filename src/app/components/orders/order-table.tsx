@@ -200,7 +200,7 @@ const OrderTable = () => {
           <input
             className="input h-[44px] w-full pl-14"
             type="text"
-            placeholder="Search by invoice no"
+            placeholder="invoice no"
             onChange={handleSearchChange}
           />
           <button className="absolute top-1/2 left-5 translate-y-[-50%] hover:text-theme">

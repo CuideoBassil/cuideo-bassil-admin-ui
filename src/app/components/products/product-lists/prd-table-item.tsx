@@ -21,8 +21,12 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
             height={60}
             alt="product img"
           />
-          <div className="font-medium text-heading text-hover-primary transition ">
-            {title}
+          <div
+            className="font-medium text-heading  transition"
+            title={title} // Show full title on hover
+          >
+            {title.slice(0, 25)}
+            {title.length > 25 && "..."}
           </div>
         </div>
       </td>
