@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Rating } from "react-simple-star-rating";
 import EditDeleteBtn from "../../button/edit-delete-btn";
 const ProductTableItem = ({ product }: { product: IProduct }) => {
-  const { _id, title, sku, price, reviews, status, brand, category } =
+  const { _id, title, sku, price, reviews, status, brand, category, quantity } =
     product || {};
   const averageRating =
     reviews && reviews?.length > 0
@@ -61,7 +61,7 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
           {status === "in-stock" ? "In Stock" : "Out Of Stock"}
         </span>
       </td>
-      {/* <td className="px-3 py-3 font-normal text-[#55585B] ">{quantity}</td> */}
+      <td className="px-3 py-3 font-normal text-[#55585B] ">{quantity}</td>
 
       <td className="px-9 py-3 ">
         <div className="flex items-center justify-end space-x-2">

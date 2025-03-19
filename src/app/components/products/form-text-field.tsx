@@ -1,7 +1,7 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import ErrorMsg from "../common/error-msg";
 
-export default function FormField({
+export default function FormTextField({
   title,
   isRequired,
   bottomTitle,
@@ -27,12 +27,11 @@ export default function FormField({
           {title} {isRequired && <span className="text-red">*</span>}
         </p>
       )}
-      <input
+      <textarea
         {...register(title.split(" ").join("_"), {
           required: isRequired ? `${title} is required!` : false,
         })}
         className="input w-full h-[44px] rounded-md border border-gray6 px-6 text-base"
-        type={type}
         autoComplete="off"
         name={title}
         id={title}

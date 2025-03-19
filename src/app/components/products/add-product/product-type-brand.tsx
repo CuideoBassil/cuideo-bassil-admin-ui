@@ -1,11 +1,18 @@
+import useBrandSubmit from "@/hooks/useBrandSubmit";
+import useCategorySubmit from "@/hooks/useCategorySubmit";
+import useProductTypeSubmit from "@/hooks/useProductTypeSubmit";
 import { useGetAllBrandsQuery } from "@/redux/brand/brandApi";
 import { useGetCategoriesByProductTypeQuery } from "@/redux/category/categoryApi";
 import { useGetAllProductTypesQuery } from "@/redux/product-type/productTypeApi";
 import { ICategoryItem } from "@/types/category-type";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+import CategoryParent from "../../category/category-parent";
+import GlobalImgUpload from "../../category/global-img-upload";
 import ErrorMsg from "../../common/error-msg";
 import Loading from "../../common/loading";
+import FormField from "../form-field";
+import ProductType from "./product-type";
 
 // Prop Type
 type IPropType = {
@@ -39,6 +46,7 @@ const SelectInput = ({
   isLoading,
   isError,
   errorMessage,
+  handleOnClick,
 }: {
   label: string;
   name: string;
@@ -50,6 +58,7 @@ const SelectInput = ({
   isLoading: boolean;
   isError: boolean;
   errorMessage: string;
+  handleOnClick?: () => void;
 }) => {
   if (isLoading) {
     return (
@@ -66,9 +75,19 @@ const SelectInput = ({
 
   return (
     <div className="mb-5">
-      <p className="text-base text-black">
-        {label} <span className="text-red">*</span>
-      </p>
+      <div className="flex items-center justify-between mb-1">
+        <p className="text-base text-black mb-0">
+          {label} <span className="text-red">*</span>
+        </p>
+        {handleOnClick && (
+          <button
+            onClick={handleOnClick}
+            className="text-black   border border-black-500  hover:bg-blue-600  rounded-full px-2 "
+          >
+            Add
+          </button>
+        )}
+      </div>
       <select
         name={name}
         value={value}
@@ -99,6 +118,9 @@ const ProductTypeBrand = ({
   selectProductType,
   default_value,
 }: IPropType) => {
+  const [productTypeModal, setProductTypeModal] = useState(false);
+  const [categoryModal, setCategoryModal] = useState(false);
+  const [brandModal, setBrandModal] = useState(false);
   const {
     data: productTypes,
     isError: productTypeError,
@@ -124,7 +146,6 @@ const ProductTypeBrand = ({
 
   useEffect(() => {
     if (default_value) {
-      // Check if the selected product type needs to be updated
       if (productTypes?.result) {
         const defaultProductType = productTypes.result.find(
           (pt) => pt.name === default_value.productType
@@ -140,7 +161,6 @@ const ProductTypeBrand = ({
         }
       }
 
-      // Check if the selected brand needs to be updated
       if (brandsData?.result) {
         const defaultBrand = brandsData.result.find(
           (b) => b.name === default_value.brand
@@ -150,7 +170,6 @@ const ProductTypeBrand = ({
         }
       }
 
-      // Check if the selected category needs to be updated
       if (categoryData?.data) {
         const defaultCategory = categoryData.data.find(
           (cat) => cat.parent === default_value.category
@@ -175,11 +194,33 @@ const ProductTypeBrand = ({
     setSelectBrand,
     setSelectCategory,
   ]);
+  const {
+    handleSubmit: handleSubmitPT,
+    register: registerPT,
+    handleSubmitProductType,
+  } = useProductTypeSubmit();
+
+  const {
+    handleSubmit: handleSubmitBR,
+    register: registerBR,
+    setLogo,
+    handleSubmitBrand,
+    isSubmitted: isSubmittedBR,
+    setIsSubmitted,
+  } = useBrandSubmit();
+
+  const {
+    selectProductType: selectProductTypeCT,
+    setSelectProductType: setSelectProductTypeCT,
+    control,
+    register: registerCT,
+    handleSubmit: handleSubmitCT,
+    handleSubmitCategory,
+  } = useCategorySubmit();
 
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6">
       <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-x-6">
-        {/* Product Type Selection */}
         <SelectInput
           label="Product Type"
           name="productType"
@@ -204,11 +245,11 @@ const ProductTypeBrand = ({
           isLoading={productTypeLoading}
           isError={productTypeError}
           errorMessage="There was an error"
+          handleOnClick={() => setProductTypeModal(true)}
         />
-
-        {/* Category Selection */}
         {categoryData?.data && (
           <SelectInput
+            handleOnClick={() => setCategoryModal(true)}
             label="Category"
             name="category"
             options={
@@ -235,8 +276,8 @@ const ProductTypeBrand = ({
           />
         )}
 
-        {/* Brand Selection */}
         <SelectInput
+          handleOnClick={() => setBrandModal(true)}
           label="Brand"
           name="brand"
           options={
@@ -256,6 +297,107 @@ const ProductTypeBrand = ({
           errorMessage="There was an error"
         />
       </div>
+      {productTypeModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-5 rounded-md shadow-md w-1/3 relative">
+            <button
+              onClick={() => setProductTypeModal(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg"
+            >
+              &times;
+            </button>
+
+            <h2 className="text-lg font-bold mb-3">Add New Product Type</h2>
+            <div className="gap-6">
+              <form onSubmit={handleSubmitPT(handleSubmitProductType)}>
+                <div className="mb-6 bg-white px-8 py-8 rounded-md">
+                  <FormField
+                    register={registerPT}
+                    errors={errors}
+                    title="Name"
+                    isRequired={true}
+                    placeHolder={""}
+                  />
+                  <button className="tp-btn px-7 py-2">Add Product Type</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+      {categoryModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-5 rounded-md shadow-md w-1/3 relative">
+            <button
+              onClick={() => setCategoryModal(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg"
+            >
+              &times;
+            </button>
+
+            <h2 className="text-lg font-bold mb-3">Add New Category</h2>
+            <div className="gap-6">
+              <form onSubmit={handleSubmitCT(handleSubmitCategory)}>
+                <div className="mb-6 bg-white px-8 py-8 rounded-md">
+                  <CategoryParent register={registerCT} errors={errors} />
+
+                  <div className="mb-6">
+                    <p className="mb-0 text-base text-black">Product Type</p>
+                    <div className="category-add-select select-bordered">
+                      <ProductType
+                        selectProductType={selectProductTypeCT}
+                        setSelectProductType={setSelectProductTypeCT}
+                        control={control}
+                        errors={errors}
+                      />
+                    </div>
+                  </div>
+
+                  <button className="tp-btn px-7 py-2">Add Category</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+      {brandModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-5 rounded-md shadow-md w-1/3 relative">
+            <button
+              onClick={() => setBrandModal(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg"
+            >
+              &times;
+            </button>
+
+            <h2 className="text-lg font-bold mb-3">Add New Brand</h2>
+
+            <form
+              onSubmit={handleSubmitBR(handleSubmitBrand)}
+              className="gap-6"
+            >
+              <div className="mb-6 bg-white px-8 py-8 rounded-md">
+                <GlobalImgUpload
+                  isSubmitted={isSubmittedBR}
+                  setImage={setLogo}
+                  image=""
+                  setIsSubmitted={setIsSubmitted}
+                />
+
+                <FormField
+                  register={registerBR}
+                  errors={errors}
+                  title="Name"
+                  isRequired={true}
+                  placeHolder=""
+                />
+
+                <button className="tp-btn px-7 py-2">Add Brand</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
