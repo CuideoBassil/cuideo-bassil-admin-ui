@@ -1,13 +1,16 @@
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import {
   useAddProductTypeMutation,
   useEditProductTypeMutation,
 } from "@/redux/product-type/productTypeApi";
 import { notifyError, notifySuccess } from "@/utils/toast";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const useProductTypeSubmit = () => {
+  const [logo, setLogo] = useState<string>("");
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
   const router = useRouter();
   // add
   const [addProductType, { data: productTypeData, isError, isLoading }] =
@@ -35,6 +38,7 @@ const useProductTypeSubmit = () => {
     try {
       const productType_data = {
         name: data?.name,
+        image: logo,
       };
       const res = await addProductType({ ...productType_data });
       if ("error" in res) {
@@ -59,6 +63,7 @@ const useProductTypeSubmit = () => {
     try {
       const productType_data = {
         name: data?.name,
+        image: logo,
       };
       const res = await editProductType({ id, data: productType_data });
       if ("error" in res) {
@@ -84,6 +89,9 @@ const useProductTypeSubmit = () => {
     register,
     handleSubmitProductType,
     handleSubmitEditProductType,
+    setLogo,
+    isSubmitted,
+    setIsSubmitted,
   };
 };
 

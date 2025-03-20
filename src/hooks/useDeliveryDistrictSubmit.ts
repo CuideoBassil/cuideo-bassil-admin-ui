@@ -1,25 +1,31 @@
 import {
-  useAddBrandMutation,
-  useEditBrandMutation,
-} from "@/redux/brand/brandApi";
+  useAddDeliveryDistrictMutation,
+  useEditDeliveryDistrictMutation,
+} from "@/redux/delivery-district/deliveryDistrictApi";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const useBrandSubmit = () => {
+const useDeliveryDistrictSubmit = () => {
   const [status, setStatus] = useState<string>("active");
   const [logo, setLogo] = useState<string>("");
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const router = useRouter();
   // add
-  const [addBrand, { data: brandData, isError, isLoading }] =
-    useAddBrandMutation();
+  const [
+    addDeliveryDistrict,
+    { data: deliveryDistrictData, isError, isLoading },
+  ] = useAddDeliveryDistrictMutation();
   // add
   const [
-    editBrand,
-    { data: brandEditData, isError: brandIsErr, isLoading: brandLoading },
-  ] = useEditBrandMutation();
+    editDeliveryDistrict,
+    {
+      data: deliveryDistrictEditData,
+      isError: deliveryDistrictIsErr,
+      isLoading: deliveryDistrictLoading,
+    },
+  ] = useEditDeliveryDistrictMutation();
 
   // react hook form
   const {
@@ -30,18 +36,13 @@ const useBrandSubmit = () => {
   } = useForm();
 
   // submit handle
-  const handleSubmitBrand = async (data: any) => {
+  const handleSubmitDeliveryDistrict = async (data: any) => {
     try {
-      const brand_data = {
+      const deliveryDistrict_data = {
         name: data?.name,
-        description: data?.description,
-        email: data?.email,
-        website: data.website,
-        location: data.location,
-        logo: logo,
-        status: status,
+        deliveryCost: data?.deliverycost,
       };
-      const res = await addBrand({ ...brand_data });
+      const res = await addDeliveryDistrict({ ...deliveryDistrict_data });
       if ("error" in res) {
         if ("data" in res.error) {
           const errorData = res.error.data as { message?: string };
@@ -50,7 +51,7 @@ const useBrandSubmit = () => {
           }
         }
       } else {
-        notifySuccess("Brand added successfully");
+        notifySuccess("DeliveryDistrict added successfully");
         setIsSubmitted(true);
         reset();
         setLogo("");
@@ -60,19 +61,17 @@ const useBrandSubmit = () => {
     }
   };
 
-  //handle Submit edit Category
-  const handleSubmitEditBrand = async (data: any, id: string) => {
+  //handle Submit edit DeliveryDistrict
+  const handleSubmitEditDeliveryDistrict = async (data: any, id: string) => {
     try {
-      const brand_data = {
+      const deliveryDistrict_data = {
         name: data?.name,
-        description: data?.description,
-        email: data?.email,
-        website: data.website,
-        location: data.location,
-        logo: logo,
-        status: status,
+        deliveryCost: data?.deliverycost,
       };
-      const res = await editBrand({ id, data: brand_data });
+      const res = await editDeliveryDistrict({
+        id,
+        data: deliveryDistrict_data,
+      });
       if ("error" in res) {
         if ("data" in res.error) {
           const errorData = res.error.data as { message?: string };
@@ -81,8 +80,8 @@ const useBrandSubmit = () => {
           }
         }
       } else {
-        notifySuccess("Brand update successfully");
-        router.push("/brands");
+        notifySuccess("DeliveryDistrict update successfully");
+        router.push("/delivery-districts");
         setIsSubmitted(true);
         reset();
       }
@@ -96,12 +95,12 @@ const useBrandSubmit = () => {
     handleSubmit,
     errors,
     setStatus,
-    handleSubmitBrand,
+    handleSubmitDeliveryDistrict,
     setLogo,
     isSubmitted,
     setIsSubmitted,
-    handleSubmitEditBrand,
+    handleSubmitEditDeliveryDistrict,
   };
 };
 
-export default useBrandSubmit;
+export default useDeliveryDistrictSubmit;

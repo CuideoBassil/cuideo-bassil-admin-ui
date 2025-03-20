@@ -6,13 +6,16 @@ import Loading from "../common/loading";
 import FormField from "./form-field-two";
 import { useGetProductTypeQuery } from "@/redux/product-type/productTypeApi";
 import useProductTypeSubmit from "@/hooks/useProductTypeSubmit";
+import CategoryImgUpload from "../category/global-img-upload";
 
 const EditProductType = ({ id }: { id: string }) => {
   const {
     errors,
     handleSubmit,
     register,
-
+    setLogo,
+    isSubmitted,
+    setIsSubmitted,
     handleSubmitEditProductType,
   } = useProductTypeSubmit();
   // get productType
@@ -41,6 +44,13 @@ const EditProductType = ({ id }: { id: string }) => {
         >
           <div className="mb-6 bg-white px-8 py-8 rounded-md">
             {/* Form Field */}
+            <CategoryImgUpload
+              isSubmitted={isSubmitted}
+              setImage={setLogo}
+              image={productType.image ? productType.image : ""}
+              setIsSubmitted={setIsSubmitted}
+              default_img={productType.image}
+            />
             <FormField
               default_val={productType.name}
               register={register}

@@ -1,17 +1,17 @@
 "use client";
 import usePagination from "@/hooks/use-pagination";
-import { useGetAllProductTypesQuery } from "@/redux/product-type/productTypeApi";
-import Image from "next/image";
+import { useGetAllDeliveryDistrictsQuery } from "@/redux/delivery-district/deliveryDistrictApi";
 import ErrorMsg from "../common/error-msg";
 import Pagination from "../ui/Pagination";
-import ProductTypeEditDelete from "./product-type-edit-del";
-const ProductTypeTables = () => {
+import DeliveryDistrictEditDelete from "./delivery-district-edit-del";
+
+const DeliveryDistrictTables = () => {
   const {
-    data: productTypes,
+    data: deliveryDistricts,
     isError,
     isLoading,
-  } = useGetAllProductTypesQuery();
-  const paginationData = usePagination(productTypes?.result || [], 10);
+  } = useGetAllDeliveryDistrictsQuery();
+  const paginationData = usePagination(deliveryDistricts?.result || [], 10);
   const { currentItems, handlePageClick, pageCount } = paginationData;
   // decide what to render
   let content = null;
@@ -22,8 +22,8 @@ const ProductTypeTables = () => {
   if (!isLoading && isError) {
     content = <ErrorMsg msg="There was an error" />;
   }
-  if (!isLoading && !isError && productTypes?.result.length === 0) {
-    content = <ErrorMsg msg="No Category Found" />;
+  if (!isLoading && !isError && deliveryDistricts?.result.length === 0) {
+    content = <ErrorMsg msg="No District Found" />;
   }
 
   if (!isLoading && !isError && currentItems) {
@@ -34,17 +34,17 @@ const ProductTypeTables = () => {
             <table className="w-full text-base text-left text-gray-500 ">
               <thead>
                 <tr className="border-b border-gray6 text-tiny">
-                  {/* <th
-                    scope="col"
-                    className="pr-8 py-3 text-tiny text-text2 uppercase font-semibold"
-                  >
-                    ID
-                  </th> */}
                   <th
                     scope="col"
                     className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px]"
                   >
                     Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[150px] text-end"
+                  >
+                    Delivery Cost
                   </th>
 
                   <th
@@ -56,34 +56,18 @@ const ProductTypeTables = () => {
                 </tr>
               </thead>
               <tbody>
-                {[...currentItems.reverse()].map((item: any) => (
+                {[...currentItems.reverse()].map((item) => (
                   <tr
                     key={item._id}
                     className="bg-white border-b border-gray6 last:border-0 text-start mx-9"
                   >
-                    {/* <td className="px-3 py-3 pl-0 font-normal text-[#55585B]">
-                      #{item._id.slice(2, 10)}
-                    </td> */}
+                    <td className="pr-8 py-5 whitespace-nowrap">{item.name}</td>{" "}
                     <td className="pr-8 py-5 whitespace-nowrap">
-                      <a href="#" className="flex items-center space-x-5">
-                        {item.image && (
-                          <Image
-                            className="w-10 h-10 rounded-full object-contain"
-                            src={item.image}
-                            alt="image"
-                            width={40}
-                            height={40}
-                          />
-                        )}
-                        <span className="font-medium text-heading text-hover-primary transition">
-                          {item.name}
-                        </span>
-                      </a>
+                      {item.deliveryCost} USD
                     </td>
-
                     <td className="px-9 py-3 text-end">
                       <div className="flex items-center justify-end space-x-2">
-                        <ProductTypeEditDelete id={item._id} />
+                        <DeliveryDistrictEditDelete id={item._id} />
                       </div>
                     </td>
                   </tr>
@@ -94,7 +78,8 @@ const ProductTypeTables = () => {
         </div>
         <div className="flex justify-between items-center flex-wrap">
           <p className="mb-0 text-tiny">
-            Showing 1-{currentItems.length} of {productTypes?.result.length}
+            Showing 1-
+            {currentItems.length} of {deliveryDistricts?.result.length}
           </p>
           <div className="pagination py-3 flex justify-end items-center pagination">
             <Pagination
@@ -113,4 +98,4 @@ const ProductTypeTables = () => {
   );
 };
 
-export default ProductTypeTables;
+export default DeliveryDistrictTables;

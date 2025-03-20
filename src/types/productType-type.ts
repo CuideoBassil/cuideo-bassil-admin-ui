@@ -1,6 +1,7 @@
 export interface ProductType {
   _id: string;
   name: string;
+  image: string;
 }
 
 export interface ProductTypeResponse {
@@ -15,6 +16,7 @@ export interface ProductTypeDelResponse {
 
 export interface IAddProductType {
   name: string;
+  image: string;
 }
 
 export interface IProductTypeAddResponse {

@@ -137,7 +137,6 @@ const useProductSubmit = () => {
 
   // Edit Product Function
   const handleEditProduct = async (data: any, id: string) => {
-    console.log("data", data);
     const productData = {
       sku: data.SKU,
       image: img,

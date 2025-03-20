@@ -13,9 +13,9 @@ const EditBrand = ({ id }: { id: string }) => {
     errors,
     handleSubmit,
     register,
-    setLogo,
     setStatus,
     handleSubmitEditBrand,
+    setLogo,
     isSubmitted,
     setIsSubmitted,
   } = useBrandSubmit();

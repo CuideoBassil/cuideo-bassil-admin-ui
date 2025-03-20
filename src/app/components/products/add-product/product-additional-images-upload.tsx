@@ -28,7 +28,6 @@ const ProductAdditionalImagesUpload = ({
   // Sync default images into the component state if available
   useEffect(() => {
     if (default_images?.length > 0) {
-      console.log("default_images: ", default_images);
       setImgUrls((prev) => [...default_images, ...prev]); // Add default images to the front or back
     }
   }, [default_images]);

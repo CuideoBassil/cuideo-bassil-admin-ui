@@ -9,9 +9,9 @@ const AddBrand = () => {
     errors,
     handleSubmit,
     register,
-    setLogo,
     setStatus,
     handleSubmitBrand,
+    setLogo,
     isSubmitted,
     setIsSubmitted,
   } = useBrandSubmit();
