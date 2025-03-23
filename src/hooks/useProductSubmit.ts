@@ -67,7 +67,7 @@ const useProductSubmit = () => {
     reset,
     formState: { errors },
     control,
-  } = useForm();
+  } = useForm({ mode: "onSubmit", reValidateMode: "onSubmit" });
 
   // Reset Form Function
   const resetForm = () => {

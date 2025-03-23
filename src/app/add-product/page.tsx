@@ -13,7 +13,7 @@ const AddProduct = () => {
 
         {/* add a product start */}
         <div className="grid grid-cols-12">
-          <div className="col-span-12 2xl:col-span-10">
+          <div className="col-span-12">
             <ProductSubmit />
           </div>
         </div>

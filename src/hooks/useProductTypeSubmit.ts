@@ -35,6 +35,7 @@ const useProductTypeSubmit = () => {
 
   // submit handle
   const handleSubmitProductType = async (data: any) => {
+    console.log(data);
     try {
       const productType_data = {
         name: data?.name,

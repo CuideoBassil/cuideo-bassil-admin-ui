@@ -7,7 +7,6 @@ import ProductColor from "./product-color";
 import ProductImgUpload from "./product-img-upload";
 import ProductTypeBrand from "./product-type-brand";
 import Tags from "./tags";
-import { useGetAllTagsQuery } from "@/redux/tag/tagApi";
 
 const ProductSubmit = () => {
   const {
