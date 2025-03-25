@@ -1,22 +1,25 @@
-import React from "react";
-import Datepicker from "react-tailwindcss-datepicker";
+import React, { useEffect, useState } from "react";
+import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
+
+type IDateType = {
+  startDate: Date | null;
+  endDate: Date | null;
+};
 
 type IPropType = {
-  offerDate: {
-    startDate: string | null;
-    endDate: string | null;
-  };
-  setOfferDate: React.Dispatch<
-    React.SetStateAction<{
-      startDate: string | null;
-      endDate: string | null;
-    }>
-  >;
-  defaultValue?: {
-    startDate: string | null;
-    endDate: string | null;
-  };
+  offerDate: IDateType;
+  setOfferDate: React.Dispatch<React.SetStateAction<IDateType>>;
+  defaultValue?: { startDate: string | null; endDate: string | null };
   isRange?: boolean;
+};
+
+// Helper function to adjust dates
+const adjustDateToStart = (date: Date) => {
+  return new Date(date.setHours(0, 0, 0, 0)); // Set to 00:00:00
+};
+
+const adjustDateToEnd = (date: Date) => {
+  return new Date(date.setHours(23, 59, 59, 999)); // Set to 23:59:59
 };
 
 const OfferDatePicker = ({
@@ -25,32 +28,38 @@ const OfferDatePicker = ({
   defaultValue,
   isRange = true,
 }: IPropType) => {
-  const handleValueChange = (newValue: any) => {
-    setOfferDate(newValue);
-  };
+  const [internalDate, setInternalDate] = useState<DateValueType>(offerDate);
 
-  // Convert the startDate and endDate to Date objects if they are strings
-  const convertToDate = (date: string | null) => {
-    return date ? new Date(date) : null;
-  };
+  // Sync defaultValue on mount
+  useEffect(() => {
+    if (defaultValue) {
+      const start = defaultValue.startDate
+        ? adjustDateToStart(new Date(defaultValue.startDate))
+        : null;
+      const end = defaultValue.endDate
+        ? adjustDateToEnd(new Date(defaultValue.endDate))
+        : null;
 
-  const formattedOfferDate = {
-    startDate: convertToDate(offerDate.startDate),
-    endDate: convertToDate(offerDate.endDate),
-  };
+      setInternalDate({ startDate: start, endDate: end });
+      setOfferDate({ startDate: start, endDate: end });
+    }
+  }, [defaultValue, setOfferDate]);
 
-  const formattedDefaultValue = defaultValue
-    ? {
-        startDate: convertToDate(defaultValue.startDate),
-        endDate: convertToDate(defaultValue.endDate),
-      }
-    : null;
+  const handleValueChange = (newValue: DateValueType) => {
+    if (!newValue || !newValue.startDate || !newValue.endDate) return;
+
+    const start = adjustDateToStart(new Date(newValue.startDate));
+    const end = adjustDateToEnd(new Date(newValue.endDate));
+
+    setInternalDate({ startDate: start, endDate: end });
+    setOfferDate({ startDate: start, endDate: end });
+  };
 
   return (
     <Datepicker
       useRange={isRange}
       inputClassName="input w-full h-[44px] rounded-md border border-gray6 px-6 text-base"
-      value={formattedDefaultValue || formattedOfferDate}
+      value={internalDate}
       onChange={handleValueChange}
     />
   );
