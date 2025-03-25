@@ -5,7 +5,7 @@ import {
 } from "@/redux/product/productApi";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import slugify from "slugify";
 
@@ -37,7 +37,10 @@ const useProductSubmit = () => {
   const [price, setPrice] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(0);
+
+  // Brand state, ensuring it has name and id properties
   const [brand, setBrand] = useState<IBrand>({ name: "", id: "" });
+
   const [color, setColor] = useState<IColor>({ name: "", code: "" });
   const [category, setCategory] = useState<ICategory>({ name: "", id: "" });
   const [status, setStatus] = useState<Status>("in-stock");
@@ -81,7 +84,7 @@ const useProductSubmit = () => {
     setPrice(0);
     setDiscount(0);
     setQuantity(0);
-    setBrand({ name: "", id: "" });
+    setBrand({ name: "", id: "" }); // Reset brand here
     setCategory({ name: "", id: "" });
     setStatus("in-stock");
     setProductType({ name: "", id: "" });
@@ -108,7 +111,7 @@ const useProductSubmit = () => {
       price: +data.price,
       discount: +data.discount_price,
       quantity: +data.quantity,
-      brand,
+      brand, // Ensure brand is passed correctly
       category,
       color,
       status: (data.quantity > 0 ? "in-stock" : "out-of-stock") as Status,
@@ -149,7 +152,7 @@ const useProductSubmit = () => {
       price: +data.price,
       discount: +data.discount_price,
       quantity: +data.quantity,
-      brand,
+      brand, // Ensure brand is passed here as well
       category,
       color,
       status: (data.quantity > 0 ? "in-stock" : "out-of-stock") as Status,

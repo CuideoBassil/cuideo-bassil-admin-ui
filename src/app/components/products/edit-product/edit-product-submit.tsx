@@ -53,8 +53,7 @@ const EditProductSubmit = ({ id }: { id: string }) => {
     content = (
       <form
         onSubmit={handleSubmit(async (data) => {
-          await handleEditProduct(data, id); // Handle submission logic
-          // After submission, invalidate the query to refetch product data
+          await handleEditProduct(data, id);
           refetch();
         })}
       >
@@ -118,12 +117,14 @@ const EditProductSubmit = ({ id }: { id: string }) => {
                 bottomTitle="Set the product discounted price."
                 register={register}
                 errors={errors}
+                defaultValue={productDetails.discount}
               />
               <div>
                 <p className="mb-0 text-base text-black capitalize">
                   start and end date
                 </p>
                 <OfferDatePicker
+                  defaultValue={productDetails.offerDate}
                   offerDate={offerDate}
                   setOfferDate={setOfferDate}
                 />
@@ -139,12 +140,12 @@ const EditProductSubmit = ({ id }: { id: string }) => {
             register={register}
             errors={errors}
             control={control}
-            setSelectBrand={setBrand}
-            setSelectCategory={setCategory}
-            setSelectProductType={setProductType}
-            selectBrand={brand}
-            selectCategory={category}
-            selectProductType={productType}
+            setBrand={setBrand}
+            setCategory={setCategory}
+            setProductType={setProductType}
+            brand={brand}
+            category={category}
+            productType={productType}
             default_value={{
               brand: productDetails.brand.name,
               productType: productDetails.productType.name,

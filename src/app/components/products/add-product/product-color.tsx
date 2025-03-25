@@ -14,10 +14,13 @@ type IPropType = {
 
 const ProductColor = ({ defaul_value, color, setColor }: IPropType) => {
   useEffect(() => {
-    if (defaul_value && !color.name && !color.code) {
+    if (
+      defaul_value &&
+      (color.name !== defaul_value.name || color.code !== defaul_value.code)
+    ) {
       setColor({ name: defaul_value.name, code: defaul_value.code });
     }
-  }, [defaul_value, color, setColor]);
+  }, [defaul_value, setColor]);
 
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6">

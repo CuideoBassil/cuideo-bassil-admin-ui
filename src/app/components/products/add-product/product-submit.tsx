@@ -108,12 +108,12 @@ const ProductSubmit = () => {
           register={register}
           errors={errors}
           control={control}
-          setSelectBrand={setBrand}
-          setSelectCategory={setCategory}
-          setSelectProductType={setProductType}
-          selectBrand={brand}
-          selectCategory={category}
-          selectProductType={productType}
+          setBrand={setBrand}
+          setCategory={setCategory}
+          setProductType={setProductType}
+          brand={brand}
+          category={category}
+          productType={productType}
         />
         <ProductColor color={color} setColor={setColor} />
         <ProductImgUpload

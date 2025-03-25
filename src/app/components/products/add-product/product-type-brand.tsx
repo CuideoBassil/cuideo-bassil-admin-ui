@@ -1,6 +1,5 @@
 import useBrandSubmit from "@/hooks/useBrandSubmit";
 import useCategorySubmit from "@/hooks/useCategorySubmit";
-import useProductTypeSubmit from "@/hooks/useProductTypeSubmit";
 import { useGetAllBrandsQuery } from "@/redux/brand/brandApi";
 import { useGetCategoriesByProductTypeQuery } from "@/redux/category/categoryApi";
 import { useGetAllProductTypesQuery } from "@/redux/product-type/productTypeApi";
@@ -19,18 +18,16 @@ type IPropType = {
   register: UseFormRegister<any>;
   errors: FieldErrors<any>;
   control: Control;
-  setSelectProductType: React.Dispatch<
+  setProductType: React.Dispatch<
     React.SetStateAction<{ name: string; id: string }>
   >;
-  setSelectBrand: React.Dispatch<
+  setBrand: React.Dispatch<React.SetStateAction<{ name: string; id: string }>>;
+  setCategory: React.Dispatch<
     React.SetStateAction<{ name: string; id: string }>
   >;
-  setSelectCategory: React.Dispatch<
-    React.SetStateAction<{ name: string; id: string }>
-  >;
-  selectProductType: { name: string; id: string };
-  selectBrand: { name: string; id: string };
-  selectCategory: { name: string; id: string };
+  productType: { name: string; id: string };
+  brand: { name: string; id: string };
+  category: { name: string; id: string };
   default_value?: { brand: string; productType: string; category: string };
 };
 
@@ -38,6 +35,7 @@ type IPropType = {
 const SelectInput = ({
   label,
   name,
+  placeholder,
   options,
   value,
   onChange,
@@ -50,6 +48,7 @@ const SelectInput = ({
 }: {
   label: string;
   name: string;
+  placeholder?: string;
   options: { id: string; name: string }[];
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -92,6 +91,7 @@ const SelectInput = ({
         name={name}
         value={value}
         onChange={onChange}
+        placeholder={placeholder}
         className="w-full bg-white border border-blue-100 rounded-md p-3 text-gray-700 focus:outline-none focus:border-blue-500"
       >
         {!defaultValue && (
@@ -110,15 +110,14 @@ const SelectInput = ({
 
 const ProductTypeBrand = ({
   errors,
-  selectBrand,
-  setSelectBrand,
-  setSelectCategory,
-  selectCategory,
-  setSelectProductType,
-  selectProductType,
+  brand,
+  setBrand,
+  setCategory,
+  category,
+  setProductType,
+  productType,
   default_value,
 }: IPropType) => {
-  const [productTypeModal, setProductTypeModal] = useState(false);
   const [categoryModal, setCategoryModal] = useState(false);
   const [brandModal, setBrandModal] = useState(false);
   const {
@@ -137,45 +136,51 @@ const ProductTypeBrand = ({
     data: categoryData,
     isError: categoryError,
     isLoading: categoryLoading,
-  } = useGetCategoriesByProductTypeQuery(
-    default_value ? default_value.productType : selectProductType.name,
-    {
-      skip: !!!default_value && !selectProductType.name,
+  } = useGetCategoriesByProductTypeQuery(productType.name, {
+    skip: !productType.name,
+  });
+  useEffect(() => {
+    if (productType.name !== default_value?.productType) {
+      if (!categoryLoading && categoryData?.data?.length) {
+        setCategory({
+          name: categoryData.data[0].parent,
+          id: categoryData.data[0]._id,
+        });
+      } else {
+        setCategory({ name: "", id: "" });
+      }
     }
-  );
+  }, [productType, categoryData, categoryLoading]);
 
   useEffect(() => {
     if (default_value) {
-      if (productTypes?.result) {
+      if (productTypes?.result && !productType.name) {
         const defaultProductType = productTypes.result.find(
           (pt) => pt.name === default_value.productType
         );
-        if (
-          defaultProductType &&
-          defaultProductType._id !== selectProductType.id
-        ) {
-          setSelectProductType({
+        if (defaultProductType && defaultProductType._id !== productType.id) {
+          setProductType({
             id: defaultProductType._id,
             name: defaultProductType.name,
           });
         }
       }
 
-      if (brandsData?.result) {
+      if (brandsData?.result && !brand.name) {
         const defaultBrand = brandsData.result.find(
           (b) => b.name === default_value.brand
         );
-        if (defaultBrand && defaultBrand._id !== selectBrand.id) {
-          setSelectBrand({ id: defaultBrand._id, name: defaultBrand.name });
+        if (defaultBrand && defaultBrand._id !== brand.id) {
+          setBrand({ id: defaultBrand._id, name: defaultBrand.name });
         }
       }
 
-      if (categoryData?.data) {
+      if (categoryData?.data && !category.name) {
         const defaultCategory = categoryData.data.find(
           (cat) => cat.parent === default_value.category
         );
-        if (defaultCategory && defaultCategory._id !== selectCategory.id) {
-          setSelectCategory({
+        if (defaultCategory && defaultCategory._id !== category.id) {
+          setCategory({
             id: defaultCategory._id,
             name: defaultCategory.parent,
           });
@@ -187,21 +192,10 @@ const ProductTypeBrand = ({
     productTypes,
     brandsData,
     categoryData,
-    selectProductType.id,
-    selectBrand.id,
-    selectCategory.id,
-    setSelectProductType,
-    setSelectBrand,
-    setSelectCategory,
+    productType,
+    brand,
+    category,
   ]);
-  const {
-    handleSubmit: handleSubmitPT,
-    register: registerPT,
-    handleSubmitProductType,
-    setLogo: setLogoPT,
-    isSubmitted: isSubmittedPT,
-    setIsSubmitted: setIsSubmittedPT,
-  } = useProductTypeSubmit();
 
   const {
     handleSubmit: handleSubmitBR,
@@ -233,12 +227,12 @@ const ProductTypeBrand = ({
               name: pt.name,
             })) || []
           }
-          value={selectProductType.name}
+          value={productType.name}
           onChange={(e) => {
             const selected = productTypes?.result?.find(
               (pt) => pt.name === e.target.value
             );
-            setSelectProductType({
+            setProductType({
               id: selected?._id || "",
               name: e.target.value,
             });
@@ -248,7 +242,6 @@ const ProductTypeBrand = ({
           isLoading={productTypeLoading}
           isError={productTypeError}
           errorMessage="There was an error"
-          // handleOnClick={() => setProductTypeModal(true)}
         />
         {categoryData?.data && (
           <SelectInput
@@ -261,18 +254,20 @@ const ProductTypeBrand = ({
                 name: cat.parent,
               })) || []
             }
-            value={selectCategory.name}
+            value={category.name}
             onChange={(e) => {
               const selected = categoryData?.data?.find(
                 (cat: ICategoryItem) => cat.parent === e.target.value
               );
-              setSelectCategory({
+              setCategory({
                 id: selected?._id || "",
                 name: e.target.value,
               });
             }}
             error={errors?.category?.message as string}
-            defaultValue={default_value?.category}
+            defaultValue={
+              category.name !== "" ? default_value?.category : undefined
+            }
             isLoading={categoryLoading}
             isError={categoryError}
             errorMessage="There was an error"
@@ -286,12 +281,12 @@ const ProductTypeBrand = ({
           options={
             brandsData?.result?.map((b) => ({ id: b._id, name: b.name })) || []
           }
-          value={selectBrand.name}
+          value={brand.name}
           onChange={(e) => {
             const selected = brandsData?.result?.find(
               (b) => b.name === e.target.value
             );
-            setSelectBrand({ id: selected?._id || "", name: e.target.value });
+            setBrand({ id: selected?._id || "", name: e.target.value });
           }}
           error={errors?.brand?.message as string}
           defaultValue={default_value?.brand}
@@ -300,47 +295,7 @@ const ProductTypeBrand = ({
           errorMessage="There was an error"
         />
       </div>
-      {/* {productTypeModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-5 rounded-md shadow-md w-1/3 relative">
-            <button
-              onClick={() => setProductTypeModal(false)}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg"
-            >
-              &times;
-            </button>
 
-            <h2 className="text-lg font-bold mb-3">Add New Product Type</h2>
-            <div className="gap-6">
-             
-              <div className="mb-6 bg-white px-8 py-8 rounded-md">
-                <GlobalImgUpload
-                  isSubmitted={isSubmittedPT}
-                  setImage={setLogoPT}
-                  image=""
-                  setIsSubmitted={setIsSubmittedPT}
-                />
-                <FormField
-                  register={registerPT}
-                  errors={errors}
-                  title="name"
-                  isRequired={true}
-                  placeHolder={""}
-                />
-                <button
-                  className="tp-btn px-7 py-2"
-                  onClick={handleSubmitPT((data, e) => {
-                    e?.preventDefault();
-                    handleSubmitProductType(data);
-                  })}
-                >
-                  Add Product Type
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
       {categoryModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50  z-[9999]">
           <div className="bg-white p-5 rounded-md shadow-md w-1/3 relative">
