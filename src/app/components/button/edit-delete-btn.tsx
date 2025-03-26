@@ -51,16 +51,48 @@ const EditDeleteBtn = ({ id }: { id: string }) => {
   const handleUpdate = async () => {
     const data = [
       {
-        sku: "555",
-        quantity: 0,
-      },
-      {
-        sku: "123",
+        sku: "AC13INV/G",
         quantity: 1,
       },
       {
-        sku: "777",
-        quantity: 30,
+        sku: "VC20M2510WB-OT",
+        quantity: 1,
+      },
+      {
+        sku: "FFB8259SBS",
+        quantity: 1,
+      },
+      {
+        sku: "MG5930/15",
+        quantity: 1,
+      },
+      {
+        sku: "FR4091GB",
+        quantity: 0,
+      },
+      {
+        sku: "CD9HA",
+        quantity: 1,
+      },
+      {
+        sku: "K90TDBL",
+        quantity: 1,
+      },
+      {
+        sku: "WM709TL",
+        quantity: 1,
+      },
+      {
+        sku: "WM709TLA",
+        quantity: 1,
+      },
+      {
+        sku: "NGC9522S",
+        quantity: 1,
+      },
+      {
+        sku: "WM12DW",
+        quantity: 1,
       },
     ];
     updateProductQuantity({ data });

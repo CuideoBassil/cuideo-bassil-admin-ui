@@ -1,10 +1,19 @@
 import { IProduct } from "@/types/product-type";
 import Image from "next/image";
-import { Rating } from "react-simple-star-rating";
 import EditDeleteBtn from "../../button/edit-delete-btn";
 const ProductTableItem = ({ product }: { product: IProduct }) => {
-  const { _id, title, sku, price, reviews, status, brand, category, quantity } =
-    product || {};
+  const {
+    _id,
+    title,
+    sku,
+    price,
+    reviews,
+    status,
+    brand,
+    category,
+    quantity,
+    discount,
+  } = product || {};
   const averageRating =
     reviews && reviews?.length > 0
       ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
@@ -31,12 +40,15 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
         </div>
       </td>
       <td className="px-3 py-3 font-normal text-[#55585B] ">{sku}</td>
-      <td className="px-3 py-3 font-normal text-[#55585B]">${price}</td>
+      <td className="px-3 py-3 font-normal text-[#55585B]">${price}</td>{" "}
+      <td className="px-3 py-3 font-normal text-[#55585B]">
+        {discount && discount > 0 ? `$${discount}` : "-"}
+      </td>
       {/* <td className="px-3 py-3 font-normal  text-[#55585B] ">
         {description.slice(0, 45)}
         {description.length > 45 && "..."}
       </td> */}
-      <td className="px-3 py-3 font-normal text-heading ">
+      {/* <td className="px-3 py-3 font-normal text-heading ">
         <div className="flex justify-end items-center space-x-1 text-tiny">
           <span className="text-yellow flex items-center space-x-1">
             <Rating
@@ -47,10 +59,10 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
             />
           </span>
         </div>
-      </td>
+      </td> */}
       <td className="px-3 py-3 font-normal text-[#55585B] ">{brand.name}</td>
       <td className="px-3 py-3 font-normal text-[#55585B] ">{category.name}</td>
-      <td className="px-3 py-3 ">
+      {/* <td className="px-3 py-3 ">
         <span
           className={`text-[10px] p-1 rounded-md   ${
             status === "in-stock"
@@ -61,8 +73,7 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
           {status === "in-stock" ? "In Stock" : "Out Of Stock"}
         </span>
       </td>
-      <td className="px-3 py-3 font-normal text-[#55585B] ">{quantity}</td>
-
+      <td className="px-3 py-3 font-normal text-[#55585B] ">{quantity}</td> */}
       <td className="px-9 py-3 ">
         <div className="flex items-center justify-end space-x-2">
           <EditDeleteBtn id={_id} />

@@ -46,8 +46,14 @@ const OfferDatePicker = ({
   }, [defaultValue, setOfferDate]);
 
   const handleValueChange = (newValue: DateValueType) => {
-    if (!newValue || !newValue.startDate || !newValue.endDate) return;
+    // If the user clears the date picker (i.e., when newValue is null or has no valid startDate/endDate)
+    if (!newValue || !newValue.startDate || !newValue.endDate) {
+      setInternalDate({ startDate: null, endDate: null });
+      setOfferDate({ startDate: null, endDate: null });
+      return;
+    }
 
+    // Adjust the dates if valid date values are present
     const start = adjustDateToStart(new Date(newValue.startDate));
     const end = adjustDateToEnd(new Date(newValue.endDate));
 

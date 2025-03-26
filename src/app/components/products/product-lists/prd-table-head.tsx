@@ -20,18 +20,18 @@ const ProductTableHead = () => {
         >
           Price
         </th>
-        {/* <th
-          scope="col"
-          className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  "
-        >
-          Description
-        </th> */}
         <th
           scope="col"
           className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  "
         >
-          Rating
+          Discount
         </th>
+        {/* <th
+          scope="col"
+          className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  "
+        >
+          Rating
+        </th> */}
         <th
           scope="col"
           className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  "
@@ -44,7 +44,7 @@ const ProductTableHead = () => {
         >
           Category
         </th>
-        <th
+        {/* <th
           scope="col"
           className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  "
         >
@@ -55,7 +55,7 @@ const ProductTableHead = () => {
           className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  "
         >
           Qty
-        </th>
+        </th> */}
         <th
           scope="col"
           className="px-9 py-3 text-tiny text-text2 uppercase  font-semibold w-[12%] "

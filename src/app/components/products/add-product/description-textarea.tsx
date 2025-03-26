@@ -19,7 +19,7 @@ const DescriptionTextarea = ({ register, errors, defaultValue }: IPropType) => {
             required: `description is required!`,
           })}
           placeholder="Product Description"
-          className="input min-h-[120px]  w-full py-3 text-base"
+          className="input min-h-[300px]  w-full py-3 text-base"
           defaultValue={defaultValue}
         />
         <ErrorMsg msg={(errors?.description?.message as string) || ""} />
