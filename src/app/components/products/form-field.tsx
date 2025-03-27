@@ -31,6 +31,7 @@ export default function FormField({
         {...register(title.split(" ").join("_"), {
           required: isRequired ? `${title} is required!` : false,
         })}
+        onWheel={(e) => e.currentTarget.blur()}
         className="input w-full h-[44px] rounded-md border border-gray6 px-6 text-base"
         type={type}
         autoComplete="off"
