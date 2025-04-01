@@ -16,7 +16,9 @@ type IProps = {
 };
 
 export default function Sidebar({ sideMenu, setSideMenu }: IProps) {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector(
+    (state: RootState) => state.auth as { user: { role: string } }
+  );
 
   const [isDropdown, setIsDropDown] = useState<string>("");
   const dispatch = useDispatch();
@@ -66,8 +68,8 @@ export default function Sidebar({ sideMenu, setSideMenu }: IProps) {
             </div>
             <div className="px-4 py-5">
               <ul>
-                {filteredMenuItems.map((menu) => (
-                  <li key={menu.id}>
+                {filteredMenuItems.map((menu, index) => (
+                  <li key={index}>
                     {!menu.subMenus && menu.title !== "Online store" && (
                       <Link
                         href={menu.link}

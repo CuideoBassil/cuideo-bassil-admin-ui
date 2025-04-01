@@ -1,13 +1,12 @@
 "use client";
-import { useAdminChangePasswordMutation} from "@/redux/auth/authApi";
-import React from "react";
+import { useAdminChangePasswordMutation } from "@/redux/auth/authApi";
+import { RootState } from "@/redux/store";
+import { notifyError, notifySuccess } from "@/utils/toast";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import * as Yup from "yup";
 import ErrorMsg from "../common/error-msg";
-import { notifyError, notifySuccess } from "@/utils/toast";
 
 // schema
 const schema = Yup.object().shape({
@@ -35,7 +34,7 @@ const ProfileChangePass = () => {
   // on submit
   const onSubmit = async (data: { password: string; newPassword: string }) => {
     if (user) {
-     const res =  await changePassword({
+      const res = await changePassword({
         email: user.email,
         oldPass: data.password,
         newPass: data.newPassword,
@@ -63,6 +62,7 @@ const ProfileChangePass = () => {
             required: `Password is required!`,
           })}
           name="password"
+          autoComplete="off"
           className="input w-full h-[49px] rounded-md border border-gray6 px-6 text-base text-black"
           type="password"
           placeholder="Current Password"
@@ -76,6 +76,7 @@ const ProfileChangePass = () => {
             required: `New Password is required!`,
           })}
           name="newPassword"
+          autoComplete="off"
           className="input w-full h-[49px] rounded-md border border-gray6 px-6 text-base text-black"
           type="password"
           placeholder="New Password"
@@ -87,6 +88,7 @@ const ProfileChangePass = () => {
         <input
           {...register("confirmPassword")}
           name="confirmPassword"
+          autoComplete="off"
           className="input w-full h-[49px] rounded-md border border-gray6 px-6 text-base text-black"
           type="password"
           placeholder="Confirm Password"

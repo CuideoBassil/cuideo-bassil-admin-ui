@@ -44,6 +44,7 @@ const ProfileImage = ({ setProfileImg, updateData }: IPropType) => {
             height={142}
             alt="profile-img"
             style={{ objectFit: "cover" }}
+            priority={true}
           />
         )}
         <input

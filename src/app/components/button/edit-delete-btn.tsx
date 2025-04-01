@@ -52,7 +52,7 @@ const EditDeleteBtn = ({ id }: { id: string }) => {
     const data = [
       {
         sku: "AC13INV/G",
-        quantity: 1,
+        quantity: 0,
       },
       {
         sku: "VC20M2510WB-OT",
@@ -80,7 +80,7 @@ const EditDeleteBtn = ({ id }: { id: string }) => {
       },
       {
         sku: "WM709TL",
-        quantity: 1,
+        quantity: 0,
       },
       {
         sku: "WM709TLA",
