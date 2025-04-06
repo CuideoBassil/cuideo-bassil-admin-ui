@@ -48,53 +48,36 @@ const EditDeleteBtn = ({ id }: { id: string }) => {
     });
   };
 
+  function shuffleArray(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+  }
   const handleUpdate = async () => {
-    const data = [
-      {
-        sku: "AC13INV/G",
-        quantity: 0,
-      },
-      {
-        sku: "VC20M2510WB-OT",
-        quantity: 1,
-      },
-      {
-        sku: "FFB8259SBS",
-        quantity: 1,
-      },
-      {
-        sku: "MG5930/15",
-        quantity: 1,
-      },
-      {
-        sku: "FR4091GB",
-        quantity: 0,
-      },
-      {
-        sku: "CD9HA",
-        quantity: 1,
-      },
-      {
-        sku: "K90TDBL",
-        quantity: 1,
-      },
-      {
-        sku: "WM709TL",
-        quantity: 0,
-      },
-      {
-        sku: "WM709TLA",
-        quantity: 1,
-      },
-      {
-        sku: "NGC9522S",
-        quantity: 1,
-      },
-      {
-        sku: "WM12DW",
-        quantity: 1,
-      },
-    ];
+    const data = Array.from({ length: 2000 }, (_, i) => ({
+      sku: `SKU${i + 1}`,
+      quantity: Math.floor(Math.random() * 100) + 1, // Random quantity between 1 and 100
+    }));
+    shuffleArray(data); // Shuffle the array to randomize the order
+    // const data = [
+    //   {
+    //     sku: "D3",
+    //     quantity: 17,
+    //   },
+    //   {
+    //     sku: "D4",
+    //     quantity: 14,
+    //   },
+    //   {
+    //     sku: "DVDQ08",
+    //     quantity: 6,
+    //   },
+    //   {
+    //     sku: "DF400",
+    //     quantity: 9,
+    //   },
+    // ];
     updateProductQuantity({ data });
   };
 

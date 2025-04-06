@@ -1,7 +1,7 @@
 "use client";
-import Wrapper from "@/layout/wrapper";
 import Breadcrumb from "@/app/components/breadcrumb/breadcrumb";
 import EditProductSubmit from "@/app/components/products/edit-product/edit-product-submit";
+import Wrapper from "@/layout/wrapper";
 
 const EditProduct = ({ params }: { params: { id: string } }) => {
   return (
@@ -13,7 +13,7 @@ const EditProduct = ({ params }: { params: { id: string } }) => {
 
         {/* add a product start */}
         <div className="grid grid-cols-12">
-          <div className="col-span-12 2xl:col-span-10">
+          <div className="col-span-12">
             <EditProductSubmit id={params.id} />
           </div>
         </div>

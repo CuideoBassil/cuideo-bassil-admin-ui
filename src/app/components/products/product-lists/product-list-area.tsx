@@ -3,7 +3,7 @@ import usePagination from "@/hooks/use-pagination";
 import { useGetAllProductsQuery } from "@/redux/product/productApi";
 import { Search } from "@/svg";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ErrorMsg from "../../common/error-msg";
 import Pagination from "../../ui/Pagination";
 import ProductTableHead from "./prd-table-head";
@@ -13,7 +13,19 @@ const ProductListArea = () => {
   const { data: products, isError, isLoading } = useGetAllProductsQuery();
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectValue, setSelectValue] = useState<string>("");
-  const [pageSize, setPageSize] = useState(15);
+
+  // This part replaces your current useState and adds persistence logic
+  const [pageSize, setPageSize] = useState<number>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("productPageSize");
+      return stored ? Number(stored) : 15;
+    }
+    return 15;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("productPageSize", String(pageSize));
+  }, [pageSize]);
 
   let filteredProducts = products?.data ? [...products.data] : [];
 
