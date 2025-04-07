@@ -17,6 +17,7 @@ const presetColors: IColorType[] = [
   { name: "Black", code: "#000000" },
   { name: "White", code: "#FFFFFF" },
   { name: "Silver", code: "#C0C0C0" },
+  { name: "Grey", code: "#4A4A4A" },
   { name: "Brown", code: "#964B00" },
   { name: "Yellow", code: "#FFFF00" },
   { name: "Red", code: "#FF0000" },
@@ -32,7 +33,7 @@ const ProductColor = ({ defaul_value, color, setColor }: IPropType) => {
     ) {
       setColor({ name: defaul_value.name, code: defaul_value.code });
     }
-  }, [defaul_value, setColor]);
+  }, [defaul_value, setColor, color]);
 
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6">
@@ -64,8 +65,8 @@ const ProductColor = ({ defaul_value, color, setColor }: IPropType) => {
             </div>
             {/* Preset Color Boxes */}
             <div className="flex flex-wrap gap-6 mb-4">
-              {presetColors.map((preset) => (
-                <div>
+              {presetColors.map((preset, index) => (
+                <div key={index}>
                   <div
                     key={preset.name}
                     className={`w-8 h-8 rounded border-2 cursor-pointer`}

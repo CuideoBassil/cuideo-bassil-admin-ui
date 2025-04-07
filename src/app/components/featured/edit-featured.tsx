@@ -33,7 +33,7 @@ const EditFeatured = ({ id }: { id: string }) => {
       setHex(featured.background);
       setSection(featured.section);
     }
-  }, [featured]);
+  }, [featured, isError, setHex, setSection]);
   // decide to render
   let content = null;
   if (isLoading) {

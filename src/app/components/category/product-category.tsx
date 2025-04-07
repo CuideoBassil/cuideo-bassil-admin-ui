@@ -44,7 +44,7 @@ export default function ProductCategory({
       setParent(parent);
       setChildren(children);
     }
-  }, []);
+  }, [default_value, setCategory, setParent, setChildren]);
 
   // handleCategory
   const handleCategory = (value: string, title: string) => {

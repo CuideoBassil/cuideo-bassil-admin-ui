@@ -150,7 +150,13 @@ const ProductTypeBrand = ({
         setCategory({ name: "", id: "" });
       }
     }
-  }, [productType, categoryData, categoryLoading]);
+  }, [
+    productType,
+    categoryData,
+    categoryLoading,
+    setCategory,
+    default_value?.productType,
+  ]);
 
   useEffect(() => {
     if (default_value) {
@@ -195,6 +201,9 @@ const ProductTypeBrand = ({
     productType,
     brand,
     category,
+    setProductType,
+    setBrand,
+    setCategory,
   ]);
 
   const {

@@ -1,5 +1,6 @@
 "use client";
 import useUploadImage from "@/hooks/useUploadImg";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Loading from "../../common/loading";
 
@@ -65,10 +66,12 @@ const ProductAdditionalImagesUpload = ({
       <div className="flex flex-wrap items-center justify-start gap-2">
         {imgUrls.map((url, index) => (
           <div key={index} className="relative">
-            <img
+            <Image
               src={url}
               alt={`uploaded-img-${index}`}
-              className="w-20 h-20 object-cover rounded-md"
+              width={80}
+              height={80}
+              className="object-cover rounded-md"
             />
             <button
               onClick={() => removeImage(index)}
