@@ -4,7 +4,7 @@ import { Search } from "@/svg";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import ErrorMsg from "../../common/error-msg";
-import Pagination from "../../ui/Pagination";
+import ServerPagination from "../../ui/ServerPagination";
 import ProductTableHead from "./prd-table-head";
 import ProductTableItem from "./prd-table-item";
 
@@ -105,7 +105,7 @@ const ProductListArea = () => {
           </p>
           <div className="flex items-center space-x-4">
             <div className="pagination py-3 flex justify-end items-center mx-8">
-              <Pagination
+              <ServerPagination
                 items={Array(productsData.totalCount).fill(0)}
                 countOfPage={pageSize}
                 currPage={currPage}
