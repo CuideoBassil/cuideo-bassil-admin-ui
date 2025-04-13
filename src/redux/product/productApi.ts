@@ -95,6 +95,25 @@ export const authApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["UpdateProductQuantity"],
     }),
+
+    getFilteredPaginatedProducts: builder.query({
+      query: ({ skip = 0, take = 12, search, status }) => {
+        const params = new URLSearchParams();
+        params.append("skip", skip.toString());
+        params.append("take", take.toString());
+
+        if (search) {
+          params.append("search", search);
+        }
+
+        if (status) {
+          params.append("status", status);
+        }
+
+        return `/api/product/filtered/paginated?${params.toString()}`;
+      },
+      providesTags: ["FilteredPaginatedProducts"],
+    }),
   }),
 });
 
@@ -107,4 +126,5 @@ export const {
   useGetStockOutProductsQuery,
   useDeleteProductMutation,
   useUpdateProductQuantityMutation,
+  useGetFilteredPaginatedProductsQuery,
 } = authApi;

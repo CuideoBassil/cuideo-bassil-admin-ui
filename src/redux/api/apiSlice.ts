@@ -51,5 +51,6 @@ export const apiSlice = createApi({
     "getTag",
     "AllDeliveryDistricts",
     "getDeliveryDistrict",
+    "FilteredPaginatedProducts",
   ],
 });

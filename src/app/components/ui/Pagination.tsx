@@ -1,65 +1,200 @@
-import React from "react";
+"use client";
+import { useState } from "react";
 
-// Prop type
-type IProps = {
-  pageCount: number;
-  handlePageClick: (event: { selected: number }) => void;
-};
+interface PaginationProps {
+  items: any[];
+  countOfPage?: number;
+  currPage: number;
+  setCurrPage: (page: number) => void;
+}
 
-const Pagination = ({ handlePageClick, pageCount }: IProps) => {
-  const [currentPage, setCurrentPage] = React.useState(0);
+const Pagination = ({
+  items = [],
+  countOfPage = 12,
+  currPage,
+  setCurrPage,
+}: PaginationProps) => {
+  const totalPage = Math.ceil(items.length / countOfPage);
+  const [visiblePages] = useState(10);
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    handlePageClick({ selected: page });
-  };
+  function setPage(idx: number) {
+    if (idx <= 0 || idx > totalPage) return;
+    setCurrPage(idx);
+    window.scrollTo(0, 0);
+  }
 
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    for (let i = 0; i < pageCount; i++) {
-      pageNumbers.push(
-        <button
-          className={`flex items-center justify-center px-2 border rounded-md cursor-pointer ${
-            i === currentPage
-              ? "bg-blue-500 text-white"
-              : "bg-white text-gray-700 hover:bg-gray-100"
-          }`}
-          key={i}
-          onClick={() => handlePageChange(i)}
-        >
-          {i + 1}
-        </button>
-      );
+  const getVisiblePageNumbers = () => {
+    let start = Math.max(1, currPage - Math.floor(visiblePages / 2));
+    let end = Math.min(totalPage, start + visiblePages - 1);
+
+    if (end - start + 1 < visiblePages) {
+      start = Math.max(1, end - visiblePages + 1);
     }
-    return pageNumbers;
+
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
 
   return (
-    <div className="flex items-center justify-center gap-2">
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 0}
-        className={`px-2 border rounded-md ${
-          currentPage === 0
-            ? "cursor-not-allowed bg-gray-200 text-gray-400"
-            : "bg-white text-gray-700 hover:bg-gray-100"
-        }`}
-      >
-        Prev
-      </button>
-      {renderPageNumbers()}
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === pageCount - 1}
-        className={`px-2 border rounded-md ${
-          currentPage === pageCount - 1
-            ? "cursor-not-allowed bg-gray-200 text-gray-400"
-            : "bg-white text-gray-700 hover:bg-gray-100"
-        }`}
-      >
-        Next
-      </button>
-    </div>
+    <nav>
+      {totalPage > 1 && (
+        <ul
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "4px",
+            listStyle: "none",
+            padding: 0,
+            margin: 0,
+          }}
+        >
+          {/* First Page Button */}
+          <li>
+            <button
+              onClick={() => setPage(1)}
+              disabled={currPage === 1}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "40px",
+                width: "40px",
+                borderRadius: "50%",
+                cursor: "pointer",
+                border:
+                  currPage === totalPage
+                    ? "1px solid #9ca3af"
+                    : "1px solid #374151",
+                backgroundColor: currPage === 1 ? "#f3f4f6" : "transparent",
+                color: currPage === 1 ? "#9ca3af" : "#374151",
+                opacity: currPage === 1 ? 0.5 : 1,
+                pointerEvents: currPage === 1 ? "none" : "auto",
+              }}
+            >
+              First
+            </button>
+          </li>
+
+          {/* Previous Button */}
+          <li>
+            <button
+              onClick={() => setPage(currPage - 1)}
+              disabled={currPage === 1}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "40px",
+                padding: "0 12px",
+                borderRadius: "20px",
+                cursor: "pointer",
+                border:
+                  currPage === totalPage
+                    ? "1px solid #9ca3af"
+                    : "1px solid #374151",
+                backgroundColor: "transparent",
+                color: "#374151",
+                opacity: currPage === 1 ? 0.5 : 1,
+                pointerEvents: currPage === 1 ? "none" : "auto",
+              }}
+            >
+              Prev
+            </button>
+          </li>
+
+          {/* Left Ellipsis */}
+          {currPage > Math.ceil(visiblePages / 2) + 1 && (
+            <li style={{ padding: "0 8px" }}>...</li>
+          )}
+
+          {/* Page Numbers */}
+          {getVisiblePageNumbers().map((n) => (
+            <li
+              key={n}
+              onClick={() => setPage(n)}
+              style={{ cursor: "pointer" }}
+            >
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "40px",
+                  width: "40px",
+                  borderRadius: "50%",
+                  backgroundColor: currPage === n ? "#3b82f6" : "transparent",
+                  color: currPage === n ? "#ffffff" : "#374151",
+                  transition: "all 0.3s",
+                }}
+              >
+                {n}
+              </span>
+            </li>
+          ))}
+
+          {/* Right Ellipsis */}
+          {currPage < totalPage - Math.floor(visiblePages / 2) && (
+            <li style={{ padding: "0 8px" }}>...</li>
+          )}
+
+          {/* Next Button */}
+          <li>
+            <button
+              onClick={() => setPage(currPage + 1)}
+              disabled={currPage === totalPage}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "40px",
+                padding: "0 12px",
+                borderRadius: "20px",
+                cursor: "pointer",
+                border:
+                  currPage === totalPage
+                    ? "1px solid #9ca3af"
+                    : "1px solid #374151",
+                backgroundColor: "transparent",
+                color: "#374151",
+                opacity: currPage === totalPage ? 0.5 : 1,
+                pointerEvents: currPage === totalPage ? "none" : "auto",
+              }}
+            >
+              Next
+            </button>
+          </li>
+
+          {/* Last Page Button */}
+          <li>
+            <button
+              onClick={() => setPage(totalPage)}
+              disabled={currPage === totalPage}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "40px",
+                width: "40px",
+                borderRadius: "50%",
+                cursor: "pointer",
+                border:
+                  currPage === totalPage
+                    ? "1px solid #9ca3af"
+                    : "1px solid #374151",
+                backgroundColor:
+                  currPage === totalPage ? "#f3f4f6" : "transparent",
+                color: currPage === totalPage ? "#9ca3af" : "#374151",
+                opacity: currPage === totalPage ? 0.5 : 1,
+                pointerEvents: currPage === totalPage ? "none" : "auto",
+              }}
+            >
+              Last
+            </button>
+          </li>
+        </ul>
+      )}
+    </nav>
   );
 };
 

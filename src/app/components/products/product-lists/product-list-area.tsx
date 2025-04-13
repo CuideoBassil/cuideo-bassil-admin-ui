@@ -1,6 +1,5 @@
 "use client";
-import usePagination from "@/hooks/use-pagination";
-import { useGetAllProductsQuery } from "@/redux/product/productApi";
+import { useGetFilteredPaginatedProductsQuery } from "@/redux/product/productApi";
 import { Search } from "@/svg";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -10,11 +9,7 @@ import ProductTableHead from "./prd-table-head";
 import ProductTableItem from "./prd-table-item";
 
 const ProductListArea = () => {
-  const { data: products, isError, isLoading } = useGetAllProductsQuery();
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [selectValue, setSelectValue] = useState<string>("");
-
-  // This part replaces your current useState and adds persistence logic
+  const [currPage, setCurrPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("productPageSize");
@@ -22,52 +17,73 @@ const ProductListArea = () => {
     }
     return 15;
   });
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [selectValue, setSelectValue] = useState<string>("");
+  const [debouncedSearch, setDebouncedSearch] = useState<string>("");
 
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchValue);
+      setCurrPage(1);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchValue]);
+
+  // Save page size to localStorage when it changes
   useEffect(() => {
     localStorage.setItem("productPageSize", String(pageSize));
   }, [pageSize]);
 
-  let filteredProducts = products?.data ? [...products.data] : [];
+  // Build API query parameters with stable reference for caching
+  const queryParams = React.useMemo(() => {
+    return {
+      skip: (currPage - 1) * pageSize,
+      take: pageSize,
+      search: debouncedSearch || undefined,
+      status: selectValue || undefined,
+    };
+  }, [currPage, pageSize, debouncedSearch, selectValue]);
 
-  if (searchValue) {
-    filteredProducts = filteredProducts.filter((p) =>
-      p.title.toLowerCase().includes(searchValue.toLowerCase())
-    );
-  }
-
-  if (selectValue) {
-    filteredProducts = filteredProducts.filter((p) => p.status === selectValue);
-  }
-
-  // Pagination should always be initialized with dynamic page size
-  const paginationData = usePagination(filteredProducts, pageSize);
-  const { currentItems, handlePageClick, pageCount } = paginationData;
+  const {
+    data: productsData,
+    isError,
+    isLoading,
+    isFetching,
+  } = useGetFilteredPaginatedProductsQuery(queryParams, {
+    // Cache behavior configuration
+    refetchOnMountOrArgChange: false, // Don't refetch when args are the same
+    refetchOnFocus: false, // Don't refetch when window regains focus
+    refetchOnReconnect: false, // Don't refetch on reconnect
+  });
 
   const handleSearchProduct = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    // setPageIndex(1); // Reset to first page
-    handlePageClick({ selected: 0 });
   };
 
   const handleSelectField = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectValue(e.target.value);
-    // setPageIndex(1); // Reset to first page
-    handlePageClick({ selected: 0 });
+    setCurrPage(1);
   };
 
   const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPageSize(Number(e.target.value)); // Update page size
-    // setPageIndex(1); // Reset to first page
-    handlePageClick({ selected: 0 });
+    setPageSize(Number(e.target.value));
+    setCurrPage(1);
   };
 
   let content = null;
 
-  if (isLoading) {
-    content = <h2>Loading....</h2>;
+  if (isLoading || isFetching) {
+    content = (
+      <div className="flex justify-center items-center min-h-[200px]">
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        <span className="ml-3 text-gray-600">Loading products...</span>
+      </div>
+    );
   } else if (isError) {
     content = <ErrorMsg msg="There was an error" />;
-  } else if (filteredProducts.length === 0) {
+  } else if (!productsData?.products?.length) {
     content = <ErrorMsg msg="No Products Found" />;
   } else {
     content = (
@@ -76,7 +92,7 @@ const ProductListArea = () => {
           <table className="w-full text-base text-left text-gray-500 overflow-auto">
             <ProductTableHead />
             <tbody>
-              {currentItems.map((prd) => (
+              {productsData.products.map((prd: any) => (
                 <ProductTableItem key={prd._id} product={prd} />
               ))}
             </tbody>
@@ -85,13 +101,15 @@ const ProductListArea = () => {
 
         <div className="flex justify-between items-center flex-wrap mx-8">
           <p className="mb-0 text-tiny">
-            Showing {currentItems.length} of {filteredProducts.length}
+            Showing {productsData.products.length} of {productsData.totalCount}
           </p>
           <div className="flex items-center space-x-4">
-            <div className="pagination py-3 flex justify-end items-center mx-8 pagination">
+            <div className="pagination py-3 flex justify-end items-center mx-8">
               <Pagination
-                handlePageClick={handlePageClick}
-                pageCount={pageCount}
+                items={Array(productsData.totalCount).fill(0)}
+                countOfPage={pageSize}
+                currPage={currPage}
+                setCurrPage={setCurrPage}
               />
             </div>
             <div className="page-size-dropdown">
@@ -120,6 +138,7 @@ const ProductListArea = () => {
         <div className="search-input relative">
           <input
             onChange={handleSearchProduct}
+            value={searchValue}
             className="input h-[44px] w-full pl-14"
             type="text"
             placeholder="product name"
@@ -133,7 +152,7 @@ const ProductListArea = () => {
             <span className="text-tiny inline-block leading-none">
               Status :{" "}
             </span>
-            <select onChange={handleSelectField}>
+            <select onChange={handleSelectField} value={selectValue}>
               <option value="">All</option>
               <option value="in-stock">In stock</option>
               <option value="out-of-stock">Out of stock</option>
