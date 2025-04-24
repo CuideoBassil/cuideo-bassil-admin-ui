@@ -36,7 +36,6 @@ const AddFeatured = () => {
               setIsSubmitted={setIsImageSubmitted}
             />
             {/* featured image upload */}
-
             {/* Form Field */}
             {/* <FeaturedFormField
               register={register}
@@ -61,7 +60,6 @@ const AddFeatured = () => {
               name="Title"
               isReq={true}
             />
-
             <FeaturedFormField
               register={register}
               errors={errors}
@@ -76,7 +74,12 @@ const AddFeatured = () => {
               isReq={false}
               type="number"
             />
-
+            <FeaturedFormField
+              register={register}
+              errors={errors}
+              name="Sku"
+              isReq={false}
+            />
             {/* Form Field */}
             <div className="mb-6">
               <p className="mb-0 text-base text-black">Section</p>
@@ -88,11 +91,9 @@ const AddFeatured = () => {
                 />
               </div>
             </div>
-
             {/* description start */}
             <FeaturedDesc register={register} />
             {/* description end */}
-
             <button className="tp-btn px-7 py-2">Add Featured Item</button>
           </div>
         </form>

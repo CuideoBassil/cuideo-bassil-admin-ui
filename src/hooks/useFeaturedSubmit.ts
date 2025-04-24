@@ -45,6 +45,7 @@ const useFeaturedSubmit = () => {
         price: data?.price,
         discounted: data?.discounted,
         section: section,
+        productSku: data?.sku,
         img: itemImage,
         background: hex,
       };
@@ -75,6 +76,7 @@ const useFeaturedSubmit = () => {
         description: data?.description,
         price: data?.price,
         discounted: data?.discounted,
+        productSku: data?.sku,
         section: section,
         img: itemImage,
         background: hex,

@@ -24,6 +24,7 @@ export interface IAddFeatured {
   description: string;
   price?: number;
   discounted?: number;
+  productSku?: string;
   section: number;
   img: string;
   background: string;

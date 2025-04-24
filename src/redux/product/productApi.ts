@@ -64,6 +64,7 @@ export const authApi = apiSlice.injectEndpoints({
     getReviewProducts: builder.query<IReviewProductRes, void>({
       query: () => `/api/product/review-product`,
       providesTags: ["ReviewProducts"],
+      keepUnusedDataFor: 0, // Disable cache when component unmounts
     }),
     // get single product
     getStockOutProducts: builder.query<IReviewProductRes, void>({

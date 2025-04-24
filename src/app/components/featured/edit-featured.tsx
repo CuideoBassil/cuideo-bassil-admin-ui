@@ -95,6 +95,13 @@ const EditFeatured = ({ id }: { id: string }) => {
               isReq={false}
               type="number"
             />
+            <FeaturedFormField
+              default_val={featured.productSku}
+              register={register}
+              errors={errors}
+              name="Sku"
+              isReq={false}
+            />
             <div className="mb-6">
               <p className="mb-0 text-base text-black">Section</p>
               <div className="category-add-select select-bordered">

@@ -37,12 +37,7 @@ const FeaturedTables = () => {
                   >
                     Title
                   </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[150px] text-end"
-                  >
-                    Description
-                  </th>
+
                   <th
                     scope="col"
                     className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[150px] text-end"
@@ -67,13 +62,13 @@ const FeaturedTables = () => {
                   >
                     Image
                   </th>
+
                   <th
                     scope="col"
                     className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[150px] text-end"
                   >
-                    Background
+                    SKU
                   </th>
-
                   <th
                     scope="col"
                     className="px-9 py-3 text-tiny text-text2 uppercase  font-semibold w-[12%] text-end"
@@ -95,9 +90,7 @@ const FeaturedTables = () => {
                         </span>
                       </a>
                     </td>
-                    <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                      {item.description.slice(0, 20)}
-                    </td>
+
                     <td className="px-3 py-3 font-normal text-[#55585B] text-end">
                       {item.price}
                     </td>
@@ -107,17 +100,7 @@ const FeaturedTables = () => {
                     <td className="px-3 py-3 font-normal text-[#55585B] text-end">
                       {item.section}
                     </td>
-                    <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                      {item.img && (
-                        <Image
-                          className="w-10 h-10 rounded-full object-contain"
-                          src={item.img}
-                          alt="image"
-                          width={40}
-                          height={40}
-                        />
-                      )}
-                    </td>
+
                     <td className="px-3 py-3 font-normal text-[#55585B] ">
                       <div
                         className="w-10 h-10 rounded-full"
@@ -126,7 +109,20 @@ const FeaturedTables = () => {
                             ? item.background
                             : "red",
                         }}
-                      />
+                      >
+                        {item.img && (
+                          <Image
+                            className="w-10 h-10 rounded-full object-contain"
+                            src={item.img}
+                            alt="image"
+                            width={40}
+                            height={40}
+                          />
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-3 py-3 font-normal text-[#55585B] text-end">
+                      {item.productSku}
                     </td>
 
                     <td className="px-9 py-3 text-end">

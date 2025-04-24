@@ -38,7 +38,7 @@ const EditProductReviews = ({ id }: { id: string }) => {
                   <ProductReviewTableItem
                     key={i}
                     review={review}
-                    refetch={refetch()}
+                    refetch={refetch}
                   />
                 ))}
               </tbody>

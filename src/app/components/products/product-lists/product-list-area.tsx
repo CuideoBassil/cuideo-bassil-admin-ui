@@ -38,6 +38,7 @@ const ProductListArea = () => {
 
   // Build API query parameters with stable reference for caching
   const queryParams = React.useMemo(() => {
+    console.log("debouncedSearch", debouncedSearch);
     return {
       skip: (currPage - 1) * pageSize,
       take: pageSize,
