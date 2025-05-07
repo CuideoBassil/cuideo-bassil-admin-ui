@@ -147,9 +147,9 @@ const EditProductSubmit = ({ id }: { id: string }) => {
             category={category}
             productType={productType}
             default_value={{
-              brand: productDetails.brand.name,
-              productType: productDetails.productType.name,
-              category: productDetails.category.name,
+              brand: productDetails.brand?.name,
+              productType: productDetails.productType?.name,
+              category: productDetails.category?.name,
             }}
           />
           <ProductColor

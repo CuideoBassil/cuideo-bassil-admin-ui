@@ -74,7 +74,9 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
         </div>
       </td> */}
       <td className="px-3 py-3 font-normal text-[#55585B] ">{brand.name}</td>
-      <td className="px-3 py-3 font-normal text-[#55585B] ">{category.name}</td>
+      <td className="px-3 py-3 font-normal text-[#55585B] ">
+        {category?.name}
+      </td>
       {/* <td className="px-3 py-3 ">
         <span
           className={`text-[10px] p-1 rounded-md   ${
