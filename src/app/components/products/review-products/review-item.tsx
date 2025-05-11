@@ -40,7 +40,7 @@ const ReviewItem = ({ item }: { item: IProduct }) => {
               readonly={true}
             />
           </span>
-          <span>{averageRating}</span>
+          <span>{averageRating.toFixed(1)}</span>
         </div>
       </td>
       <td className="px-3 py-3 font-normal text-[#55585B] text-end">
