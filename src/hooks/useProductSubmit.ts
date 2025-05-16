@@ -5,7 +5,7 @@ import {
 } from "@/redux/product/productApi";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import slugify from "slugify";
 
@@ -117,7 +117,7 @@ const useProductSubmit = () => {
       status: (data.quantity > 0 ? "in-stock" : "out-of-stock") as Status,
       offerDate,
       productType,
-      description: data.description,
+      description,
       videoId: data.youtube_video_Id,
       tags,
     };
@@ -158,7 +158,7 @@ const useProductSubmit = () => {
       status: (data.quantity > 0 ? "in-stock" : "out-of-stock") as Status,
       offerDate,
       productType,
-      description: data.description,
+      description,
       videoId: data.youtube_video_Id,
       tags,
     };

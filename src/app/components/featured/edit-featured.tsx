@@ -24,6 +24,7 @@ const EditFeatured = ({ id }: { id: string }) => {
     setHex,
     hex,
     section,
+    setDescription,
     control,
   } = useFeaturedSubmit();
   // get featured
@@ -44,84 +45,105 @@ const EditFeatured = ({ id }: { id: string }) => {
   }
   if (featured && !isError) {
     content = (
-      <div className="col-span-12 lg:col-span-4">
+      <div className="col-span-12 ">
         <form
           onSubmit={handleSubmit((data) => handleSubmitEditFeatured(data, id))}
         >
           <div className="mb-6 bg-white px-8 py-8 rounded-md">
-            {/* featured image upload */}
-            <GlobalImgUpload
-              isSubmitted={isImageSubmitted}
-              setImage={setItemImage}
-              image={featured.img ? featured.img : "image"}
-              default_img={featured.img}
-              setIsSubmitted={setIsImageSubmitted}
-            />
-            {/* featured image upload */}
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "50%" }}>
+                <GlobalImgUpload
+                  isSubmitted={isImageSubmitted}
+                  setImage={setItemImage}
+                  image={featured.img ? featured.img : "image"}
+                  default_img={featured.img}
+                  setIsSubmitted={setIsImageSubmitted}
+                />
+              </div>
 
-            {/* Form Field */}
-            <div className="flex flex-col mb-5">
-              <p className="mb-0 text-base text-black">Background Color</p>
-              <Sketch
-                style={{ width: "100%" }}
-                color={hex}
-                disableAlpha={true}
-                onChange={(color) => {
-                  setHex(color.hex);
-                }}
-              />
-            </div>
-            <FeaturedFormField
-              default_val={featured.title}
-              register={register}
-              errors={errors}
-              name="Title"
-              isReq={true}
-            />
-
-            <FeaturedFormField
-              default_val={featured.price}
-              register={register}
-              errors={errors}
-              name="Price"
-              isReq={false}
-              type="number"
-            />
-            <FeaturedFormField
-              default_val={featured.discounted}
-              register={register}
-              errors={errors}
-              name="Discounted"
-              isReq={false}
-              type="number"
-            />
-            <FeaturedFormField
-              default_val={featured.productSku}
-              register={register}
-              errors={errors}
-              name="Sku"
-              isReq={false}
-            />
-            <div className="mb-6">
-              <p className="mb-0 text-base text-black">Section</p>
-              <div className="category-add-select select-bordered">
-                <FeaturedSection
-                  setSection={setSection}
-                  control={control}
-                  default_value={featured.section}
+              <div className="flex flex-col mb-5 w-[50%]">
+                <p className="mb-0 text-base text-black">Background Color</p>
+                <Sketch
+                  style={{ width: "100%" }}
+                  color={hex}
+                  disableAlpha={true}
+                  onChange={(color) => {
+                    setHex(color.hex);
+                  }}
                 />
               </div>
             </div>
+            <div
+              style={{
+                display: "flex",
+                gap: 5,
+                width: "100%",
+                justifyContent: "space-between",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                }}
+              >
+                <FeaturedFormField
+                  default_val={featured.title}
+                  register={register}
+                  errors={errors}
+                  name="Title"
+                  isReq={true}
+                />
+              </div>
 
-            {/* Form Field */}
+              <div className="mb-6 w-[100%]">
+                <p className="mb-0 text-base text-black">Section</p>
+                <div className="category-add-select select-bordered">
+                  <FeaturedSection
+                    setSection={setSection}
+                    control={control}
+                    default_value={featured.section}
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                gap: 5,
+                width: "100%",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <FeaturedFormField
+                default_val={featured.price}
+                register={register}
+                errors={errors}
+                name="Price"
+                isReq={false}
+                type="number"
+              />
+              <FeaturedFormField
+                default_val={featured.discounted}
+                register={register}
+                errors={errors}
+                name="Discounted"
+                isReq={false}
+                type="number"
+              />
+              <FeaturedFormField
+                default_val={featured.productSku}
+                register={register}
+                errors={errors}
+                name="Sku"
+                isReq={false}
+              />
+            </div>
 
-            {/* description start */}
             <FeaturedDesc
               register={register}
               default_val={featured.description}
+              setValue={setDescription}
             />
-            {/* description end */}
-
             <button className="tp-btn px-7 py-2">Edit Featured</button>
           </div>
         </form>
@@ -132,7 +154,7 @@ const EditFeatured = ({ id }: { id: string }) => {
   return (
     <div className="grid grid-cols-12 gap-6">
       {content}
-      <div className="col-span-12 lg:col-span-8">
+      <div className="col-span-12 ">
         {/* featured table start */}
         <FeaturedTables />
         {/* featured table end */}

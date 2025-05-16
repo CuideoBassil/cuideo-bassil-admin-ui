@@ -37,6 +37,7 @@ const EditProductSubmit = ({ id }: { id: string }) => {
     handleEditProduct,
     setOfferDate,
     offerDate,
+    setDescription,
   } = useProductSubmit();
 
   let content = null;
@@ -69,6 +70,7 @@ const EditProductSubmit = ({ id }: { id: string }) => {
             />
             <DescriptionTextarea
               register={register}
+              setValue={setDescription}
               errors={errors}
               defaultValue={productDetails.description}
             />
