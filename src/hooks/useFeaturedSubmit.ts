@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 
 const useFeaturedSubmit = () => {
   const [itemImage, setItemImage] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [hex, setHex] = useState("#fff");
   const [isImageSubmitted, setIsImageSubmitted] = useState<boolean>(false);
   const [section, setSection] = useState<number>(1);
@@ -41,7 +42,7 @@ const useFeaturedSubmit = () => {
     try {
       const featured_data = {
         title: data?.title,
-        description: data?.description,
+        description: description,
         price: data?.price,
         discounted: data?.discounted,
         section: section,
@@ -73,7 +74,7 @@ const useFeaturedSubmit = () => {
     try {
       const featured_data = {
         title: data?.title,
-        description: data?.description,
+        description: description,
         price: data?.price,
         discounted: data?.discounted,
         productSku: data?.sku,
@@ -114,6 +115,7 @@ const useFeaturedSubmit = () => {
     setHex,
     hex,
     control,
+    setDescription,
   };
 };
 

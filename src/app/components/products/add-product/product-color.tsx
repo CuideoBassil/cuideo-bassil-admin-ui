@@ -33,7 +33,7 @@ const ProductColor = ({ defaul_value, color, setColor }: IPropType) => {
     ) {
       setColor({ name: defaul_value.name, code: defaul_value.code });
     }
-  }, [defaul_value]);
+  }, [defaul_value, color, setColor]);
 
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6">

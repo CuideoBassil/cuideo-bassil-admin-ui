@@ -32,6 +32,7 @@ const ProductSubmit = () => {
     setOfferDate,
     setColor,
     isSubmitted,
+    setDescription,
   } = useProductSubmit();
 
   return (
@@ -45,7 +46,11 @@ const ProductSubmit = () => {
             register={register}
             errors={errors}
           />
-          <DescriptionTextarea register={register} errors={errors} />
+          <DescriptionTextarea
+            register={register}
+            errors={errors}
+            setValue={setDescription}
+          />
         </div>
 
         <div className="bg-white px-8 py-8 rounded-md mb-6">
