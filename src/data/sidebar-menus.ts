@@ -10,6 +10,7 @@ import {
   StuffUser,
   Type,
   Invoice,
+  Pages,
 } from "@/svg";
 import { ISidebarMenus } from "./../types/menu-types";
 
@@ -104,17 +105,13 @@ const sidebar_menu: Array<ISidebarMenus> = [
     link: "/our-staff",
     title: "Our Staff",
   },
-  // {
-  //   id: 11,
-  //   icon: Pages,
-  //   link: "/profile",
-  //   title: "Pages",
-  //   subMenus: [
-  //     { title: "Register", link: "/register" },
-  //     { title: "Login", link: "/login" },
-  //     { title: "Forgot Password", link: "/forgot-password" },
-  //   ],
-  // },
+  {
+    id: 12,
+    icon: Pages,
+    link: "/",
+    title: "Pages",
+    subMenus: [{ title: "About Us", link: "/about" }],
+  },
 ];
 
 export default sidebar_menu;
