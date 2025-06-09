@@ -1,10 +1,9 @@
-import Link from "next/link";
-import React, { useState, useRef } from "react";
-import { useReactToPrint } from "react-to-print";
 import { useGetSingleOrderQuery } from "@/redux/order/orderApi";
 import { Invoice, View } from "@/svg";
 import { notifyError } from "@/utils/toast";
-import InvoicePrint from "./invoice-print";
+import Link from "next/link";
+import { useRef, useState } from "react";
+import { useReactToPrint } from "react-to-print";
 
 const OrderActions = ({ id, cls }: { id: string; cls?: string }) => {
   const [showInvoice, setShowInvoice] = useState<boolean>(false);
@@ -30,7 +29,7 @@ const OrderActions = ({ id, cls }: { id: string; cls?: string }) => {
       <td style={{ display: "none" }}>
         {orderData && (
           <div ref={printRefTwo}>
-            <InvoicePrint orderData={orderData} />
+            {/* <InvoicePrint orderData={orderData} /> */}
           </div>
         )}
       </td>

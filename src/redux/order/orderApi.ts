@@ -1,13 +1,13 @@
-import { apiSlice } from "../api/apiSlice";
 import {
-  IOrderAmounts,
-  ISalesReport,
-  IMostSellingCategory,
   IDashboardRecentOrders,
   IGetAllOrdersRes,
+  IMostSellingCategory,
+  IOrderAmounts,
+  ISalesReport,
   IUpdateStatusOrderRes,
   Order,
 } from "@/types/order-amount-type";
+import { apiSlice } from "../api/apiSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   overrideExisting: true,
@@ -38,7 +38,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     // get recent orders
     getAllOrders: builder.query<IGetAllOrdersRes, void>({
-      query: () => `/api/order/orders`,
+      query: () => `/api/order`,
       providesTags: ["AllOrders"],
       keepUnusedDataFor: 600,
     }),
@@ -48,7 +48,10 @@ export const authApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
     }),
     // get recent orders
-    updateStatus: builder.mutation<IUpdateStatusOrderRes, { id: string, status: { status: string } }>({
+    updateStatus: builder.mutation<
+      IUpdateStatusOrderRes,
+      { id: string; status: { status: string } }
+    >({
       query({ id, status }) {
         return {
           url: `/api/order/update-status/${id}`,
@@ -56,7 +59,7 @@ export const authApi = apiSlice.injectEndpoints({
           body: status,
         };
       },
-      invalidatesTags: ["AllOrders","DashboardRecentOrders"],
+      invalidatesTags: ["AllOrders", "DashboardRecentOrders"],
     }),
   }),
 });

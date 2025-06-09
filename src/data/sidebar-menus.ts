@@ -1,7 +1,10 @@
 import {
   Categories,
   Coupons,
+  Invoice,
   Leaf,
+  Orders,
+  Pages,
   Products,
   Profile,
   Reviews,
@@ -9,8 +12,6 @@ import {
   Setting,
   StuffUser,
   Type,
-  Invoice,
-  Pages,
 } from "@/svg";
 import { ISidebarMenus } from "./../types/menu-types";
 
@@ -81,12 +82,12 @@ const sidebar_menu: Array<ISidebarMenus> = [
   //   link: "/coupon",
   //   title: "Coupons",
   // },
-  // {
-  //   id: 8,
-  //   icon: Orders,
-  //   link: "/orders",
-  //   title: "Orders",
-  // },
+  {
+    id: 8,
+    icon: Orders,
+    link: "/orders",
+    title: "Orders",
+  },
   {
     id: 9,
     icon: Profile,

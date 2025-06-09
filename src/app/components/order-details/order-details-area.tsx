@@ -1,12 +1,11 @@
 "use client";
-import dayjs from "dayjs";
-import React, { useRef } from "react";
-import ErrorMsg from "../common/error-msg";
-import { Card, Typography } from "@material-tailwind/react";
 import { useGetSingleOrderQuery } from "@/redux/order/orderApi";
 import { Invoice } from "@/svg";
-import { useReactToPrint } from "react-to-print";
 import { notifyError } from "@/utils/toast";
+import dayjs from "dayjs";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+import ErrorMsg from "../common/error-msg";
 
 const OrderDetailsArea = ({ id }: { id: string }) => {
   const { data: orderData, isLoading, isError } = useGetSingleOrderQuery(id);
@@ -30,7 +29,8 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
       "Item Price",
       "Amount",
     ];
-    const total = orderData.cart.reduce((acc, curr) => acc + curr.price, 0);
+    const total = 0;
+    // orderData.cart.reduce((acc, curr) => acc + curr.price, 0);
     const grand_total = (total +
       orderData.shippingCost +
       (orderData.discount ?? 0)) as number;
@@ -129,7 +129,7 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y text-base ">
-                      {orderData.cart.map((item, i) => (
+                      {/* {orderData.cart.map((item, i) => (
                         <tr key={item._id} className="">
                           <td className="bg-white border-b border-gray6 px-3 py-3 text-start">
                             {i + 1}
@@ -147,7 +147,7 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                             ${(item.price * item.orderQuantity).toFixed(2)}
                           </td>
                         </tr>
-                      ))}
+                      ))} */}
                     </tbody>
                   </table>
                 </div>

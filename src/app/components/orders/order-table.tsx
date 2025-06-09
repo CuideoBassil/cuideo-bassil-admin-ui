@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import Image from "next/image";
 import React, { useState } from "react";
 // internal
 import usePagination from "@/hooks/use-pagination";
@@ -8,7 +7,6 @@ import { Search } from "@/svg";
 import ErrorMsg from "../common/error-msg";
 import Pagination from "../ui/Pagination";
 import OrderActions from "./order-actions";
-import OrderStatusChange from "./status-change";
 
 const OrderTable = () => {
   const { data: orders, isError, isLoading, error } = useGetAllOrdersQuery();
@@ -50,51 +48,40 @@ const OrderTable = () => {
             <tr className="border-b border-gray6 text-tiny">
               <th
                 scope="col"
-                className="pr-8 py-3 text-tiny text-text2 uppercase font-semibold w-[170px]"
-              >
-                INVOICE NO
-              </th>
-              <th
-                scope="col"
-                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold"
+                className="pr-8 py-3 text-tiny text-text2 uppercase font-semibold "
               >
                 Customer
               </th>
               <th
                 scope="col"
-                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end"
+                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold"
               >
-                QTY
+                amount
               </th>
               <th
                 scope="col"
-                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end"
+                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  text-end"
               >
-                Total
+                District
               </th>
               <th
                 scope="col"
-                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end"
+                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  text-end"
               >
                 Status
               </th>
+
               <th
                 scope="col"
-                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end"
+                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  text-end"
               >
                 Date
               </th>
               <th
                 scope="col"
-                className="px-9 py-3 text-tiny text-text2 uppercase  font-semibold w-[14%] text-end"
+                className="px-9 py-3 text-tiny text-text2 uppercase  font-semibold  text-end"
               >
                 Action
-              </th>
-              <th
-                scope="col"
-                className="px-9 py-3 text-tiny text-text2 uppercase  font-semibold w-[4%] text-end"
-              >
-                Invoice
               </th>
             </tr>
           </thead>
@@ -105,35 +92,21 @@ const OrderTable = () => {
                 className="bg-white border-b border-gray6 last:border-0 text-start mx-9"
               >
                 <td className="px-3 py-3 font-normal text-[#55585B]">
-                  #{item.invoice}
+                  <div>
+                    <div>{item.fullname}</div>
+                    <div className="text-xs text-gray-400">
+                      {item.phoneNumber}
+                    </div>
+                  </div>
                 </td>
                 <td className="pr-8 py-5 whitespace-nowrap">
-                  <a
-                    href="#"
-                    className="flex items-center space-x-5 text-hover-primary text-heading"
-                  >
-                    {item.user?.imageURL && (
-                      <Image
-                        className="w-[50px] h-[50px] rounded-full"
-                        src={item.user.imageURL}
-                        alt="user-img"
-                        width={50}
-                        height={50}
-                      />
-                    )}
-                    <span className="font-medium">{item?.user?.name}</span>
-                  </a>
+                  {item.discountedAmount.toFixed(2)}
                 </td>
 
                 <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                  {/* {item.cart.reduce((acc, curr) => acc + curr.orderQuantity, 0)} */}
+                  {item.district}
                 </td>
-                <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                  $
-                  {/* {item.cart
-                    .reduce((acc, curr) => acc + curr.price, 0)
-                    .toFixed(2)}*/}
-                </td>
+
                 <td className="px-3 py-3 text-end">
                   <span
                     className={`text-[11px] ${
@@ -155,11 +128,6 @@ const OrderTable = () => {
                   {dayjs(item.createdAt).format("MMM D, YYYY")}
                 </td>
 
-                <td className="px-9 py-3 text-end">
-                  <div className="flex items-center justify-end space-x-2">
-                    <OrderStatusChange id={item._id} />
-                  </div>
-                </td>
                 {/* order actions */}
                 <OrderActions id={item._id} />
                 {/* order actions */}
