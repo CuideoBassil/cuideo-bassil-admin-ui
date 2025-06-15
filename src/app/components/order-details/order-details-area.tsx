@@ -22,6 +22,8 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
   }
 
   if (!isLoading && !isError && orderData) {
+    let order = orderData.data;
+
     const TABLE_HEAD = [
       "SL",
       "Product Name",
@@ -32,8 +34,8 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
     const total = 0;
     // orderData.cart.reduce((acc, curr) => acc + curr.price, 0);
     const grand_total = (total +
-      orderData.shippingCost +
-      (orderData.discount ?? 0)) as number;
+      order.deliveryDistrict?.deliveryCost +
+      (order.discountedAmount ?? 0)) as number;
     content = (
       <>
         <div className="container grid px-6 mx-auto">
@@ -49,27 +51,21 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                 <h1 className="font-bold font-heading text-xl uppercase">
                   Invoice
                   <p className="text-base mt-1 text-gray-500">
-                    Status
+                    Status:
                     <span className="pl-2 font-medium text-base capitalize">
-                      {" "}
                       <span className="font-heading">
                         <span className="inline-flex px-2 text-base font-medium leading-5 rounded-full">
-                          {orderData.status}
+                          {order.status}
                         </span>
                       </span>
                     </span>
                   </p>
                 </h1>
                 <div className="lg:text-right text-left">
-                  <h2 className="lg:flex lg:justify-end text-lg font-semibold mt-4 lg:mt-0 lg:ml-0 md:mt-0">
-                    {/* <img
-                      src="/static/media/logo-dark.acf69e90.svg"
-                      alt="dashtar"
-                      width="110"
-                    /> */}
-                  </h2>
                   <p className="text-base text-gray-500 dark:text-gray-400 mt-2">
-                    Dhaka, Bangladesh
+                    {order.deliveryDistrict?.name}, {order.city}
+                    <br />
+                    St: {order.street}, Bdg: {order.building} / {order.floor}
                   </p>
                 </div>
               </div>
@@ -80,27 +76,33 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                   </span>
                   <span className="text-base block">
                     <span>
-                      {dayjs(orderData.createdAt).format("MMMM D, YYYY")}
+                      {dayjs(order.createdAt).format("DD/MM/YYYY HH:mm")}
                     </span>
                   </span>
                 </div>
                 <div className="mb-3 md:mb-0 lg:mb-0 flex flex-col">
                   <span className="font-bold text-base uppercase block">
-                    INVOICE NO
+                    INVOICE #
                   </span>
-                  <span className="text-base block">#{orderData.invoice}</span>
+                  <span className="text-base block">{order.invoice}</span>
                 </div>
                 <div className="flex flex-col lg:text-right text-left">
                   <span className="font-bold text-base uppercase block">
                     INVOICE TO
                   </span>
                   <span className="text-base text-gray-500 block">
-                    {orderData?.user?.name} <br />
-                    <span className="ml-2">{orderData.contact}</span>
-                    <br />
-                    {orderData.address}
-                    <br />
-                    {orderData.city}
+                    {order?.fullName} <br />
+                    <span className="ml-2">{order.phoneNumber}</span>
+                  </span>
+                </div>
+              </div>{" "}
+              <div className="flex lg:flex-row md:flex-row flex-col justify-between pt-4">
+                <div className="mb-3 md:mb-0 lg:mb-0 flex flex-col">
+                  <span className="font-bold text-base uppercase block">
+                    Note
+                  </span>
+                  <span className="text-base block">
+                    <span>{order.orderNote}</span>
                   </span>
                 </div>
               </div>
@@ -129,25 +131,25 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y text-base ">
-                      {/* {orderData.cart.map((item, i) => (
-                        <tr key={item._id} className="">
+                      {order.detailedProducts.map((item: any, i: number) => (
+                        <tr key={i} className="">
                           <td className="bg-white border-b border-gray6 px-3 py-3 text-start">
                             {i + 1}
                           </td>
                           <td className="bg-white border-b border-gray6 px-3 pl-0 py-3 text-start">
-                            {item.title}
+                            {item.title}/ {item.sku}
                           </td>
                           <td className="bg-white border-b border-gray6 px-3 py-3 font-bold text-center">
-                            {item.orderQuantity}
+                            {item.quantity}
                           </td>
                           <td className="bg-white border-b border-gray6 px-3 py-3 font-bold text-center">
-                            ${item.price.toFixed(2)}
+                            ${item.discountedPrice?.toFixed(2)}
                           </td>
                           <td className="bg-white border-b border-gray6 px-3 py-3 text-right font-bold">
-                            ${(item.price * item.orderQuantity).toFixed(2)}
+                            ${(item.discountedPrice * item.quantity).toFixed(2)}
                           </td>
                         </tr>
-                      ))} */}
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -160,7 +162,7 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                     PAYMENT METHOD
                   </span>
                   <span className="text-base font-semibold block">
-                    {orderData.paymentMethod}
+                    {order.paymentMethod}
                   </span>
                 </div>
                 <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
@@ -168,15 +170,19 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                     SHIPPING COST
                   </span>
                   <span className="text-base font-semibold font-heading block">
-                    ${orderData.shippingCost}
+                    ${order.deliveryDistrict.deliveryCost.toFixed(2) || 0}
                   </span>
                 </div>
                 <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
                   <span className="mb-1 font-bold font-heading text-base uppercase block">
-                    DISCOUNT
+                    PRICE
                   </span>
                   <span className="text-base text-gray-500 font-semibold font-heading block">
-                    ${orderData?.discount}
+                    $
+                    {(
+                      order?.discountedAmount -
+                      order.deliveryDistrict.deliveryCost
+                    ).toFixed(2) || 0}
                   </span>
                 </div>
                 <div className="flex flex-col sm:flex-wrap">
@@ -184,7 +190,7 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                     TOTAL AMOUNT
                   </span>
                   <span className="text-xl font-bold block">
-                    ${grand_total.toFixed(2)}
+                    $ {order?.discountedAmount.toFixed(2) || 0}
                   </span>
                 </div>
               </div>

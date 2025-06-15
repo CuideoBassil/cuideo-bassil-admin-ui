@@ -31,8 +31,10 @@ const OrderTable = () => {
   if (!isLoading && !isError && orders?.success) {
     let orderItems = [...currentItems];
     if (searchVal) {
-      orderItems = orderItems.filter((v) =>
-        v.invoice.toString().includes(searchVal)
+      orderItems = orderItems.filter(
+        (v) =>
+          v.fullName.toString().includes(searchVal) ||
+          v.phoneNumber.includes(searchVal)
       );
     }
     if (selectVal) {
@@ -56,7 +58,7 @@ const OrderTable = () => {
                 scope="col"
                 className="px-3 py-3 text-tiny text-text2 uppercase font-semibold"
               >
-                amount
+                discounted amount
               </th>
               <th
                 scope="col"
@@ -68,9 +70,26 @@ const OrderTable = () => {
                 scope="col"
                 className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  text-end"
               >
+                City
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  text-end"
+              >
+                Street
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  text-end"
+              >
+                Bldg / Floor
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  text-end"
+              >
                 Status
               </th>
-
               <th
                 scope="col"
                 className="px-3 py-3 text-tiny text-text2 uppercase font-semibold  text-end"
@@ -93,20 +112,25 @@ const OrderTable = () => {
               >
                 <td className="px-3 py-3 font-normal text-[#55585B]">
                   <div>
-                    <div>{item.fullname}</div>
-                    <div className="text-xs text-gray-400">
-                      {item.phoneNumber}
-                    </div>
+                    <div>{item.fullName}</div>
+                    <div className="text-gray-400">{item.phoneNumber}</div>
                   </div>
                 </td>
                 <td className="pr-8 py-5 whitespace-nowrap">
-                  {item.discountedAmount.toFixed(2)}
+                  {item.discountedAmount.toFixed(2)} $
                 </td>
-
                 <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                  {item.district}
+                  {item.deliveryDistrict.name}
                 </td>
-
+                <td className="px-3 py-3 font-normal text-[#55585B] text-end">
+                  {item.city}
+                </td>
+                <td className="px-3 py-3 font-normal text-[#55585B] text-end">
+                  {item.street}
+                </td>
+                <td className="px-3 py-3 font-normal text-[#55585B] text-end">
+                  {item.building} / {item.floor}
+                </td>
                 <td className="px-3 py-3 text-end">
                   <span
                     className={`text-[11px] ${
@@ -125,9 +149,8 @@ const OrderTable = () => {
                   </span>
                 </td>
                 <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                  {dayjs(item.createdAt).format("MMM D, YYYY")}
+                  {dayjs(item.createdAt).format("DD/MM/YYYY HH:mm")}
                 </td>
-
                 {/* order actions */}
                 <OrderActions id={item._id} />
                 {/* order actions */}
@@ -168,7 +191,7 @@ const OrderTable = () => {
           <input
             className="input h-[44px] w-full pl-14"
             type="text"
-            placeholder="invoice no"
+            placeholder="customer"
             onChange={handleSearchChange}
           />
           <button className="absolute top-1/2 left-5 translate-y-[-50%] hover:text-theme">

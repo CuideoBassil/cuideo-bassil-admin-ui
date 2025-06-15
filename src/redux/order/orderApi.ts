@@ -1,11 +1,11 @@
 import {
   IDashboardRecentOrders,
   IGetAllOrdersRes,
+  IGetsingleOrderRes,
   IMostSellingCategory,
   IOrderAmounts,
   ISalesReport,
   IUpdateStatusOrderRes,
-  Order,
 } from "@/types/order-amount-type";
 import { apiSlice } from "../api/apiSlice";
 
@@ -43,7 +43,7 @@ export const authApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
     }),
     // get recent orders
-    getSingleOrder: builder.query<Order, string>({
+    getSingleOrder: builder.query<IGetsingleOrderRes, string>({
       query: (id) => `/api/order/${id}`,
       keepUnusedDataFor: 600,
     }),
