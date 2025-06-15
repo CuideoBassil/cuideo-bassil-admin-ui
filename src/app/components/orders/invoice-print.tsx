@@ -8,8 +8,10 @@ type IPropType = {
 };
 
 const InvoicePrint = ({ orderData }: IPropType) => {
-  const total = orderData.cart.reduce((acc, curr) => acc + curr.price, 0);
-  const grand_total = total + orderData.shippingCost;
+  const total = 1;
+  // const total = orderData.cart.reduce((acc, curr) => acc + curr.price, 0);
+  // const grand_total = total + orderData.shippingCost;
+  const grand_total = 2;
   return (
     <>
       {/* top bar start */}
@@ -51,7 +53,7 @@ const InvoicePrint = ({ orderData }: IPropType) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orderData.cart.map((p) => (
+                  {/* {orderData.cart.map((p) => (
                     <tr
                       key={p._id}
                       className="bg-white border-b border-gray6 last:border-0 text-start mx-9"
@@ -70,7 +72,7 @@ const InvoicePrint = ({ orderData }: IPropType) => {
                         ${(p.orderQuantity * p.price).toFixed(2)}
                       </td>
                     </tr>
-                  ))}
+                  ))} */}
                 </tbody>
               </table>
             </div>
@@ -94,7 +96,7 @@ const InvoicePrint = ({ orderData }: IPropType) => {
                       Shipping cost:
                     </td>
                     <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                      ${orderData.shippingCost.toFixed(2)}
+                      {/* ${orderData.shippingCost.toFixed(2)} */}
                     </td>
                   </tr>
                   <tr className="bg-white border-b border-gray6 last:border-0 text-start mx-9">
@@ -112,7 +114,7 @@ const InvoicePrint = ({ orderData }: IPropType) => {
         </div>
       </div>
       {/* details table */}
-      
+
       {/* details table */}
       <div className="grid grid-cols-12 gap-6 px-6 py-6">
         <div className="col-span-12">
@@ -133,7 +135,7 @@ const InvoicePrint = ({ orderData }: IPropType) => {
                       Bill No:
                     </td>
                     <td className="px-3 py-3 font-normal text-[#55585B] text-end">
-                      #{orderData.invoice}
+                      {/* #{orderData.invoice} */}
                     </td>
                   </tr>
                   <tr className="bg-white border-b border-gray6 last:border-0 text-start mx-9">
@@ -141,7 +143,7 @@ const InvoicePrint = ({ orderData }: IPropType) => {
                       No of items:
                     </td>
                     <td className="px-3 py-3 text-[#55585B] text-end text-lg font-semibold">
-                      {orderData.cart.length}
+                      {/* {orderData.cart.length} */}
                     </td>
                   </tr>
                   <tr className="bg-white border-b border-gray6 last:border-0 text-start mx-9">
@@ -149,7 +151,7 @@ const InvoicePrint = ({ orderData }: IPropType) => {
                       Date:
                     </td>
                     <td className="px-3 py-3 text-[#55585B] text-end text-lg font-semibold">
-                      {dayjs(orderData.createdAt).format('DD/MM/YYYY')}
+                      {dayjs(orderData.createdAt).format("DD/MM/YYYY")}
                     </td>
                   </tr>
                 </tbody>
@@ -161,7 +163,9 @@ const InvoicePrint = ({ orderData }: IPropType) => {
       {/* details table */}
 
       <div className="flex items-center justify-center flex-wrap px-8 mb-6 bg-white rounded-t-md rounded-b-md  py-6 text-center">
-          <h3 className="font-normal mb-0">Thank you for your order. Come again!</h3>
+        <h3 className="font-normal mb-0">
+          Thank you for your order. Come again!
+        </h3>
       </div>
     </>
   );
