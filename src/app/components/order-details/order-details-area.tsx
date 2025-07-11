@@ -1,9 +1,13 @@
 "use client";
-import { useGetSingleOrderQuery } from "@/redux/order/orderApi";
+import {
+  useGetSingleOrderQuery,
+  useUpdateStatusMutation,
+} from "@/redux/order/orderApi";
 import { Invoice } from "@/svg";
 import { notifyError } from "@/utils/toast";
 import dayjs from "dayjs";
 import { useRef } from "react";
+import ReactSelect from "react-select";
 import { useReactToPrint } from "react-to-print";
 import ErrorMsg from "../common/error-msg";
 
@@ -24,18 +28,6 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
   if (!isLoading && !isError && orderData) {
     let order = orderData.data;
 
-    const TABLE_HEAD = [
-      "SL",
-      "Product Name",
-      "	Quantity",
-      "Item Price",
-      "Amount",
-    ];
-    const total = 0;
-    // orderData.cart.reduce((acc, curr) => acc + curr.price, 0);
-    const grand_total = (total +
-      order.deliveryDistrict?.deliveryCost +
-      (order.discountedAmount ?? 0)) as number;
     content = (
       <>
         <div className="container grid px-6 mx-auto">
@@ -50,7 +42,7 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
               <div className="flex lg:flex-row md:flex-row flex-col lg:items-center justify-between pb-4 border-b border-slate-200">
                 <h1 className="font-bold font-heading text-xl uppercase">
                   Invoice
-                  <p className="text-base mt-1 text-gray-500">
+                  {/* <p className="text-base mt-1 text-gray-500">
                     Status:
                     <span className="pl-2 font-medium text-base capitalize">
                       <span className="font-heading">
@@ -59,7 +51,7 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                         </span>
                       </span>
                     </span>
-                  </p>
+                  </p> */}
                 </h1>
                 <div className="lg:text-right text-left">
                   <p className="text-base text-gray-500 dark:text-gray-400 mt-2">
@@ -84,7 +76,7 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                   <span className="font-bold text-base uppercase block">
                     INVOICE #
                   </span>
-                  <span className="text-base block">{order.invoice}</span>
+                  {/* <span className="text-base block">{order.invoice}</span> */}
                 </div>
                 <div className="flex flex-col lg:text-right text-left">
                   <span className="font-bold text-base uppercase block">
@@ -213,9 +205,57 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
       notifyError("Failed to print");
     }
   };
+  const options = [
+    { value: "delivered", label: "Delivered" },
+    { value: "processing", label: "Processing" },
+    { value: "pending", label: "Pending" },
+    { value: "cancel", label: "canceled" },
+  ];
+  const [updateStatus] = useUpdateStatusMutation();
+  const handleChange = async (value: string | undefined, id: string) => {
+    if (value) {
+      const res = await updateStatus({ id, status: { status: value } });
+    }
+  };
 
   return (
     <>
+      {!isLoading && !isError && orderData && (
+        <>
+          <div className="container grid px-6 mx-auto">
+            <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
+              Status
+            </h1>
+            <div className="bg-white mb-4  p-6 lg:p-8 rounded-xl shadow-sm overflow-hidden">
+              <ReactSelect
+                styles={{
+                  menu: (provided) => ({
+                    ...provided,
+                    zIndex: 9999,
+                  }),
+                  menuPortal: (provided) => ({
+                    ...provided,
+                    zIndex: 9999,
+                  }),
+                }}
+                defaultValue={options.find(
+                  (option) => option.value === orderData?.data.status
+                )}
+                onChange={(value) => handleChange(value?.value, id)}
+                options={options}
+                menuPortalTarget={document.body}
+              />
+            </div>
+          </div>
+          {/* <div className="container grid px-6 mx-auto">
+            <div className="mb-4 mt-3 flex justify-between">
+              <button onClick={handlePrintReceipt} className="tp-btn px-5 py-2">
+                Change Status
+              </button>
+            </div>
+          </div> */}
+        </>
+      )}
       <div className="">{content}</div>
       <div className="container grid px-6 mx-auto">
         <div className="mb-4 mt-3 flex justify-between">

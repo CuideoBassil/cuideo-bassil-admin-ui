@@ -30,6 +30,12 @@ export const authApi = apiSlice.injectEndpoints({
       providesTags: ["DashboardMostSellingCategory"],
       keepUnusedDataFor: 600,
     }),
+    // get pending orders
+    getPendingOrders: builder.query<IGetAllOrdersRes, void>({
+      query: () => `/api/order/pending`,
+      providesTags: ["PendingOrders"],
+      keepUnusedDataFor: 600,
+    }),
     // get recent orders
     getRecentOrders: builder.query<IDashboardRecentOrders, void>({
       query: () => `/api/user-order/dashboard-recent-order`,
@@ -59,7 +65,7 @@ export const authApi = apiSlice.injectEndpoints({
           body: status,
         };
       },
-      invalidatesTags: ["AllOrders", "DashboardRecentOrders"],
+      invalidatesTags: ["AllOrders", "DashboardRecentOrders", "PendingOrders"],
     }),
   }),
 });
@@ -72,4 +78,5 @@ export const {
   useGetAllOrdersQuery,
   useUpdateStatusMutation,
   useGetSingleOrderQuery,
+  useGetPendingOrdersQuery,
 } = authApi;

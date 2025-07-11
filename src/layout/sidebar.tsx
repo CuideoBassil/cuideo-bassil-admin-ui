@@ -1,6 +1,7 @@
 "use client";
 import sidebar_menu from "@/data/sidebar-menus";
 import { userLoggedOut } from "@/redux/auth/authSlice";
+import { useGetPendingOrdersQuery } from "@/redux/order/orderApi";
 import { RootState } from "@/redux/store";
 import { DownArrow } from "@/svg";
 import Image from "next/image";
@@ -19,6 +20,8 @@ export default function Sidebar({ sideMenu, setSideMenu }: IProps) {
   const { user } = useSelector(
     (state: RootState) => state.auth as { user: { role: string } }
   );
+  const { data: pendingData } = useGetPendingOrdersQuery();
+  const pendingCount = pendingData?.data?.length || 0;
 
   const [isDropdown, setIsDropDown] = useState<string>("");
   const dispatch = useDispatch();
@@ -80,7 +83,23 @@ export default function Sidebar({ sideMenu, setSideMenu }: IProps) {
                           <menu.icon />
                         </span>
                         {menu.title}
-
+                        {menu.title == "Orders" && pendingCount > 0 && (
+                          <span
+                            style={{
+                              color: "black",
+                              backgroundColor: "red",
+                              width: "25px",
+                              height: "25px",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "50%",
+                            }}
+                            className="ml-2"
+                          >
+                            {pendingCount}
+                          </span>
+                        )}
                         {menu.subMenus && (
                           <span className="absolute right-4 top-[52%] transition-transform duration-300 origin-center w-4 h-4">
                             <DownArrow />

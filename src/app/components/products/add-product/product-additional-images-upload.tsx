@@ -1,14 +1,14 @@
 "use client";
 import useUploadImage from "@/hooks/useUploadImg";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Loading from "../../common/loading";
 
 type IPropType = {
-  imgUrl: string[]; // Ensure this is an array
+  imgUrl: string[];
   setImgUrl: React.Dispatch<React.SetStateAction<string[]>>;
   isSubmitted: boolean;
-  default_images?: any[]; // Default images prop should be an array of strings
+  default_images?: string[]; // ensure it's string[]
 };
 
 const ProductAdditionalImagesUpload = ({
@@ -17,54 +17,44 @@ const ProductAdditionalImagesUpload = ({
   isSubmitted,
   default_images = [],
 }: IPropType) => {
-  const [imgUrls, setImgUrls] = useState<string[]>(imgUrl || []); // Initialize with imgUrl or empty array
   const { handleImageUpload, uploadData, isError, isLoading } =
     useUploadImage();
 
-  // Sync parent state with component state
+  // Merge default images on mount only once
   useEffect(() => {
-    setImgUrls(imgUrl);
-  }, [imgUrl]);
-
-  // Sync default images into the component state if available
-  useEffect(() => {
-    if (default_images?.length > 0) {
-      setImgUrls((prev) => [...default_images, ...prev]); // Add default images to the front or back
+    if (default_images.length > 0) {
+      const merged = [...default_images, ...imgUrl].filter(
+        (v, i, arr) => arr.indexOf(v) === i // remove duplicates
+      );
+      setImgUrl(merged);
     }
-  }, [default_images]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // only on mount
 
-  // Update uploaded images
+  // Update uploaded image
   useEffect(() => {
     if (uploadData?.data?.url && !isError) {
-      setImgUrls((prev) => {
-        const updatedUrls = [...prev, uploadData.data.url];
-        setImgUrl(updatedUrls); // Update parent state
-        return updatedUrls;
-      });
+      const updatedUrls = [...imgUrl, uploadData.data.url];
+      setImgUrl(updatedUrls);
     }
-  }, [uploadData, isError, setImgUrl]);
+  }, [uploadData, isError, imgUrl, setImgUrl]);
 
-  // Handle file upload
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
     await handleImageUpload(event);
   };
 
-  // Remove image by index
   const removeImage = (index: number) => {
-    setImgUrls((prev) => {
-      const updatedUrls = prev.filter((_, i) => i !== index);
-      setImgUrl(updatedUrls); // Sync with parent
-      return updatedUrls;
-    });
+    const updatedUrls = imgUrl.filter((_, i) => i !== index);
+    setImgUrl(updatedUrls);
   };
 
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6 text-center">
       <p className="text-base text-black mb-4">Upload Additional Images</p>
       <div className="flex flex-wrap items-center justify-start gap-2">
-        {imgUrls.map((url, index) => (
+        {imgUrl.map((url, index) => (
           <div key={index} className="relative">
             <Image
               src={url}
@@ -82,8 +72,7 @@ const ProductAdditionalImagesUpload = ({
           </div>
         ))}
 
-        {/* Show upload box only if less than 10 images */}
-        {imgUrls.length < 10 && (
+        {imgUrl.length < 10 && (
           <label
             htmlFor="product_imgs"
             className="w-20 h-20 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-md cursor-pointer"
