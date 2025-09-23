@@ -1,5 +1,5 @@
 import { Sketch } from "@uiw/react-color";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 type IColorType = {
   name: string;
@@ -26,14 +26,15 @@ const presetColors: IColorType[] = [
 ];
 
 const ProductColor = ({ defaul_value, color, setColor }: IPropType) => {
+  const isInitialized = useRef(false);
+
   useEffect(() => {
-    if (
-      defaul_value &&
-      (color.name !== defaul_value.name || color.code !== defaul_value.code)
-    ) {
+    // Only set default value once on mount
+    if (defaul_value && !isInitialized.current) {
       setColor({ name: defaul_value.name, code: defaul_value.code });
+      isInitialized.current = true;
     }
-  }, [defaul_value, color, setColor]);
+  }, [defaul_value, setColor]);
 
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6">

@@ -1,7 +1,7 @@
 "use client";
 import useUploadImage from "@/hooks/useUploadImg";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Loading from "../../common/loading";
 
 type IPropType = {
@@ -20,6 +20,9 @@ const ProductAdditionalImagesUpload = ({
   const { handleImageUpload, uploadData, isError, isLoading } =
     useUploadImage();
 
+  // Keep track of processed uploads to prevent duplicates
+  const processedUploads = useRef(new Set<string>());
+
   // Merge default images on mount only once
   useEffect(() => {
     if (default_images.length > 0) {
@@ -31,13 +34,18 @@ const ProductAdditionalImagesUpload = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // only on mount
 
-  // Update uploaded image
+  // Update uploaded image - removed imgUrl from dependencies to prevent loop
   useEffect(() => {
     if (uploadData?.data?.url && !isError) {
-      const updatedUrls = [...imgUrl, uploadData.data.url];
-      setImgUrl(updatedUrls);
+      const newUrl = uploadData.data.url;
+
+      // Check if we've already processed this upload
+      if (!processedUploads.current.has(newUrl)) {
+        processedUploads.current.add(newUrl);
+        setImgUrl((prev) => [...prev, newUrl]);
+      }
     }
-  }, [uploadData, isError, imgUrl, setImgUrl]);
+  }, [uploadData, isError, setImgUrl]); // Removed imgUrl from dependencies
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -46,6 +54,10 @@ const ProductAdditionalImagesUpload = ({
   };
 
   const removeImage = (index: number) => {
+    const removedUrl = imgUrl[index];
+    // Remove from processed uploads when image is deleted
+    processedUploads.current.delete(removedUrl);
+
     const updatedUrls = imgUrl.filter((_, i) => i !== index);
     setImgUrl(updatedUrls);
   };
