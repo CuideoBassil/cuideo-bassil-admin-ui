@@ -2,6 +2,7 @@
 import useProductSubmit from "@/hooks/useProductSubmit";
 import { useGetProductQuery } from "@/redux/product/productApi";
 import { IProduct } from "@/types/product-type";
+import { useEffect } from "react";
 import ErrorMsg from "../../common/error-msg";
 import DescriptionTextarea from "../add-product/description-textarea";
 import OfferDatePicker from "../add-product/offer-date-picker";
@@ -38,7 +39,16 @@ const EditProductSubmit = ({ id }: { id: string }) => {
     setOfferDate,
     offerDate,
     setDescription,
+    description,
+    initializeFormData,
   } = useProductSubmit();
+
+  // Initialize form data when product loads
+  useEffect(() => {
+    if (product?.data) {
+      initializeFormData(product.data);
+    }
+  }, [product, initializeFormData]);
 
   let content = null;
 
@@ -72,7 +82,7 @@ const EditProductSubmit = ({ id }: { id: string }) => {
               register={register}
               setValue={setDescription}
               errors={errors}
-              defaultValue={productDetails.description}
+              defaultValue={description}
             />
           </div>
 
