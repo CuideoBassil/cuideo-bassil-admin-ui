@@ -5,7 +5,7 @@ import {
 } from "@/redux/product/productApi";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import slugify from "slugify";
 
@@ -96,6 +96,32 @@ const useProductSubmit = () => {
     setSizes([]);
     reset();
   };
+
+  // Initialize form with product data for editing
+  const initializeFormData = useCallback((product: any) => {
+    if (!product) return;
+
+    setSku(product.sku || "");
+    setImg(product.image || "");
+    setTitle(product.title || "");
+    setSlug(product.slug || "");
+    setUnit(product.unit || "1");
+    setImageURLs(product.additionalImages || []);
+    setChildren(product.children || "");
+    setPrice(product.price || 0);
+    setDiscount(product.discount || 0);
+    setQuantity(product.quantity || 0);
+    setBrand(product.brand || { name: "", id: "" });
+    setCategory(product.category || { name: "", id: "" });
+    setStatus(product.status || "in-stock");
+    setProductType(product.productType || { name: "", id: "" });
+    setColor(product.color || { name: "", code: "" });
+    setDescription(product.description || "");
+    setVideoId(product.videoId || "");
+    setOfferDate(product.offerDate || { startDate: null, endDate: null });
+    setTags(product.tags || []);
+    setSizes(product.sizes || []);
+  }, []);
 
   // Submit Product Function
   const handleSubmitProduct = async (data: any) => {
@@ -223,6 +249,7 @@ const useProductSubmit = () => {
     setOfferDate,
     setIsSubmitted,
     isSubmitted,
+    initializeFormData,
   };
 };
 

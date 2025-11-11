@@ -29,7 +29,7 @@ const DescriptionTextarea = ({
       <div id="editor" className="text-base">
         <ReactQuill
           theme="snow"
-          defaultValue={defaultValue}
+          value={defaultValue || ""}
           onChange={(e) => setValue(e)}
           placeholder="Description..."
         />
