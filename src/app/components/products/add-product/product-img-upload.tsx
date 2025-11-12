@@ -1,5 +1,5 @@
 import useUploadImage from "@/hooks/useUploadImg";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Loading from "../../common/loading";
 import DefaultUploadImg from "./default-upload-img";
 import UploadImage from "./upload-image";
@@ -20,17 +20,22 @@ const ProductImgUpload = ({
   const { handleImageUpload, uploadData, isError, isLoading } =
     useUploadImage();
 
+  const isInitialized = useRef(false);
+
+  // Set default image only once on mount
+  useEffect(() => {
+    if (default_img && !isInitialized.current) {
+      setImgUrl(default_img);
+      isInitialized.current = true;
+    }
+  }, [default_img, setImgUrl]);
+
+  // Update image when upload completes
   useEffect(() => {
     if (uploadData?.data?.url && !isError) {
       setImgUrl(uploadData.data.url);
     }
   }, [uploadData, isError, setImgUrl]);
-
-  useEffect(() => {
-    if (default_img) {
-      setImgUrl(default_img);
-    }
-  }, [default_img, setImgUrl]);
 
   return (
     <div className="bg-white px-8 py-8 rounded-md mb-6 text-center">

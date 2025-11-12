@@ -33,6 +33,7 @@ const ProductSubmit = () => {
     setColor,
     isSubmitted,
     setDescription,
+    description,
   } = useProductSubmit();
 
   return (
@@ -50,6 +51,7 @@ const ProductSubmit = () => {
             register={register}
             errors={errors}
             setValue={setDescription}
+            defaultValue={description}
           />
         </div>
 
