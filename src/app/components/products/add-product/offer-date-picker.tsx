@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
 
 type IDateType = {
@@ -29,10 +29,11 @@ const OfferDatePicker = ({
   isRange = true,
 }: IPropType) => {
   const [internalDate, setInternalDate] = useState<DateValueType>(offerDate);
+  const isInitialized = useRef(false);
 
-  // Sync defaultValue on mount
+  // Sync defaultValue on mount only once
   useEffect(() => {
-    if (defaultValue) {
+    if (defaultValue && !isInitialized.current) {
       const start = defaultValue.startDate
         ? adjustDateToStart(new Date(defaultValue.startDate))
         : null;
@@ -42,6 +43,7 @@ const OfferDatePicker = ({
 
       setInternalDate({ startDate: start, endDate: end });
       setOfferDate({ startDate: start, endDate: end });
+      isInitialized.current = true;
     }
   }, [defaultValue, setOfferDate]);
 

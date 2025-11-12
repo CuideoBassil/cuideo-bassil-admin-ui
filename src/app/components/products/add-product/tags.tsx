@@ -1,6 +1,6 @@
 import useTagSubmit from "@/hooks/useTagSubmit";
 import { useGetAllTagsQuery } from "@/redux/tag/tagApi";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { TagsInput } from "react-tag-input-component";
 
 type IPropType = {
@@ -12,10 +12,12 @@ type IPropType = {
 const Tags = ({ tags, setTags, default_value }: IPropType) => {
   const { data: tagsData, isError, isLoading, refetch } = useGetAllTagsQuery();
   const { handleSubmitTag } = useTagSubmit();
+  const isInitialized = useRef(false);
 
   useEffect(() => {
-    if (default_value) {
+    if (default_value && !isInitialized.current) {
       setTags(default_value);
+      isInitialized.current = true;
     }
   }, [default_value, setTags]);
 
