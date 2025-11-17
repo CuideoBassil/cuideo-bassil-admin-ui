@@ -1,7 +1,21 @@
+"use client";
+import QuickEdit from "@/svg/quick-edit";
 import { IProduct } from "@/types/product-type";
 import Image from "next/image";
+import { useState } from "react";
 import EditDeleteBtn from "../../button/edit-delete-btn";
-const ProductTableItem = ({ product }: { product: IProduct }) => {
+import QuickEditTooltip from "../../tooltip/quick-edit-tooltip";
+import QuickEditModal from "./quick-edit-modal";
+
+const ProductTableItem = ({
+  product,
+  refetch,
+}: {
+  product: IProduct;
+  refetch: () => void;
+}) => {
+  const [isQuickEditOpen, setIsQuickEditOpen] = useState(false);
+  const [showQuickEdit, setShowQuickEdit] = useState(false);
   const {
     _id,
     title,
@@ -20,48 +34,49 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
       : 0;
 
   return (
-    <tr className="bg-white border-b border-gray6 last:border-0 text-start mx-9 gap-2">
-      <td className="px-3 py-3 whitespace-nowrap">
-        <div>
-          <div className="flex items-start gap-2">
-            <Image
-              className="w-[60px] h-[60px] rounded-md object-cover bg-[#F2F3F5]"
-              src={product.image}
-              width={60}
-              height={60}
-              alt="product img"
-            />
-            <div
-              className="font-medium text-heading transition max-w-[200px] break-words overflow-hidden"
-              title={title} // Show full title on hover
-              style={{
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 2, // Limits to 2 lines
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "normal",
-              }}
-            >
-              {title}
+    <>
+      <tr className="bg-white border-b border-gray6 last:border-0 text-start mx-9 gap-2">
+        <td className="px-3 py-3 whitespace-nowrap">
+          <div>
+            <div className="flex items-start gap-2">
+              <Image
+                className="w-[60px] h-[60px] rounded-md object-cover bg-[#F2F3F5]"
+                src={product.image}
+                width={60}
+                height={60}
+                alt="product img"
+              />
+              <div
+                className="font-medium text-heading transition max-w-[200px] break-words overflow-hidden"
+                title={title} // Show full title on hover
+                style={{
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2, // Limits to 2 lines
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "normal",
+                }}
+              >
+                {title}
+              </div>
+            </div>
+
+            <div className="font-medium text-heading  transition">
+              SKU: <span style={{ color: "gray" }}>{sku}</span>
             </div>
           </div>
-
-          <div className="font-medium text-heading  transition">
-            SKU: <span style={{ color: "gray" }}>{sku}</span>
-          </div>
-        </div>
-      </td>
-      {/* <td className="px-3 py-3 font-normal text-[#55585B] ">{sku}</td> */}
-      <td className="px-3 py-3 font-normal text-[#55585B]">${price}</td>
-      <td className="px-3 py-3 font-normal text-[#55585B]">
-        {discount && discount > 0 ? `$${discount}` : "-"}
-      </td>
-      {/* <td className="px-3 py-3 font-normal  text-[#55585B] ">
+        </td>
+        {/* <td className="px-3 py-3 font-normal text-[#55585B] ">{sku}</td> */}
+        <td className="px-3 py-3 font-normal text-[#55585B]">${price}</td>
+        <td className="px-3 py-3 font-normal text-[#55585B]">
+          {discount && discount > 0 ? `$${discount}` : "-"}
+        </td>
+        {/* <td className="px-3 py-3 font-normal  text-[#55585B] ">
         {description.slice(0, 45)}
         {description.length > 45 && "..."}
       </td> */}
-      {/* <td className="px-3 py-3 font-normal text-heading ">
+        {/* <td className="px-3 py-3 font-normal text-heading ">
         <div className="flex justify-end items-center space-x-1 text-tiny">
           <span className="text-yellow flex items-center space-x-1">
             <Rating
@@ -73,11 +88,11 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
           </span>
         </div>
       </td> */}
-      <td className="px-3 py-3 font-normal text-[#55585B] ">{brand.name}</td>
-      <td className="px-3 py-3 font-normal text-[#55585B] ">
-        {category?.name}
-      </td>
-      {/* <td className="px-3 py-3 ">
+        <td className="px-3 py-3 font-normal text-[#55585B] ">{brand.name}</td>
+        <td className="px-3 py-3 font-normal text-[#55585B] ">
+          {category?.name}
+        </td>
+        {/* <td className="px-3 py-3 ">
         <span
           className={`text-[10px] p-1 rounded-md   ${
             status === "in-stock"
@@ -88,23 +103,43 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
           {status === "in-stock" ? "In Stock" : "Out Of Stock"}
         </span>
       </td> */}
-      <td className="px-3 py-3  ">
-        <span
-          className={`text-[10px] px-3 py-1 rounded-md   ${
-            quantity > 0
-              ? "text-success bg-success/10"
-              : "text-danger bg-danger/10"
-          }`}
-        >
-          {quantity > 0 ? quantity : "0"}
-        </span>
-      </td>
-      <td className="px-9 py-3 ">
-        <div className="flex items-center justify-end space-x-2">
-          <EditDeleteBtn id={_id} />
-        </div>
-      </td>
-    </tr>
+        <td className="px-3 py-3  ">
+          <span
+            className={`text-[10px] px-3 py-1 rounded-md   ${
+              quantity > 0
+                ? "text-success bg-success/10"
+                : "text-danger bg-danger/10"
+            }`}
+          >
+            {quantity > 0 ? quantity : "0"}
+          </span>
+        </td>
+        <td className="px-9 py-3 ">
+          <div className="flex items-center justify-end space-x-2">
+            <div className="relative">
+              <button
+                onClick={() => setIsQuickEditOpen(true)}
+                onMouseEnter={() => setShowQuickEdit(true)}
+                onMouseLeave={() => setShowQuickEdit(false)}
+                className="w-8 h-8 leading-8 text-tiny bg-blue-600 text-white  hover:bg-blue-800 rounded-md"
+              >
+                <QuickEdit />
+              </button>
+              <QuickEditTooltip showQuickEdit={showQuickEdit} />
+            </div>
+            <EditDeleteBtn id={_id} />
+          </div>
+        </td>
+      </tr>
+
+      {/* Quick Edit Modal */}
+      <QuickEditModal
+        product={product}
+        isOpen={isQuickEditOpen}
+        onClose={() => setIsQuickEditOpen(false)}
+        refetch={refetch}
+      />
+    </>
   );
 };
 

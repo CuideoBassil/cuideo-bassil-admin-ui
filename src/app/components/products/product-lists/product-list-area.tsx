@@ -51,6 +51,7 @@ const ProductListArea = () => {
     isError,
     isLoading,
     isFetching,
+    refetch,
   } = useGetFilteredPaginatedProductsQuery(queryParams, {
     // Cache behavior configuration
     refetchOnMountOrArgChange: false, // Don't refetch when args are the same
@@ -93,38 +94,66 @@ const ProductListArea = () => {
             <ProductTableHead />
             <tbody>
               {productsData.products.map((prd: any) => (
-                <ProductTableItem key={prd._id} product={prd} />
+                <ProductTableItem
+                  key={prd._id}
+                  product={prd}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
         </div>
 
-        <div className="flex justify-between items-center flex-wrap mx-8">
-          <p className="mb-0 text-tiny">
-            Showing {productsData.products.length} of {productsData.totalCount}
-          </p>
-          <div className="flex items-center space-x-4">
-            <div className="pagination py-3 flex justify-end items-center mx-8">
+        {/* Improved Pagination Footer */}
+        <div className="px-8 py-4 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Left Section - Results Info & Page Size */}
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="text-sm text-gray-600">
+                Showing{" "}
+                <span className="font-semibold text-gray-900">
+                  {(currPage - 1) * pageSize + 1}
+                </span>{" "}
+                to{" "}
+                <span className="font-semibold text-gray-900">
+                  {Math.min(currPage * pageSize, productsData.totalCount)}
+                </span>{" "}
+                of{" "}
+                <span className="font-semibold text-gray-900">
+                  {productsData.totalCount}
+                </span>{" "}
+                results
+              </div>
+
+              {/* Page Size Selector */}
+              <div className="flex items-center gap-2">
+                <label htmlFor="pageSize" className="text-sm text-gray-600">
+                  Show:
+                </label>
+                <select
+                  id="pageSize"
+                  value={pageSize}
+                  onChange={handlePageSizeChange}
+                  className="px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                >
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                  <option value={15}>15</option>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Right Section - Pagination Controls */}
+            <div className="flex items-center gap-2">
               <ServerPagination
                 items={Array(productsData.totalCount).fill(0)}
                 countOfPage={pageSize}
                 currPage={currPage}
                 setCurrPage={setCurrPage}
               />
-            </div>
-            <div className="page-size-dropdown">
-              <span className="mr-2">Page size:</span>
-              <select
-                value={pageSize}
-                onChange={handlePageSizeChange}
-                className="border rounded-md px-2 py-1"
-              >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={15}>15</option>
-                <option value={25}>25</option>
-                <option value={50}>50</option>
-              </select>
             </div>
           </div>
         </div>
