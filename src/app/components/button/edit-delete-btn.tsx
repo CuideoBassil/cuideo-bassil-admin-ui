@@ -81,7 +81,7 @@ const EditDeleteBtn = ({ id }: { id: string }) => {
           <button
             onMouseEnter={() => setShowEdit(true)}
             onMouseLeave={() => setShowEdit(false)}
-            className="w-10 h-10 leading-10 text-tiny bg-success text-white rounded-md hover:bg-green-600"
+            className="w-8 h-8 leading-8 text-tiny bg-success text-white rounded-md hover:bg-green-600"
           >
             <Edit />
           </button>

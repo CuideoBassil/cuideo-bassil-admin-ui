@@ -51,6 +51,7 @@ const ProductListArea = () => {
     isError,
     isLoading,
     isFetching,
+    refetch,
   } = useGetFilteredPaginatedProductsQuery(queryParams, {
     // Cache behavior configuration
     refetchOnMountOrArgChange: false, // Don't refetch when args are the same
@@ -93,7 +94,11 @@ const ProductListArea = () => {
             <ProductTableHead />
             <tbody>
               {productsData.products.map((prd: any) => (
-                <ProductTableItem key={prd._id} product={prd} />
+                <ProductTableItem
+                  key={prd._id}
+                  product={prd}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
