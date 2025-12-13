@@ -113,7 +113,10 @@ export const authApi = apiSlice.injectEndpoints({
 
         return `/api/product/filtered/paginated?${params.toString()}`;
       },
-      providesTags: ["FilteredPaginatedProducts"],
+      providesTags: (result, error, arg) => [
+        { type: "FilteredPaginatedProducts", id: JSON.stringify(arg) },
+      ],
+      keepUnusedDataFor: 120, // Cache for 2 minutes
     }),
   }),
 });
