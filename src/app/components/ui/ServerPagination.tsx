@@ -3,19 +3,22 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 interface PaginationProps {
-  items: any[];
+  items?: any[];
+  totalItems?: number;
   countOfPage?: number;
   currPage: number;
   setCurrPage: (page: number) => void;
 }
 
 const ServerPagination = ({
-  items = [],
+  items,
+  totalItems,
   countOfPage = 12,
   currPage,
   setCurrPage,
 }: PaginationProps) => {
-  const totalPage = Math.ceil(items.length / countOfPage);
+  const itemCount = totalItems ?? (items?.length ?? 0);
+  const totalPage = Math.ceil(itemCount / countOfPage);
   const maxVisiblePages = 5;
   const [pageInput, setPageInput] = useState("");
   const [inputError, setInputError] = useState(false);

@@ -149,7 +149,7 @@ const ProductListArea = () => {
             {/* Right Section - Pagination Controls */}
             <div className="flex items-center gap-2">
               <ServerPagination
-                items={Array(productsData.totalCount).fill(0)}
+                totalItems={productsData.totalCount}
                 countOfPage={pageSize}
                 currPage={currPage}
                 setCurrPage={setCurrPage}
