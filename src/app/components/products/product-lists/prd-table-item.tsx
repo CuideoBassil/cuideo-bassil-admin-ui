@@ -39,13 +39,19 @@ const ProductTableItem = ({
         <td className="px-3 py-3 whitespace-nowrap">
           <div>
             <div className="flex items-start gap-2">
-              <Image
-                className="w-[60px] h-[60px] rounded-md object-cover bg-[#F2F3F5]"
-                src={product.image}
-                width={60}
-                height={60}
-                alt="product img"
-              />
+              {/^https?:\/\//.test(product.image || "") ? (
+                <Image
+                  className="w-[60px] h-[60px] rounded-md object-cover bg-[#F2F3F5]"
+                  src={product.image}
+                  width={60}
+                  height={60}
+                  alt="product img"
+                />
+              ) : (
+                <div className="w-[60px] h-[60px] rounded-md bg-[#F2F3F5] flex items-center justify-center text-[10px] text-gray-400 text-center leading-tight">
+                  No Image
+                </div>
+              )}
               <div
                 className="font-medium text-heading transition max-w-[200px] break-words overflow-hidden"
                 title={title} // Show full title on hover

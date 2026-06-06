@@ -97,6 +97,23 @@ export const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ["UpdateProductQuantity"],
     }),
 
+    // batch import products from an Excel workbook
+    importProductsExcel: builder.mutation<
+      IProductResponse,
+      { file: File; mode: "validate" | "commit" }
+    >({
+      query({ file, mode }) {
+        const formData = new FormData();
+        formData.append("file", file);
+        return {
+          url: `/api/product/import-excel?mode=${mode}`,
+          method: "POST",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["AllProducts", "AllCategory", "AllBrands", "AllProductTypes"],
+    }),
+
     getFilteredPaginatedProducts: builder.query({
       query: ({ skip = 0, take = 12, search, status }) => {
         const params = new URLSearchParams();
@@ -131,4 +148,5 @@ export const {
   useDeleteProductMutation,
   useUpdateProductQuantityMutation,
   useGetFilteredPaginatedProductsQuery,
+  useImportProductsExcelMutation,
 } = authApi;

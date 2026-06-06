@@ -31,6 +31,7 @@ const sidebar_menu: Array<ISidebarMenus> = [
       { title: "Product List", link: "/product-list" },
       // { title: "Product Grid", link: "/product-grid" },
       { title: "Add Product", link: "/add-product" },
+      { title: "Import Products", link: "/import-products" },
     ],
   },
   {

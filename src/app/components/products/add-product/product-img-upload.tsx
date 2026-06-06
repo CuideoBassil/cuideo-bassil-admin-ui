@@ -22,13 +22,18 @@ const ProductImgUpload = ({
 
   const isInitialized = useRef(false);
 
+  // Only treat a real http(s) URL as an existing image; markers like "NO_IMAGE"
+  // (used for products imported without a picture) are treated as no image.
+  const safeDefaultImg =
+    default_img && /^https?:\/\//.test(default_img) ? default_img : undefined;
+
   // Set default image only once on mount
   useEffect(() => {
-    if (default_img && !isInitialized.current) {
-      setImgUrl(default_img);
+    if (safeDefaultImg && !isInitialized.current) {
+      setImgUrl(safeDefaultImg);
       isInitialized.current = true;
     }
-  }, [default_img, setImgUrl]);
+  }, [safeDefaultImg, setImgUrl]);
 
   // Update image when upload completes
   useEffect(() => {
@@ -53,7 +58,7 @@ const ProductImgUpload = ({
             setImgUrl={setImgUrl}
           />
         ) : (
-          <DefaultUploadImg img={default_img} isLoading={isLoading} wh={100} />
+          <DefaultUploadImg img={safeDefaultImg} isLoading={isLoading} wh={100} />
         )}
       </div>
 
